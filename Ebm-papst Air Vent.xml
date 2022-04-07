@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="8c20964a-40ba-4cb2-abe6-0e1d8ed29fe2" revision="1.0">
+    <Name>Ebm-papst Air Vent</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>EBM-Papst</Producer>
+    <Model></Model>
+    <Category>1</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <SuggestedCCUParameters>
+      <Baudrate>19200</Baudrate>
+      <DataBits>8</DataBits>
+      <Parity>Even</Parity>
+      <StopBits>One</StopBits>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>Ebm-papst Air Vent</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Vent $[SlaveId] On/Off</Name>
+          <Id>-2</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadSwitchState>MODBUSR(H, 0xD001, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 0xD001, Uint16, St * 32767)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Vent $[SlaveId] Speed</Name>
+          <Id>-3</Id>
+          <Model>ModbusDimmer</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadLevel>MODBUSR(H, 0xD001, Uint16) / 65535</ReadLevel>
+            <WriteLevel>MODBUSW(H, 0xD001, Uint16, Le * 65535)</WriteLevel>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Vent $[SlaveId] Watt Power</Name>
+          <Id>-4</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 0xD021, Int16)*0.01705</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Vent $[SlaveId] Module Temperature</Name>
+          <Id>-5</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadTemperature>MODBUSR(A, 0xD015, Int16)</ReadTemperature>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Vent $[SlaveId] Error</Name>
+          <Id>-6</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 0xD011, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Vent $[SlaveId] Source</Name>
+          <Id>-7</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 0xD101, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 0xD101, Bool, St); MODBUSW(H, 0xD000, Int16, 2);</WriteSwitchState>
+            <OnStateName>Modbus</OnStateName>
+            <OffStateName>Sensor</OffStateName>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Vent $[SlaveId] RPM</Name>
+          <Id>-8</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadState>(MODBUSR(A, 0xD010, UInt16)/64000)*MODBUSR(H, 0xD119, UInt16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

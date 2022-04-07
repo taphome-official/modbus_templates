@@ -1,0 +1,868 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="59">
+  <Template id="82c3d3fa-9ef2-4814-960d-bacfda2bf1a2" revision="1.0">
+    <SuggestedCCUParameters>
+      <TcpPort>502</TcpPort>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>Jablotron Futura 3.0</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer></Producer>
+    <Model></Model>
+    <Description></Description>
+    <Category>1</Category>
+    <Module>
+      <Name>Jablotron Futura 3.0</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>2500</InternalPollInterval>
+        <ReadScript>var Code := MODBUSR(A,16, UInt32);
+IF (GETBIT(Code,0), ADDINFO(0,"Aktivní funkce Boost"));
+IF (GETBIT(Code,1), ADDINFO(1,"Aktivní funkce Cirkulace"));
+IF (GETBIT(Code,2), ADDINFO(2,"Aktivní časový program"));
+IF (GETBIT(Code,3), ADDINFO(3,"Aktivní funkce Přetlak"));
+IF (GETBIT(Code,4), ADDINFO(4,"Aktivní funkce Dovolená"));
+IF (GETBIT(Code,5), ADDINFO(5,"Aktivní funkce Párty"));
+IF (GETBIT(Code,6), ADDINFO(6,"Aktivní funkce Noční režim"));
+IF (GETBIT(Code,7), ADDINFO(7,"Aktivní funkce Protiradonová ochrana"));
+IF (GETBIT(Code,8), ADDINFO(8,"Zařízení je zapnuto, není v režimu snížené spotřeby"));
+IF (GETBIT(Code,9), ADDINFO(9,"Probíhá kontrola filtrů"));
+IF (GETBIT(Code,10), ADDINFO(10,"Probíhá vysoušení"));
+IF (GETBIT(Code,11), ADDINFO(11,"Otevřený Bypass"));
+IF (GETBIT(Code,12), ADDINFO(12,"Nízká venkovní teplota, omezená funkce větrání"));
+IF (GETBIT(Code,13), ADDINFO(13,"Odstavení po chybě"));
+IF (GETBIT(Code,14), ADDINFO(14,"Zařízení se spouští"));
+IF (GETBIT(Code,15), ADDINFO(15,"Aktivní servisní režim"));
+IF (GETBIT(Code,16), ADDINFO(16,"Teplota odpadního vzduchu &lt; -3°C (splněna podmínka ochrany před zamrznutím)"));
+IF (GETBIT(Code,17), ADDINFO(17,"Nouzové vypnutí"));
+IF (GETBIT(Code,18), ADDINFO(18,"Nouzové vypnutí"));
+IF (GETBIT(Code,19), ADDINFO(19,"Odměřování tlakové ztráty"));
+IF (GETBIT(Code,20), ADDINFO(20,"Stand-by"));
+IF (GETBIT(Code,21), ADDINFO(21,"Zónový boost"));
+IF (GETBIT(Code,22), ADDINFO(22,"Odměřování tlakové ztráty zón"));
+
+var Code := MODBUSR(A,18, UInt32);
+IF (GETBIT(Code,0), ADDERROR(0,"Chyba senzoru ambient"));
+IF (GETBIT(Code,1), ADDERROR(1,"Chyba senzoru indoor"));
+IF (GETBIT(Code,2), ADDERROR(2,"Chyba senzoru fresh"));
+IF (GETBIT(Code,3), ADDERROR(3,"Chyba senzoru waste"));
+IF (GETBIT(Code,4), ADDERROR(4,"Chyba přívodního ventilátoru"));
+IF (GETBIT(Code,5), ADDERROR(5,"Chyba odtahového ventilátoru"));
+IF (GETBIT(Code,6), ADDERROR(6,"Chyba komunikace s výměníkem"));
+IF (GETBIT(Code,7), ADDERROR(7,"Chyba polohy klapek výměníku"));
+IF (GETBIT(Code,8), ADDERROR(8,"Chyba komunikace s IO deskou"));
+IF (GETBIT(Code,9), ADDERROR(9,"Zablokovaný přívodní ventilátor"));
+IF (GETBIT(Code,10), ADDERROR(10,"Zablokovaný odtahový ventilátor"));
+IF (GETBIT(Code,11), ADDERROR(11,"Chyba komunikace s Coolbreeze"));
+IF (GETBIT(Code,12), ADDERROR(12,"Chyba venkovní jednotky Coolbreeze"));
+
+var Code := MODBUSR(A,20, UInt32);
+IF (GETBIT(Code,0), ADDWARNING(0,"Neinicializovaný filtr"));
+IF (GETBIT(Code,1), ADDWARNING(1,"Filtr je příliš zanesený"));
+IF (GETBIT(Code,2), ADDWARNING(2,"Filtr se používá příliš dlouho"));
+IF (GETBIT(Code,3), ADDWARNING(3,"Nízké napětí RTC baterie"));
+IF (GETBIT(Code,4), ADDWARNING(4,"Příliš vysoké otáčky přívodního ventilátoru"));
+IF (GETBIT(Code,5), ADDWARNING(5,"Příliš vysoké otáčky odtahového ventilátoru"));
+IF (GETBIT(Code,8), ADDWARNING(8,"Příliš nízká venkovní teplota, omezená funkce větrání"));
+IF (GETBIT(Code,9), ADDWARNING(9,"Nesprávná konfigurace zónového větrání - přívod"));
+IF (GETBIT(Code,10), ADDWARNING(10,"Nesprávná konfigurace zónového větrání - odtah"));
+IF (GETBIT(Code,11), ADDWARNING(11,"Nouzové vypnutí"));
+IF (GETBIT(Code,12), ADDWARNING(12,"Chyba komunikace se SuperBreeze"));
+IF (GETBIT(Code,13), ADDWARNING(13,"Obecná chyba SuperBreeze"));</ReadScript>
+        <PrefetchModeId>1</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Sériové číslo","Section":null},"ReadFormula":"MODBUSR(A, 1, Uint32)"},{"AttributeDefinition":{"Name":"MAC adresa","Section":null},"ReadFormula":"var macA := MODBUSR(A, 3, Uint16);\r\nvar macB := MODBUSR(A, 4, Uint16);\r\nvar macC := MODBUSR(A, 5, Uint16);\r\nTOSTRING(GETBYTE(macA, 0), \"X2\") + \":\" +\r\nTOSTRING(GETBYTE(macA, 1), \"X2\") + \":\" +\r\nTOSTRING(GETBYTE(macB, 0), \"X2\") + \":\" +\r\nTOSTRING(GETBYTE(macB, 1), \"X2\") + \":\" +\r\nTOSTRING(GETBYTE(macC, 0), \"X2\") + \":\" +\r\nTOSTRING(GETBYTE(macC, 1), \"X2\");"},{"AttributeDefinition":{"Name":"Verze hardware","Section":null},"ReadFormula":"MODBUSR(A, 6, Uint32)"},{"AttributeDefinition":{"Name":"Verze firmware","Section":null},"ReadFormula":"MODBUSR(A, 8, Uint32)"},{"AttributeDefinition":{"Name":"Verze registrové mapy","Section":null},"ReadFormula":"MODBUSR(A, 12, Uint32)"},{"AttributeDefinition":{"Name":"Varianta zařízení","Section":null},"ReadFormula":"SWITCH(MODBUSR(A, 14, Uint16),\r\n0, \"Futura L\",\r\n1, \"Futura L\",\r\n2, \"Futura M\",\r\n\"--\")"},{"AttributeDefinition":{"Name":"Vnitřní topení je dostupné","Section":null},"ReadFormula":"IF(GETBIT(MODBUSR(A, 15, Uint16), 0), \"Ano\", \"Ne\")"},{"AttributeDefinition":{"Name":"Chlazení Coolbreeze je dostupné","Section":null},"ReadFormula":"IF(GETBIT(MODBUSR(A, 15, Uint16), 1), \"Ano\", \"Ne\")"},{"AttributeDefinition":{"Name":"Topení Coolbreeze je dostupné","Section":null},"ReadFormula":"IF(GETBIT(MODBUSR(A, 15, Uint16), 2), \"Ano\", \"Ne\")"},{"AttributeDefinition":{"Name":"Funkce bypass je dostupná","Section":null},"ReadFormula":"IF(GETBIT(MODBUSR(A, 15, Uint16), 3), \"Ano\", \"Ne\")"},{"AttributeDefinition":{"Name":"Napětí záložní baterie pro RTC [mV]","Section":null},"ReadFormula":"MODBUSR(A, 52, Uint16)"}]</ServiceAttributesFormulas>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+        <MaxPrefetchGroupSize>10</MaxPrefetchGroupSize>
+        <Variables>[]</Variables>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Aktuální hodnota zpětně získávaného tepla [W]</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 42, Uint16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Aktuální příkon jednotky [W]</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 41, Uint16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Aktuální vzduchové množství [m3/h]</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 44, Uint16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Časový program</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <NegateState>False</NegateState>
+            <OnStateIconId>35</OnStateIconId>
+            <OffStateIconId>36</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 12, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 12, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Dodávaný vzduch do domu</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>3001</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(A, 31, Int16) / 10</ReadTemperature>
+            <ReadHumidity>MODBUSR(A, 35, Int16) / 1000</ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Externí NTC senzor</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>3001</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>var x:= MODBUSR(A, 38, Int16) / 10;
+if (x = -99, NaN, x)</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Funkce Boost</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zbývající čas [s]","Section":null},"ReadFormula":"MODBUSR(H, 1, Uint16)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Funkce Boost","NumericParameters":[{"FriendlyName":"Čas","Abbreviation":"sec","IsFloat":false,"MinValue":1.0,"MaxValue":7200.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 1, Uint16, sec)"}]</ServiceActionsScripts>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>7</Value7Index>
+            <Value8Index>8</Value8Index>
+            <Value9Index>9</Value9Index>
+            <Value0Name>Vypnuto</Value0Name>
+            <Value1Name>30 s</Value1Name>
+            <Value2Name>60 s</Value2Name>
+            <Value3Name>5 min</Value3Name>
+            <Value4Name>10 min</Value4Name>
+            <Value5Name>15 min</Value5Name>
+            <Value6Name>30 min</Value6Name>
+            <Value7Name>1 h</Value7Name>
+            <Value8Name>1,5 h</Value8Name>
+            <Value9Name>2 h</Value9Name>
+            <Value0IconId>61</Value0IconId>
+            <Value1IconId>143</Value1IconId>
+            <Value2IconId>144</Value2IconId>
+            <Value3IconId>145</Value3IconId>
+            <Value4IconId>146</Value4IconId>
+            <Value5IconId>147</Value5IconId>
+            <Value6IconId>148</Value6IconId>
+            <Value7IconId>149</Value7IconId>
+            <Value8IconId>150</Value8IconId>
+            <Value9IconId>28</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>var x := MODBUSR(H, 1, Uint16);
+IF(x = 0, RETURN(0));
+IF(x &gt; 5400, RETURN(9));
+IF(x &gt; 3600, RETURN(8));
+IF(x &gt; 1800, RETURN(7));
+IF(x &gt; 900, RETURN(6));
+IF(x &gt; 600, RETURN(5));
+IF(x &gt; 300, RETURN(4));
+IF(x &gt; 60, RETURN(3));
+IF(x &gt; 30, RETURN(2));
+IF(x &gt; 0, RETURN(1));</ReadSwitchState>
+            <WriteSwitchState>IF(Mu = 0, MODBUSW(H, 1, Uint16, 0));
+IF(Mu = 1, MODBUSW(H, 1, Uint16, 30));
+IF(Mu = 2, MODBUSW(H, 1, Uint16, 60));
+IF(Mu = 3, MODBUSW(H, 1, Uint16, 300));
+IF(Mu = 4, MODBUSW(H, 1, Uint16, 600));
+IF(Mu = 5, MODBUSW(H, 1, Uint16, 900));
+IF(Mu = 6, MODBUSW(H, 1, Uint16, 1800));
+IF(Mu = 7, MODBUSW(H, 1, Uint16, 3600));
+IF(Mu = 8, MODBUSW(H, 1, Uint16, 5400));
+IF(Mu = 9, MODBUSW(H, 1, Uint16, 7200));
+</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Funkce Cirkulace</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zbývající čas [s]","Section":null},"ReadFormula":"MODBUSR(H, 2, Uint16)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Funkce Cirkulace","NumericParameters":[{"FriendlyName":"Čas","Abbreviation":"sec","IsFloat":false,"MinValue":1.0,"MaxValue":7200.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 2, Uint16, sec)"}]</ServiceActionsScripts>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>7</Value7Index>
+            <Value8Index>8</Value8Index>
+            <Value9Index>9</Value9Index>
+            <Value0Name>Vypnuto</Value0Name>
+            <Value1Name>30 s</Value1Name>
+            <Value2Name>60 s</Value2Name>
+            <Value3Name>5 min</Value3Name>
+            <Value4Name>10 min</Value4Name>
+            <Value5Name>15 min</Value5Name>
+            <Value6Name>30 min</Value6Name>
+            <Value7Name>1 h</Value7Name>
+            <Value8Name>1,5 h</Value8Name>
+            <Value9Name>2 h</Value9Name>
+            <Value0IconId>116</Value0IconId>
+            <Value1IconId>115</Value1IconId>
+            <Value2IconId>115</Value2IconId>
+            <Value3IconId>115</Value3IconId>
+            <Value4IconId>115</Value4IconId>
+            <Value5IconId>115</Value5IconId>
+            <Value6IconId>115</Value6IconId>
+            <Value7IconId>115</Value7IconId>
+            <Value8IconId>115</Value8IconId>
+            <Value9IconId>115</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>var x := MODBUSR(H, 2, Uint16);
+IF(x = 0, RETURN(0));
+IF(x &gt; 5400, RETURN(9));
+IF(x &gt; 3600, RETURN(8));
+IF(x &gt; 1800, RETURN(7));
+IF(x &gt; 900, RETURN(6));
+IF(x &gt; 600, RETURN(5));
+IF(x &gt; 300, RETURN(4));
+IF(x &gt; 60, RETURN(3));
+IF(x &gt; 30, RETURN(2));
+IF(x &gt; 0, RETURN(1));</ReadSwitchState>
+            <WriteSwitchState>IF(Mu = 0, MODBUSW(H, 2, Uint16, 0));
+IF(Mu = 1, MODBUSW(H, 2, Uint16, 30));
+IF(Mu = 2, MODBUSW(H, 2, Uint16, 60));
+IF(Mu = 3, MODBUSW(H, 2, Uint16, 300));
+IF(Mu = 4, MODBUSW(H, 2, Uint16, 600));
+IF(Mu = 5, MODBUSW(H, 2, Uint16, 900));
+IF(Mu = 6, MODBUSW(H, 2, Uint16, 1800));
+IF(Mu = 7, MODBUSW(H, 2, Uint16, 3600));
+IF(Mu = 8, MODBUSW(H, 2, Uint16, 5400));
+IF(Mu = 9, MODBUSW(H, 2, Uint16, 7200));
+</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Funkce Noc</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zbývající čas [s]","Section":null},"ReadFormula":"MODBUSR(H, 4, Uint16)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Funkce Noc","NumericParameters":[{"FriendlyName":"Čas","Abbreviation":"sec","IsFloat":false,"MinValue":1.0,"MaxValue":7200.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 4, Uint16, sec)"}]</ServiceActionsScripts>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>7</Value7Index>
+            <Value8Index>8</Value8Index>
+            <Value9Index>9</Value9Index>
+            <Value0Name>Vypnuto</Value0Name>
+            <Value1Name>30 s</Value1Name>
+            <Value2Name>60 s</Value2Name>
+            <Value3Name>5 min</Value3Name>
+            <Value4Name>10 min</Value4Name>
+            <Value5Name>15 min</Value5Name>
+            <Value6Name>30 min</Value6Name>
+            <Value7Name>1 h</Value7Name>
+            <Value8Name>1,5 h</Value8Name>
+            <Value9Name>2 h</Value9Name>
+            <Value0IconId>122</Value0IconId>
+            <Value1IconId>121</Value1IconId>
+            <Value2IconId>121</Value2IconId>
+            <Value3IconId>121</Value3IconId>
+            <Value4IconId>121</Value4IconId>
+            <Value5IconId>121</Value5IconId>
+            <Value6IconId>121</Value6IconId>
+            <Value7IconId>121</Value7IconId>
+            <Value8IconId>121</Value8IconId>
+            <Value9IconId>121</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>var x := MODBUSR(H, 4, Uint16);
+IF(x = 0, RETURN(0));
+IF(x &gt; 5400, RETURN(9));
+IF(x &gt; 3600, RETURN(8));
+IF(x &gt; 1800, RETURN(7));
+IF(x &gt; 900, RETURN(6));
+IF(x &gt; 600, RETURN(5));
+IF(x &gt; 300, RETURN(4));
+IF(x &gt; 60, RETURN(3));
+IF(x &gt; 30, RETURN(2));
+IF(x &gt; 0, RETURN(1));</ReadSwitchState>
+            <WriteSwitchState>IF(Mu = 0, MODBUSW(H, 4, Uint16, 0));
+IF(Mu = 1, MODBUSW(H, 4, Uint16, 30));
+IF(Mu = 2, MODBUSW(H, 4, Uint16, 60));
+IF(Mu = 3, MODBUSW(H, 4, Uint16, 300));
+IF(Mu = 4, MODBUSW(H, 4, Uint16, 600));
+IF(Mu = 5, MODBUSW(H, 4, Uint16, 900));
+IF(Mu = 6, MODBUSW(H, 4, Uint16, 1800));
+IF(Mu = 7, MODBUSW(H, 4, Uint16, 3600));
+IF(Mu = 8, MODBUSW(H, 4, Uint16, 5400));
+IF(Mu = 9, MODBUSW(H, 4, Uint16, 7200));
+</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Funkce Party</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-11</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zbývající čas [s]","Section":null},"ReadFormula":"MODBUSR(H, 5, Uint16)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Funkce Party","NumericParameters":[{"FriendlyName":"Čas","Abbreviation":"sec","IsFloat":false,"MinValue":1.0,"MaxValue":28800.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 5, Uint16, sec)"}]</ServiceActionsScripts>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>7</Value7Index>
+            <Value8Index>8</Value8Index>
+            <Value9Index>9</Value9Index>
+            <Value0Name>Vypnuto</Value0Name>
+            <Value1Name>30 min</Value1Name>
+            <Value2Name>1 h</Value2Name>
+            <Value3Name>2 h</Value3Name>
+            <Value4Name>3 h</Value4Name>
+            <Value5Name>4 h</Value5Name>
+            <Value6Name>5 h</Value6Name>
+            <Value7Name>6 h</Value7Name>
+            <Value8Name>7 h</Value8Name>
+            <Value9Name>8 h</Value9Name>
+            <Value0IconId>61</Value0IconId>
+            <Value1IconId>49</Value1IconId>
+            <Value2IconId>49</Value2IconId>
+            <Value3IconId>49</Value3IconId>
+            <Value4IconId>49</Value4IconId>
+            <Value5IconId>49</Value5IconId>
+            <Value6IconId>49</Value6IconId>
+            <Value7IconId>49</Value7IconId>
+            <Value8IconId>49</Value8IconId>
+            <Value9IconId>49</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>var x := MODBUSR(H, 5, Uint16);
+IF(x = 0, RETURN(0));
+IF(x &gt; 60 * 60 * 7, RETURN(9));
+IF(x &gt; 60 * 60 * 6, RETURN(8));
+IF(x &gt; 60 * 60 * 5, RETURN(7));
+IF(x &gt; 60 * 60 * 4, RETURN(6));
+IF(x &gt; 60 * 60 * 3, RETURN(5));
+IF(x &gt; 60 * 60 * 2, RETURN(4));
+IF(x &gt; 60 * 60 * 1, RETURN(3));
+IF(x &gt; 60 * 30, RETURN(2));
+IF(x &gt; 0, RETURN(1));</ReadSwitchState>
+            <WriteSwitchState>IF(Mu = 0, MODBUSW(H, 5, Uint16, 0));
+IF(Mu = 1, MODBUSW(H, 5, Uint16, 60 * 30));
+IF(Mu = 2, MODBUSW(H, 5, Uint16, 60 * 60 * 1));
+IF(Mu = 3, MODBUSW(H, 5, Uint16, 60 * 60 * 2));
+IF(Mu = 4, MODBUSW(H, 5, Uint16, 60 * 60 * 3));
+IF(Mu = 5, MODBUSW(H, 5, Uint16, 60 * 60 * 4));
+IF(Mu = 6, MODBUSW(H, 5, Uint16, 60 * 60 * 5));
+IF(Mu = 7, MODBUSW(H, 5, Uint16, 60 * 60 * 6));
+IF(Mu = 8, MODBUSW(H, 5, Uint16, 60 * 60 * 7));
+IF(Mu = 9, MODBUSW(H, 5, Uint16, 60 * 60 * 8));
+</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Funkce Přetlak</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-12</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zbývající čas [s]","Section":null},"ReadFormula":"MODBUSR(H, 3, Uint16)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Funkce Přetlak","NumericParameters":[{"FriendlyName":"Čas","Abbreviation":"sec","IsFloat":false,"MinValue":1.0,"MaxValue":7200.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 3, Uint16, sec)"}]</ServiceActionsScripts>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>7</Value7Index>
+            <Value8Index>8</Value8Index>
+            <Value9Index>9</Value9Index>
+            <Value0Name>Vypnuto</Value0Name>
+            <Value1Name>30 s</Value1Name>
+            <Value2Name>60 s</Value2Name>
+            <Value3Name>5 min</Value3Name>
+            <Value4Name>10 min</Value4Name>
+            <Value5Name>15 min</Value5Name>
+            <Value6Name>30 min</Value6Name>
+            <Value7Name>1 h</Value7Name>
+            <Value8Name>1,5 h</Value8Name>
+            <Value9Name>2 h</Value9Name>
+            <Value0IconId>124</Value0IconId>
+            <Value1IconId>123</Value1IconId>
+            <Value2IconId>123</Value2IconId>
+            <Value3IconId>123</Value3IconId>
+            <Value4IconId>123</Value4IconId>
+            <Value5IconId>123</Value5IconId>
+            <Value6IconId>123</Value6IconId>
+            <Value7IconId>123</Value7IconId>
+            <Value8IconId>123</Value8IconId>
+            <Value9IconId>123</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>var x := MODBUSR(H, 3, Uint16);
+IF(x = 0, RETURN(0));
+IF(x &gt; 5400, RETURN(9));
+IF(x &gt; 3600, RETURN(8));
+IF(x &gt; 1800, RETURN(7));
+IF(x &gt; 900, RETURN(6));
+IF(x &gt; 600, RETURN(5));
+IF(x &gt; 300, RETURN(4));
+IF(x &gt; 60, RETURN(3));
+IF(x &gt; 30, RETURN(2));
+IF(x &gt; 0, RETURN(1));</ReadSwitchState>
+            <WriteSwitchState>IF(Mu = 0, MODBUSW(H, 3, Uint16, 0));
+IF(Mu = 1, MODBUSW(H, 3, Uint16, 30));
+IF(Mu = 2, MODBUSW(H, 3, Uint16, 60));
+IF(Mu = 3, MODBUSW(H, 3, Uint16, 300));
+IF(Mu = 4, MODBUSW(H, 3, Uint16, 600));
+IF(Mu = 5, MODBUSW(H, 3, Uint16, 900));
+IF(Mu = 6, MODBUSW(H, 3, Uint16, 1800));
+IF(Mu = 7, MODBUSW(H, 3, Uint16, 3600));
+IF(Mu = 8, MODBUSW(H, 3, Uint16, 5400));
+IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
+</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Hodnota zanesení filtrů</Name>
+          <Model>ModbusDimmer</Model>
+          <Id>-13</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadLevel>MODBUSR(A, 40, Uint16) / 100</ReadLevel>
+            <WriteLevel></WriteLevel>
+            <IconId>3024</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Napětí vstupu UIN1 [V]</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-14</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 49, Uint16) / 1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Napětí vstupu UIN2 [V]</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-15</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 50, Uint16) / 1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Odpadní vzduch</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-16</Id>
+          <DeviceProperties>
+            <DeviceType>3001</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(A, 33, Int16) / 10</ReadTemperature>
+            <ReadHumidity>MODBUSR(A, 37, Int16) / 1000</ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Povolení bypassu</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-17</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <NegateState>False</NegateState>
+            <OnStateIconId>39</OnStateIconId>
+            <OffStateIconId>305</OffStateIconId>
+            <OnStateName>Povoleno</OnStateName>
+            <OffStateName>Zakázáno</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 14, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 14, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Povolení chlazení</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-18</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <NegateState>False</NegateState>
+            <OnStateIconId>2</OnStateIconId>
+            <OffStateIconId>18</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 16, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 16, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Povolení komfortního řízení teploty</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-19</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <NegateState>False</NegateState>
+            <OnStateIconId>39</OnStateIconId>
+            <OffStateIconId>305</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 17, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 17, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Povolení protiradonové ochrany</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-20</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <NegateState>False</NegateState>
+            <OnStateIconId>39</OnStateIconId>
+            <OffStateIconId>305</OffStateIconId>
+            <OnStateName>Povoleno</OnStateName>
+            <OffStateName>Zakázáno</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 13, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 13, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Povolení topení</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-21</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <NegateState>False</NegateState>
+            <OnStateIconId>1</OnStateIconId>
+            <OffStateIconId>29</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 15, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 15, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Preferovaná teplota</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-22</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <MinTemperature>10</MinTemperature>
+            <MaxTemperature>30</MaxTemperature>
+            <ReadCurrentTemperature></ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 10, Uint16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 10, Uint16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Preferovaná vlhkost</Name>
+          <Model>ModbusDimmer</Model>
+          <Id>-23</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadLevel>MODBUSR(H, 11, Uint16) / 1000</ReadLevel>
+            <WriteLevel>MODBUSW(H, 11, Uint16, Le * 1000)</WriteLevel>
+            <IconId>3020</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Venkovní vzduch</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-24</Id>
+          <DeviceProperties>
+            <DeviceType>3001</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(A, 30, Int16) / 10</ReadTemperature>
+            <ReadHumidity>MODBUSR(A, 34, Int16) / 1000</ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Výkon topení dohřevu [W]</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-25</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 43, Uint16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Výkon ventilátoru pro odtah vzduchu</Name>
+          <Model>ModbusDimmer</Model>
+          <Id>-26</Id>
+          <DeviceProperties>
+            <DeviceType>2008</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Otáčky ventilátoru [rpm]","Section":null},"ReadFormula":"MODBUSR(A, 48, Uint16)\r\n"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadLevel>MODBUSR(A, 46, Uint16) / 100</ReadLevel>
+            <WriteLevel></WriteLevel>
+            <IconId>3007</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Výkon ventilátoru pro přívod vzduchu</Name>
+          <Model>ModbusDimmer</Model>
+          <Id>-27</Id>
+          <DeviceProperties>
+            <DeviceType>2008</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Otáčky ventilátoru [rpm]","Section":null},"ReadFormula":"MODBUSR(A, 47, Uint16)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadLevel>MODBUSR(A, 45, Uint16) / 100</ReadLevel>
+            <WriteLevel></WriteLevel>
+            <IconId>3007</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Výkon větrání</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-28</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Vypnuto</Value0Name>
+            <Value1Name>Úroveň 1</Value1Name>
+            <Value2Name>Úroveň 2</Value2Name>
+            <Value3Name>Úroveň 3</Value3Name>
+            <Value4Name>Úroveň 4</Value4Name>
+            <Value5Name>Úroveň 5</Value5Name>
+            <Value6Name>Automatické větrání</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>166</Value0IconId>
+            <Value1IconId>167</Value1IconId>
+            <Value2IconId>168</Value2IconId>
+            <Value3IconId>169</Value3IconId>
+            <Value4IconId>170</Value4IconId>
+            <Value5IconId>171</Value5IconId>
+            <Value6IconId>117</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 0, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 0, Uint16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

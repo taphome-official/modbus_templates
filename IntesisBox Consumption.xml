@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="c9e70cfb-2bb2-4332-893b-759e07b0fdbb" revision="1.0">
+    <Name>IntesisBox Consumption</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>Intesis</Producer>
+    <Model></Model>
+    <Category>0</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <SuggestedCCUParameters>
+      <Baudrate>9600</Baudrate>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <StopBits>One</StopBits>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>IntesisBox Consumption</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Heat mode consumption [Wh]</Name>
+          <Id>-2</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 47, Uint16)</ReadState>
+            <WriteState>MODBUSWNE(H, 47, Uint16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Cool mode consumption [Wh]</Name>
+          <Id>-3</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 48, Uint16)</ReadState>
+            <WriteState>MODBUSWNE(H, 48, Uint16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Tank mode consumption [Wh]</Name>
+          <Id>-4</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 49, Uint16)</ReadState>
+            <WriteState>MODBUSWNE(H, 49, Uint16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

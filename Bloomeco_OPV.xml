@@ -1,0 +1,2525 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="dfa314dd-f2cf-4669-a77a-b41ce4fbd4bb" revision="1.0">
+    <Name>Bloomeco_OPV</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>Bloomeco</Producer>
+    <Model>OPV</Model>
+    <Category>1</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>Bloomeco_OPV</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>A013 T3 T Water Top</Name>
+          <Id>-2</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(A, 13, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H000 P Režim Ohrievača TV</Name>
+          <Id>-3</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>AUTO</Value0Name>
+            <Value1Name>ECO</Value1Name>
+            <Value2Name>BOOST</Value2Name>
+            <Value3Name>BACKUP</Value3Name>
+            <Value4Name>SILENT</Value4Name>
+            <Value5Name>HOLIDAY</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>6</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(SH, 0, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(sH, 0, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H008 A1 T auto</Name>
+          <Id>-4</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>60000</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR( A, 13, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 8, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(SH, 8, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H009 A2 T eco</Name>
+          <Id>-5</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>60000</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(A, 13, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 9, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(SH, 9, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H035 C5 Language</Name>
+          <Id>-6</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>250000</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>anglicky</Value0Name>
+            <Value1Name>Nemecky</Value1Name>
+            <Value2Name>2</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>6</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(SH, 35, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(SH, 35, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A011 T1 T air in</Name>
+          <Id>-7</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(A, 11, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A012 T2 T air out</Name>
+          <Id>-8</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(A, 12, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A000 ADC value CH2</Name>
+          <Id>-9</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A,0, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 0, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H042 D02.4 Modbus modify</Name>
+          <Id>-10</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 42, int16) </ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 42, int16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H046 D07 Air Temperature max</Name>
+          <Id>-11</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>250000</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(A, 11, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 46, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 46, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H047 D08 Air Temperature min</Name>
+          <Id>-12</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(A, 11, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 47, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 47, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H048 D09 Water temperature max</Name>
+          <Id>-13</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(A, 13, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 48, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 48, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H001 D16.3 Low tariff weekday start hour #2</Name>
+          <Id>-14</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 1, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 1, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H002 D16.4 Low tariff weekday end hour #2</Name>
+          <Id>-15</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 2, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 2, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H049 D10 Defrosting temperature stop</Name>
+          <Id>-16</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(A, 12, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 49, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 49, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H050 D11 Evapovator temperature max</Name>
+          <Id>-17</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(H, 1, Int16) / 100</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 50, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 50, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H051 D12 Temperature Backup</Name>
+          <Id>-18</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>60000</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR( A, 13, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 51, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(SH, 51, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H052 D13 Legionella</Name>
+          <Id>-19</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>25000</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 52, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 52, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H053 D14 Legionella temperature</Name>
+          <Id>-20</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>250000</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(A, 13, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 53, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 53, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H054 D15 Legionella date</Name>
+          <Id>-21</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>250000</InternalPollInterval>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>7</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>Pondelok</Value1Name>
+            <Value2Name>Utorok</Value2Name>
+            <Value3Name>Streda</Value3Name>
+            <Value4Name>Štvrtok</Value4Name>
+            <Value5Name>Piatok</Value5Name>
+            <Value6Name>Sobota</Value6Name>
+            <Value7Name>Nedeľa</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>6</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 54, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 54, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H055 D16 Forced operation</Name>
+          <Id>-22</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>25000</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(SH, 55, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(SH, 55, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H060 D04 Ventilation medium speed</Name>
+          <Id>-23</Id>
+          <Model>ModbusDimmer</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadLevel>MODBUSR(SH, 60, Int16) / 100</ReadLevel>
+            <WriteLevel>MODBUSWNE(SH, 60, Int16, Le * 100)</WriteLevel>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H043 D03 Ventilation min speed</Name>
+          <Id>-24</Id>
+          <Model>ModbusDimmer</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadLevel>MODBUSR(H, 44, Int16) / 100</ReadLevel>
+            <WriteLevel>MODBUSWNE(SH, 44, Int16, Le * 100)</WriteLevel>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H044 D05 Ventilation max speed</Name>
+          <Id>-25</Id>
+          <Model>ModbusDimmer</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadLevel>MODBUSR(H, 43, Int16) / 100</ReadLevel>
+            <WriteLevel>MODBUSWNE(SH, 43, Int16, Le * 100)</WriteLevel>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H045 D06 AUTO speed</Name>
+          <Id>-26</Id>
+          <Model>ModbusDimmer</Model>
+          <DeviceProperties>
+            <InternalPollInterval>25000</InternalPollInterval>
+            <ReadLevel>MODBUSR(SH, 45, Int16) / 100</ReadLevel>
+            <WriteLevel>MODBUSWNE(SH, 45, Int16, Le * 100)</WriteLevel>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H068 D26 Extra function</Name>
+          <Id>-27</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Off</Value0Name>
+            <Value1Name>Solar</Value1Name>
+            <Value2Name>Floor</Value2Name>
+            <Value3Name>Cooling</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>66</Value1IconId>
+            <Value2IconId>78</Value2IconId>
+            <Value3IconId>2</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 68, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 68, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H071 D29 external control</Name>
+          <Id>-28</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Off</Value0Name>
+            <Value1Name>Hygrostat</Value1Name>
+            <Value2Name>Max</Value2Name>
+            <Value3Name>ON / OFF</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>64</Value1IconId>
+            <Value2IconId>180</Value2IconId>
+            <Value3IconId>60</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 71, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 71, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H072 D30 filter timer</Name>
+          <Id>-29</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 72, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 72, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H073 D31 Filter Interval</Name>
+          <Id>-30</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>150000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 73, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 73, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H074 D32 Filter reset</Name>
+          <Id>-31</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 74, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 74, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H075 D33 Temperature HP max</Name>
+          <Id>-32</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(H, 75, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 75, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 75, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H069 D27 SG ready</Name>
+          <Id>-33</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H,69, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H,69, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H065 D23 Solar temperature max</Name>
+          <Id>-34</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript>MODBUSWNE(H,66, Int16, 50)</InitializeScript>
+            <ReadCurrentTemperature>MODBUSR(H, 1, Int16) / 100</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 65, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 65, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H066 D24 Solar dT min</Name>
+          <Id>-35</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 66, Int16) /10</ReadState>
+            <WriteState>MODBUSWNE(H,66, Int16, Va*10)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A001 ADC Value CH3</Name>
+          <Id>-36</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>150000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A,1, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 1, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A002 ADC Value CH4</Name>
+          <Id>-37</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 2, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A019 R1 Extra</Name>
+          <Id>-38</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 19, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A020 R2 Defrost</Name>
+          <Id>-39</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 20, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A021 R3 fan</Name>
+          <Id>-40</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 21, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A022 R4 HP</Name>
+          <Id>-41</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 22, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A023 R5 El heater</Name>
+          <Id>-42</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 23, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A024 R6 Pressostat</Name>
+          <Id>-43</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 24, Uint16) &amp; 1</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A028 Temperature avg air</Name>
+          <Id>-44</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(A, 28, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A027 V in (0/3-10V)</Name>
+          <Id>-45</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 27, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A030 El Power</Name>
+          <Id>-46</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 30, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H003 D16.5 Low tarif weekday start hour #3</Name>
+          <Id>-47</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 3, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 3, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H004 D16.6 Low tarif weekday end hour #3</Name>
+          <Id>-48</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 4, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 4, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H005 D17.3 Low tariff weekend start hour #2</Name>
+          <Id>-49</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 5, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 5, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H006 D17.4 Low tariff weekend end hour #2</Name>
+          <Id>-50</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 6, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 6, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H007 Um8</Name>
+          <Id>-51</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 7, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 7, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H010 A3 Boost</Name>
+          <Id>-52</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(H, 10, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 10, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 10, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H011 D17.5 Low tariff weekend start hour #3</Name>
+          <Id>-53</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 11, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H012 D17.6 Low tarif weekend end hour #3</Name>
+          <Id>-54</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 12, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 12, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H013 B01 Ventilation</Name>
+          <Id>-55</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>${level_0Of3}</Value0Name>
+            <Value1Name>Single speed</Value1Name>
+            <Value2Name>2xspeed</Value2Name>
+            <Value3Name>${level_3Of3}</Value3Name>
+            <Value4Name></Value4Name>
+            <Value5Name></Value5Name>
+            <Value6Name></Value6Name>
+            <Value7Name></Value7Name>
+            <Value8Name></Value8Name>
+            <Value9Name></Value9Name>
+            <Value0IconId>20</Value0IconId>
+            <Value1IconId>21</Value1IconId>
+            <Value2IconId>22</Value2IconId>
+            <Value3IconId>23</Value3IconId>
+            <Value4IconId>0</Value4IconId>
+            <Value5IconId>0</Value5IconId>
+            <Value6IconId>0</Value6IconId>
+            <Value7IconId>0</Value7IconId>
+            <Value8IconId>0</Value8IconId>
+            <Value9IconId>0</Value9IconId>
+            <ReadSwitchState>MODBUSR(SH, 13, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(SH, 13, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H014 B02 ventilation speed</Name>
+          <Id>-56</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Nízke  D05</Value0Name>
+            <Value1Name>Stredné D04</Value1Name>
+            <Value2Name>Vysoké D03</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>20</Value0IconId>
+            <Value1IconId>22</Value1IconId>
+            <Value2IconId>23</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 14, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(SH, 14, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H015 B03 low tariff</Name>
+          <Id>-57</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>OFF</Value0Name>
+            <Value1Name>STANDARD</Value1Name>
+            <Value2Name>Optimal</Value2Name>
+            <Value3Name>Optimal</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>6</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 15, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 15, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H016 hot on time</Name>
+          <Id>-58</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 16, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 16, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H017 B05 PV</Name>
+          <Id>-59</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>OFF</Value0Name>
+            <Value1Name>ECO</Value1Name>
+            <Value2Name>STORAGE</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>16</Value1IconId>
+            <Value2IconId>1</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 17, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 17, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H018 B06 solar</Name>
+          <Id>-60</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 18, int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 18, int16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A003 ADC value CH7</Name>
+          <Id>-61</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 3, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A004 ADC value CH10</Name>
+          <Id>-62</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 4, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A005 ADC value CH11</Name>
+          <Id>-63</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 5, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A006 ADC value CH12</Name>
+          <Id>-64</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 6, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A007 ADC value CH13</Name>
+          <Id>-65</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 7, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A008 ADC value CH14</Name>
+          <Id>-66</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 8, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A009 ADC value CH15</Name>
+          <Id>-67</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 9, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A025 SG1 Input</Name>
+          <Id>-68</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 25, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A026 SG2 Input</Name>
+          <Id>-69</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 26, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A029 Temperature avg evap</Name>
+          <Id>-70</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(A, 29, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H039  D02.1 Modbus adress</Name>
+          <Id>-71</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 39, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 39, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A031 Total power</Name>
+          <Id>-72</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 31, Int16) </ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H040 D02.2 Modbus baud rate</Name>
+          <Id>-73</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>250000</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>66</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>9600</Value0Name>
+            <Value1Name>19200</Value1Name>
+            <Value2Name>2</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>0</Value0IconId>
+            <Value1IconId>6</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 40, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 40, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H041 D02.3 Modbus parity</Name>
+          <Id>-74</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>250000</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>None</Value0Name>
+            <Value1Name>Even</Value1Name>
+            <Value2Name>Odd</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>6</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 42, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 42, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A032 Heating  C</Name>
+          <Id>-75</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 32, Int16) / 100</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A033 Water P</Name>
+          <Id>-76</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 33, Int16)/100</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>ModbusVariable-Rtu</Name>
+          <Id>-77</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 34, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A035 T1</Name>
+          <Id>-78</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 35, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A036 T2</Name>
+          <Id>-79</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 36, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A037 T3</Name>
+          <Id>-80</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 37, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A038 T4</Name>
+          <Id>-81</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 38, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A039 T5</Name>
+          <Id>-82</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 39, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A040 Heat Pump</Name>
+          <Id>-83</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 40, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A041 Evaporator</Name>
+          <Id>-84</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 41, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A042 Cold evap</Name>
+          <Id>-85</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 42, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A043 Modbus</Name>
+          <Id>-86</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 43, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A045 Hot Evaporator</Name>
+          <Id>-87</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 45, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A048 Heat Pump On Temp</Name>
+          <Id>-88</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(A, 48, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A049 Heat Pump Off Temp</Name>
+          <Id>-89</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(A, 49, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A050 Heat Pump Released</Name>
+          <Id>-90</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 1, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A052 E-Heat Off Temp</Name>
+          <Id>-91</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(A, 52, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A051 E-heat On temp</Name>
+          <Id>-92</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(A, 51, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A053 E-heat Released Level</Name>
+          <Id>-93</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 53, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A054 Cold Mode</Name>
+          <Id>-94</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 54, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A055 Hot Mode</Name>
+          <Id>-95</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A,55, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A056 Defrost</Name>
+          <Id>-96</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadState>MODBUSR(A, 56, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A057 Defrost Fan</Name>
+          <Id>-97</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 57, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A059 Compresor</Name>
+          <Id>-98</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 59, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A060 WP State Timer</Name>
+          <Id>-99</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 60, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A061 Defrost Valve Off Timer</Name>
+          <Id>-100</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 61, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A062 Compressor On Timer</Name>
+          <Id>-101</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 62, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A063 T without Defrost Cnt</Name>
+          <Id>-102</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 63, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A064 T3 Stable Cnt</Name>
+          <Id>-103</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 64, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A065 T1 Stable Cnt</Name>
+          <Id>-104</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 65, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A066 Fan Stable Cnt</Name>
+          <Id>-105</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 66, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A067 T1 -T2 old</Name>
+          <Id>-106</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(A, 67, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A068 Defrost On Cnt</Name>
+          <Id>-107</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 68, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A069 T1-T2 step</Name>
+          <Id>-108</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 69, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A072 Heat Pump Hour sec</Name>
+          <Id>-109</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 72, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A073 EH-hours sec</Name>
+          <Id>-110</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 73, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A074 Fan Hours sec</Name>
+          <Id>-111</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 74, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A075 Back Up  Mode Rest Time</Name>
+          <Id>-112</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 75, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A076 Hot On Rest Time</Name>
+          <Id>-113</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 76, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A077 Back Up Mode On Time</Name>
+          <Id>-114</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 77, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A078 Filter On Time</Name>
+          <Id>-115</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 78, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A079 Defrost Run Out Cnt</Name>
+          <Id>-116</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 79, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A081 T1_Error Cnt</Name>
+          <Id>-117</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 81, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A082 T2_Error Cnt</Name>
+          <Id>-118</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 82, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A083 T3 _Error cnt</Name>
+          <Id>-119</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 83, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A084 T4_Error Cnt</Name>
+          <Id>-120</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 84, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A085 T5_Error cnt</Name>
+          <Id>-121</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 85, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A096 Optimal Release HP</Name>
+          <Id>-122</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 96, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A086 Pressostat Error Cnt</Name>
+          <Id>-123</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 86, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A087 Evap Error Cnt</Name>
+          <Id>-124</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 087, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A088 Cold Evap Error Cnt</Name>
+          <Id>-125</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 88, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A089 Modbus Error Cnt</Name>
+          <Id>-126</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 89, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A090 Hot Evap Error Cnt</Name>
+          <Id>-127</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A,90, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A093 Error List</Name>
+          <Id>-128</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 93, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A095 Fan rpm</Name>
+          <Id>-129</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 95, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A098 Legionella State</Name>
+          <Id>-130</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 98, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A097 Optimal EL On</Name>
+          <Id>-131</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(A, 97, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A099 Low Tariff On/Off</Name>
+          <Id>-132</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 99, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A100 PV State</Name>
+          <Id>-133</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 100, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A101 SG State</Name>
+          <Id>-134</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 101, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A102 Cooling State</Name>
+          <Id>-135</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 102, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A103 Extern Control State</Name>
+          <Id>-136</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 103, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A105 Power Fan</Name>
+          <Id>-137</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 105, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A106 Power Compressor</Name>
+          <Id>-138</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 106, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A107 HPWe ( Compressor + Fan)</Name>
+          <Id>-139</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 107, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A108 Optimal Qdisp</Name>
+          <Id>-140</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 108, Int16) / 10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A109 Optimal Qreg</Name>
+          <Id>-141</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 109, Int16) / 10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A111 HPWe Acc Temp Debug</Name>
+          <Id>-142</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 111, UInt16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A112 El Acc Temp Debug</Name>
+          <Id>-143</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 112, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A113 Water P Acc Temp Debug</Name>
+          <Id>-144</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 113, UInt16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A116 Password O.K. Cnt Down</Name>
+          <Id>-145</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 116, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H019 B07 Floor</Name>
+          <Id>-146</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 19, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(SH, 19, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H020 B08 Floor temperature</Name>
+          <Id>-147</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(H, 20, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 20, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 20, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H021 B09 Cooling</Name>
+          <Id>-148</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 21, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 1, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H022 B10 Cooling Temperature</Name>
+          <Id>-149</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(H, 22, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 22, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 22, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H023 Um24</Name>
+          <Id>-150</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 23, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H024 Sm1</Name>
+          <Id>-151</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 24, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 24, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H025 C0 Reset</Name>
+          <Id>-152</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 25, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 25, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H026 C1.1 Model</Name>
+          <Id>-153</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 26, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H027 C1.2 Software</Name>
+          <Id>-154</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 27, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H028 C1.3 Version</Name>
+          <Id>-155</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 28, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H029 C2.1 Hour</Name>
+          <Id>-156</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 29, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 29, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H030 C2.2 Minutes</Name>
+          <Id>-157</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 30, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 30, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H031 C3.1 Date</Name>
+          <Id>-158</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 31, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 31, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H032 C3.2 Month</Name>
+          <Id>-159</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H,32, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 32, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H033 C3.3 Year</Name>
+          <Id>-160</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 33, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 33, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H034 C4 Day</Name>
+          <Id>-161</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>250000</InternalPollInterval>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>7</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>Pondelok</Value1Name>
+            <Value2Name>Utorok</Value2Name>
+            <Value3Name>Streda</Value3Name>
+            <Value4Name>Štvrtok</Value4Name>
+            <Value5Name>Piatok</Value5Name>
+            <Value6Name>Sobota</Value6Name>
+            <Value7Name>Nedeľa</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>6</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 34, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 34, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H036 C6 Contrast</Name>
+          <Id>-162</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>7</Value7Index>
+            <Value8Index>8</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>1</Value1Name>
+            <Value2Name>2</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>6</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 36, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 36, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H039 D0 Reset All</Name>
+          <Id>-163</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 39, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(SH, 39, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H056 D17.1 Low tariff weekday start hour #1</Name>
+          <Id>-164</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 56, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 56, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H057 D17.2 Low tariff weekday end hour #1</Name>
+          <Id>-165</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 57, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 57, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H058 D18.1 Low tariff weekend start hour #1</Name>
+          <Id>-166</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 58, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 58, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H059 D18.2 Low tariff weekend end hour #1</Name>
+          <Id>-167</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 59, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 59, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H061 D19 Daylight saving</Name>
+          <Id>-168</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 61, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 61, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H081 M01 minimum Time defrosting</Name>
+          <Id>-169</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 81, Int16)</ReadState>
+            <WriteState>MODBUSWNE(SH, 81, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H082 M02 Timer 1</Name>
+          <Id>-170</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 82, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 82, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H083 M03 Max interval defrosting</Name>
+          <Id>-171</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 83, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 83, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H084 M04 Admitted variation defrosting</Name>
+          <Id>-172</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(A, 12, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 84, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 84, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H085  M05 Delta T defrosting min.</Name>
+          <Id>-173</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(H, 85, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 85, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 85, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H086 M06 Fan defrosting temperatue</Name>
+          <Id>-174</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(H, 86, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 86, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 86, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H087 M07 Max Time defrosting</Name>
+          <Id>-175</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 87, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 87, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H088 M08 Temperature water for max fan</Name>
+          <Id>-176</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(H, 88, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 88, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 88, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H089 M09 Delta T heat on</Name>
+          <Id>-177</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(H, 89, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 89, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 89, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H090 M10 Password</Name>
+          <Id>-178</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 90, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 90, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H091 M11 Reset event log</Name>
+          <Id>-179</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 91, int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 91, int16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H092 M12 Save restore set points</Name>
+          <Id>-180</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>Restore</Value1Name>
+            <Value2Name>Save</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>6</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 92, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 92, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H096 HP MWHe</Name>
+          <Id>-181</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 96, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 96, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H097 HP MWHt</Name>
+          <Id>-182</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 97, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 97, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H098 EL MWHe</Name>
+          <Id>-183</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 98, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 98, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H099 El Start/Stops</Name>
+          <Id>-184</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 99, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 99, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H100 E2 HP hours (2hours)</Name>
+          <Id>-185</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 100, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 100, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H101 E3 EL hours (2 hours)</Name>
+          <Id>-186</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 101, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 101, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H102 E4 Fan hours (2 hours)</Name>
+          <Id>-187</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 102, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 102, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H103 Back up mode rest time</Name>
+          <Id>-188</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 103, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 103, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H104 Hot on rest time</Name>
+          <Id>-189</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 104, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 104, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H105 power on count</Name>
+          <Id>-190</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 105, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 105, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H106 back up mode on time</Name>
+          <Id>-191</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 106, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 106, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H107 filter (2hours)</Name>
+          <Id>-192</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 107, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 107, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>H115 last legionella (date/month)</Name>
+          <Id>-193</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 115, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 115, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>A047 Fan speed set</Name>
+          <Id>-194</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 47, Int16) / 100</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="6031d250-72da-4f92-84ff-5de67b0ce1a0" revision="1.0">
+    <Name>Generic 8DI/8DO module</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>Noname</Producer>
+    <Model></Model>
+    <Category>6</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <SuggestedCCUParameters>
+      <Baudrate>9600</Baudrate>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <StopBits>One</StopBits>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Name>DO Register</Name>
+        <Value>1</Value>
+        <Id>DORegister</Id>
+      </Parameter>
+      <Parameter>
+        <Name>DI Register</Name>
+        <Value>2</Value>
+        <Id>DIRegister</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>Generic 8DI/8DO module</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+        <WriteScript>MODBUSWNE(SH, $[DORegister], Int16, St2 | (St3 &lt;&lt; 1) | (St4 &lt;&lt; 2) | (St5 &lt;&lt; 3) | (St6 &lt;&lt; 4) | (St7 &lt;&lt; 5) | (St8 &lt;&lt; 6) | (St9 &lt;&lt; 7))</WriteScript>
+        <Variables>[{"DeviceId":-2,"ValueLogType":48,"ValueAggregation":null,"Abbreviation":"St2","ValueLogTypeFlavourId":1},{"DeviceId":-3,"ValueLogType":48,"ValueAggregation":null,"Abbreviation":"St3","ValueLogTypeFlavourId":1},{"DeviceId":-4,"ValueLogType":48,"ValueAggregation":null,"Abbreviation":"St4","ValueLogTypeFlavourId":1},{"DeviceId":-5,"ValueLogType":48,"ValueAggregation":null,"Abbreviation":"St5","ValueLogTypeFlavourId":1},{"DeviceId":-6,"ValueLogType":48,"ValueAggregation":null,"Abbreviation":"St6","ValueLogTypeFlavourId":1},{"DeviceId":-7,"ValueLogType":48,"ValueAggregation":null,"Abbreviation":"St7","ValueLogTypeFlavourId":1},{"DeviceId":-8,"ValueLogType":48,"ValueAggregation":null,"Abbreviation":"St8","ValueLogTypeFlavourId":1},{"DeviceId":-9,"ValueLogType":48,"ValueAggregation":null,"Abbreviation":"St9","ValueLogTypeFlavourId":1}]</Variables>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>DO1</Name>
+          <Id>-2</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, $[DORegister], Int16) &amp; 1</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DO2</Name>
+          <Id>-3</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadSwitchState>(MODBUSR(H, $[DORegister], Int16) &amp; 2 )&gt;&gt;1</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DO3</Name>
+          <Id>-4</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadSwitchState>(MODBUSR(H, $[DORegister], Int16) &amp; 4)&gt;&gt;2</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DO4</Name>
+          <Id>-5</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadSwitchState>(MODBUSR(H, $[DORegister], Int16) &amp; 8)&gt;&gt;3</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DO5</Name>
+          <Id>-6</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadSwitchState>(MODBUSR(H, $[DORegister], Int16) &amp; 16)&gt;&gt;4</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DO6</Name>
+          <Id>-7</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadSwitchState>(MODBUSR(H, $[DORegister], Int16) &amp; 32)&gt;&gt;5</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DO7</Name>
+          <Id>-8</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadSwitchState>(MODBUSR(H, $[DORegister], Int16) &amp; 64)&gt;&gt;6</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DO8</Name>
+          <Id>-9</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadSwitchState>(MODBUSR(H, $[DORegister], Int16) &amp; 128)&gt;&gt;7</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI1</Name>
+          <Id>-11</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadState>MODBUSR(H, $[DIRegister], Int16) &amp; 1</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI2</Name>
+          <Id>-12</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadState>(MODBUSR(H, $[DIRegister], Int16) &amp; 2)&gt;&gt;1</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI3</Name>
+          <Id>-13</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadState>(MODBUSR(H, $[DIRegister], Int16) &amp; 4)&gt;&gt;2</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI4</Name>
+          <Id>-14</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadState>(MODBUSR(H, $[DIRegister], Int16) &amp; 8)&gt;&gt;3</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI5</Name>
+          <Id>-15</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadState>(MODBUSR(H, $[DIRegister], Int16) &amp; 16)&gt;&gt;4</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI6</Name>
+          <Id>-16</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadState>(MODBUSR(H, $[DIRegister], Int16) &amp; 32)&gt;&gt;5</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI7</Name>
+          <Id>-17</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadState>(MODBUSR(H, $[DIRegister], Int16) &amp; 64)&gt;&gt;6</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI8</Name>
+          <Id>-18</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <ReadState>(MODBUSR(H, $[DIRegister], Int16) &amp; 128)&gt;&gt;7</ReadState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

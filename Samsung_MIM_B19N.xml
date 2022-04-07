@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="24338ab8-2677-47c1-9e28-a0ee40a246ed" revision="1.0">
+    <Name>Samsung_MIM_B19N</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>Samsung</Producer>
+    <Model>MIM_B19N</Model>
+    <Category>2</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>Samsung_MIM_B19N</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Inlet Water Temperature</Name>
+          <Id>-2</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(H, 65, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Mode</Name>
+          <Id>-3</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Auto</Value0Name>
+            <Value1Name>Cool</Value1Name>
+            <Value2Name>Dry</Value2Name>
+            <Value3Name>Fan</Value3Name>
+            <Value4Name>Heat</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>113</Value0IconId>
+            <Value1IconId>2</Value1IconId>
+            <Value2IconId>16</Value2IconId>
+            <Value3IconId>28</Value3IconId>
+            <Value4IconId>1</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 53, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 53, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>On/Off Switch</Name>
+          <Id>-4</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 52, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 52, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Thermostat Outlet Water</Name>
+          <Id>-5</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(H, 66, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 68, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 68, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>State of Comunication</Name>
+          <Id>-6</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 50, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Error Code of Internal Unit</Name>
+          <Id>-7</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 63, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

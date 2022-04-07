@@ -1,0 +1,444 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="34760a1f-ec7a-4fc2-bb04-b6af0f37f557" revision="1.0">
+    <Name>Intesis Air Conditioners</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>Intesis</Producer>
+    <Model></Model>
+    <Category>3</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>Intesis Air Conditioners</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>AC On/Off</Name>
+          <Id>-2</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 0, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 0, Bool, St)</WriteSwitchState>
+            <OnStateIconId>107</OnStateIconId>
+            <OffStateIconId>108</OffStateIconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Heat 8/10C Mode</Name>
+          <Id>-3</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 56, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 56, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Powerful</Name>
+          <Id>-4</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 38, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 38, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Human activity</Name>
+          <Id>-5</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>true</IsReadOnly>
+            <ReadSwitchState>MODBUSR(H, 59, Bool)</ReadSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Compressor On Time</Name>
+          <Id>-6</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 54, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 54, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Current Max Setpoint</Name>
+          <Id>-7</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>true</IsReadOnly>
+            <ReadState>MODBUSR(H, 24, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Current Min Setpoint</Name>
+          <Id>-8</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>true</IsReadOnly>
+            <ReadState>MODBUSR(H, 25, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Error Code</Name>
+          <Id>-9</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>true</IsReadOnly>
+            <ReadState>MODBUSR(H, 11, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Operation Current</Name>
+          <Id>-10</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>true</IsReadOnly>
+            <ReadState>MODBUSR(H, 62, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Power Consumption</Name>
+          <Id>-11</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>true</IsReadOnly>
+            <ReadState>MODBUSR(H, 61, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Return Path Temperature</Name>
+          <Id>-12</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>true</IsReadOnly>
+            <ReadState>MODBUSR(H, 66, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Today Day</Name>
+          <Id>-13</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 80, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 80, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Today Energy lsw</Name>
+          <Id>-14</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>true</IsReadOnly>
+            <ReadState>MODBUSR(H, 73, UInt16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Today Energy MSW</Name>
+          <Id>-15</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>true</IsReadOnly>
+            <ReadState>MODBUSR(H, 72, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Today Month</Name>
+          <Id>-16</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 79, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 79, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Today Year</Name>
+          <Id>-17</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 78, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 78, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Total Energy lsw</Name>
+          <Id>-18</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 77, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 77, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Total Energy MSW</Name>
+          <Id>-19</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 76, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 76, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Yesterday Energy lsw</Name>
+          <Id>-20</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>true</IsReadOnly>
+            <ReadState>MODBUSR(H, 75, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Yesterday Energy MSW</Name>
+          <Id>-21</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>true</IsReadOnly>
+            <ReadState>MODBUSR(H, 74, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Under Voltage Count</Name>
+          <Id>-22</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 55, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 55, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Unit Operation Time</Name>
+          <Id>-23</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 9, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 9, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Temp. from ext. sensor</Name>
+          <Id>-24</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 22, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 22, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Compressor Status</Name>
+          <Id>-25</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2000</InternalPollInterval>
+            <IsReadOnly>true</IsReadOnly>
+            <ReadSwitchState>MODBUSR(H, 53, Int16)</ReadSwitchState>
+            <Value0Name>Off</Value0Name>
+            <Value1Name>To Off</Value1Name>
+            <Value2Name>To On</Value2Name>
+            <Value3Name>On</Value3Name>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Econavi</Name>
+          <Id>-26</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2000</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 57, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 57, Int16, Mu)</WriteSwitchState>
+            <Value0Name>Off</Value0Name>
+            <Value1Name>Econavi</Value1Name>
+            <Value2Name>Auto Comfort</Value2Name>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Fan Speed</Name>
+          <Id>-27</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2000</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 2, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 2, Int16, Mu)</WriteSwitchState>
+            <Value0Name>Auto</Value0Name>
+            <Value1Name>Low</Value1Name>
+            <Value2Name>Mid-1</Value2Name>
+            <Value3Name>Mid-2</Value3Name>
+            <Value4Name>Mid-3</Value4Name>
+            <Value5Name>High</Value5Name>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Horizontal Vane pos.</Name>
+          <Id>-28</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2000</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 26, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 26, Int16, Mu)</WriteSwitchState>
+            <Value0Name>Auto</Value0Name>
+            <Value1Name>Left</Value1Name>
+            <Value2Name>Position-2</Value2Name>
+            <Value3Name>Position-3</Value3Name>
+            <Value4Name>Position-4</Value4Name>
+            <Value5Name>Right</Value5Name>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Mode</Name>
+          <Id>-29</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2000</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 1, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 1, Int16, Mu)</WriteSwitchState>
+            <Value0Name>Auto</Value0Name>
+            <Value0IconId>39</Value0IconId>
+            <Value1Name>Heat</Value1Name>
+            <Value1IconId>1</Value1IconId>
+            <Value2Name>Dry</Value2Name>
+            <Value2IconId>64</Value2IconId>
+            <Value3Name>Fan</Value3Name>
+            <Value3IconId>32</Value3IconId>
+            <Value4Name>Cool</Value4Name>
+            <Value4IconId>2</Value4IconId>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Quiet</Name>
+          <Id>-30</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 39, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 39, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Setpoint</Name>
+          <Id>-31</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <ReadCurrentTemperature>MODBUSR(H, 5, Int16)</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 4, Int16)</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 4, Int16, Se)</WriteDesiredTemperature>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Vertical Vane pos.</Name>
+          <Id>-32</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>5000</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 3, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 3, Int16, Mu)</WriteSwitchState>
+            <Value0Name>Auto</Value0Name>
+            <Value1Name>Up</Value1Name>
+            <Value2Name>Position-2</Value2Name>
+            <Value3Name>Position-3</Value3Name>
+            <Value4Name>Position-4</Value4Name>
+            <Value5Name>Down (vertical)</Value5Name>
+            <Value6Name>Swing</Value6Name>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Demand Response</Name>
+          <Id>-33</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>5000</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 58, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 58, Uint16, Mu)</WriteSwitchState>
+            <Value0Name>Normal</Value0Name>
+            <Value1Name>Comp</Value1Name>
+            <Value2Name>50%</Value2Name>
+            <Value3Name>75%</Value3Name>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

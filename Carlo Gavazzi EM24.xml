@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="d746f6fb-9d71-4dc9-ab00-347d1370524f" revision="1.0">
+    <Name>Carlo Gavazzi EM24</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>Carlo Gavazzi</Producer>
+    <Model>EM24</Model>
+    <Category>7</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <SuggestedCCUParameters>
+      <Baudrate>9600</Baudrate>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <StopBits>One</StopBits>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>Carlo Gavazzi EM24</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Total Production</Name>
+          <Id>-2</Id>
+          <Model>ModbusElectricityMeter</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <ReadTotalConsumption>MODBUSR(H, 62, Int32) / 10</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 55, Int32) / 10</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Production kWh L1</Name>
+          <Id>-3</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 070, Int32) / 10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Production kWh L2</Name>
+          <Id>-4</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 072, Int32) / 10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Production kWh L3</Name>
+          <Id>-5</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 074, Int32) / 10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Consumption</Name>
+          <Id>-6</Id>
+          <Model>ModbusElectricityMeter</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <ReadTotalConsumption>MODBUSR(H, 92, Int32) / 10</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 56, Int32) / 10</ReadDemand>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

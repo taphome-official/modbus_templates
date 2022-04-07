@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="99577bdd-b7fc-46e8-b80a-dc432ff80783" revision="1.0">
+    <Name>Fronius symo template</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>Fronius</Producer>
+    <Model>Symo</Model>
+    <Category>8</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>Fronius symo template</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Operating state</Name>
+          <Id>-2</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadSwitchState>MODBUSR(H, 40253+47, Int16)</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+            <Value0Index>64</Value0Index>
+            <Value1Name>Off</Value1Name>
+            <Value2Name>In operation</Value2Name>
+            <Value3Name>Run-up phase</Value3Name>
+            <Value4Name>Normal operation</Value4Name>
+            <Value5Name>Power reduction</Value5Name>
+            <Value6Name>Switch-off phase</Value6Name>
+            <Value7Name>Error exists</Value7Name>
+            <Value8Name>Standby</Value8Name>
+            <Value9Index>65</Value9Index>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Production [W]</Name>
+          <Id>-3</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadState>MODBUSR(H, 40083, Int16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total energy [kWh]</Name>
+          <Id>-4</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadState>MODBUSR(H, 40093, Int32)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Battery available energy [%]</Name>
+          <Id>-5</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadState>MODBUSR(H, 40303+8, Uint16)/100</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

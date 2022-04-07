@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="dfe35a33-f5c7-4d60-9da2-fbfd89e2c9b4" revision="1.0">
+    <Name>EGO_SmartHeater</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>EGO</Producer>
+    <Model>SmartHeater</Model>
+    <Category>11</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>EGO_SmartHeater</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Power Nominal Value</Name>
+          <Id>-2</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 4864, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 4864, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Home Total Power</Name>
+          <Id>-3</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 4865, Int32)</ReadState>
+            <WriteState>MODBUSWNE(H, 4865, Int32, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>ActualTemperature Boiler</Name>
+          <Id>-4</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(H, 5124, Int16)</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Relais (1) ActualPower</Name>
+          <Id>-5</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 4096, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Relais(2) Actual Power</Name>
+          <Id>-6</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 4128, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Relais(3) Actual Power</Name>
+          <Id>-7</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 4160, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>TemperatureMin Value</Name>
+          <Id>-8</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(H, 4617, UInt16)</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Relais(1) Operating Seconds</Name>
+          <Id>-9</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 5129, UInt32)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Relais (2) Operating Seconds</Name>
+          <Id>-10</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 5131, UInt32)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Relais (3) Operating Seconds</Name>
+          <Id>-11</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 5133, UInt32)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

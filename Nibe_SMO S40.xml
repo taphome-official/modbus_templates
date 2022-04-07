@@ -1,0 +1,479 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="56" locationId="841ca9eb-159f-49ef-ade8-9e60a71c667f">
+  <Template id="fc8ded4d-c834-409b-a3b5-03b47d226c69" revision="1.0">
+    <SuggestedCCUParameters>
+      <TcpPort>502</TcpPort>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>Nibe SMO S40</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer></Producer>
+    <Model></Model>
+    <Description></Description>
+    <Category>2</Category>
+    <Module>
+      <Name>Nibe SMO S40</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>5000</InternalPollInterval>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Alarm number</Name>
+          <Id>-2</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 1975, UInt16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Calculated supply temp</Name>
+          <Id>-3</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ReadTemperature>MODBUSR(A, 1017, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Calculated supply temp cooling</Name>
+          <Id>-4</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ReadTemperature>MODBUSR(A, 1567, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Charge pump (EB100-GP12) READ</Name>
+          <Id>-5</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 1636, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Current BE1 (A)</Name>
+          <Id>-6</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 50, UInt32)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Current BE2 (A)</Name>
+          <Id>-7</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 48, UInt32)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Current BE3 (A)</Name>
+          <Id>-8</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 46, UInt32)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Degree minutes</Name>
+          <Id>-9</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 18, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 18, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Degree minutes cooling</Name>
+          <Id>-10</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 20, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 20, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>External heating medium pump (GP10) READ</Name>
+          <Id>-11</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ReadSwitchState>MODBUSR(A, 1066, Bool)</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>External supply line (BT25)</Name>
+          <Id>-12</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ReadTemperature>MODBUSR(A, 39, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Flow sensor (BF1) l/m</Name>
+          <Id>-13</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ReadTemperature>MODBUSR(A, 40, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Heating curve</Name>
+          <Id>-14</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 26, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 26, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Hot Water Charging (BT6)</Name>
+          <Id>-15</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ReadTemperature>MODBUSR(A, 9, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Hot water demand</Name>
+          <Id>-16</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Small</Value0Name>
+            <Value1Name>Medium</Value1Name>
+            <Value2Name>Large</Value2Name>
+            <Value3Name>Smart control</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>6</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 56, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 56, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Hot Water Top (BT7)</Name>
+          <Id>-17</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ReadTemperature>MODBUSR(A, 8, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Offset curve</Name>
+          <Id>-18</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 30, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 30, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Operating mode</Name>
+          <Id>-19</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Auto</Value0Name>
+            <Value1Name>Manual</Value1Name>
+            <Value2Name>Add. heat only</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>113</Value0IconId>
+            <Value1IconId>107</Value1IconId>
+            <Value2IconId>1</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 237, Int16)</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Operating prioritisation</Name>
+          <Id>-20</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 1028, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Outdoor Temperature (BT1)</Name>
+          <Id>-21</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ReadTemperature>MODBUSR(A, 1, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Reset alarm</Name>
+          <Id>-22</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ReadSwitchState>MODBUSR(H, 22, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 22, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Return temperature (BT71)</Name>
+          <Id>-23</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ReadTemperature>MODBUSR(A, 88, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Room Temperature 1 (BT50)</Name>
+          <Id>-24</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ReadTemperature>MODBUSR(A, 26, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Supply temp. max.</Name>
+          <Id>-25</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ReadTemperature>MODBUSR(H, 38, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Supply temp. min.</Name>
+          <Id>-26</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ReadTemperature>MODBUSR(H, 34, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total run time additional heat (h)</Name>
+          <Id>-27</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadErrorsScript></ReadErrorsScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 1025, Int32)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

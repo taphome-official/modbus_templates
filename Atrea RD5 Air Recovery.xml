@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="11c0acad-ea92-4066-86fd-aacc9b3807b5" revision="3.0">
+    <SuggestedCCUParameters>
+      <TcpPort>502</TcpPort>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+	  <Revision id="2.0">Completely reworked</Revision>
+	  <Revision id="2.0">Updated</Revision>
+    </RevisionHistory>
+    <Name>Atrea RD5</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>Atrea</Producer>
+    <Model>RD5 Air Recovery</Model>
+    <Description></Description>
+    <Category>1</Category>
+    <Module>
+      <Name>Atrea RD5</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>5000</InternalPollInterval>
+        <ReadScript>IF (MODBUSR(D, 11100), ADDERROR(0,"Unit overheat  ")); 
+IF (MODBUSR(D, 11101), ADDERROR(1,"Orientation not set  "));
+IF (MODBUSR(D, 11102), ADDERROR(2,"Heater type   not set")); 
+IF (MODBUSR(D, 11103), ADDERROR(3,"2nd frost protection  "));
+IF (MODBUSR(D, 11104), ADDERROR(4,"STP contact active  "));
+IF (MODBUSR(D, 11105), ADDERROR(5,"Pressure gauge fault DP1   ")); 
+IF (MODBUSR(D, 11106), ADDERROR(6,"Pressure gauge fault DP2  "));
+IF (MODBUSR(D, 11107), ADDERROR(7, “Sensor fault TU1  ")); 
+IF (MODBUSR(D, 11108), ADDERROR(8, ”TU2 A sensor fault  ")); 
+IF (MODBUSR(D, 11109), ADDERROR(9,”TEa sensor fault  ")); 
+IF (MODBUSR(D, 11110), ADDERROR(10,”Sensor fault TEb  "));
+IF (MODBUSR(D, 11111), ADDERROR(11,”Sensor fault TA2  ")); 
+IF (MODBUSR(D, 11112), ADDERROR(12,”Communication fault with RD-IO   ")); 
+IF (MODBUSR(D, 11114), ADDERROR(14,”Unbalanced flow  ")); 
+IF (MODBUSR(D, 11115), ADDERROR(15,”1st frost protection  ")); 
+IF (MODBUSR(D, 11116), ADDERROR(16,”Indoor sensor fault  ")); 
+IF (MODBUSR(D, 11117), ADDERROR(17,”Recuperator freeze U  OK / Freeze")); 
+IF (MODBUSR(D, 11118), ADDERROR(18,”Recuperator defrost U  ")); 
+IF (MODBUSR(D, 11119), ADDERROR(19,”High tariff U  ")); 
+IF (MODBUSR(D, 11120), ADDERROR(20,”Insufficient flow U  ")); 
+IF (MODBUSR(D, 11121), ADDERROR(21,”Insufficient primary heating output U   ")); 
+IF (MODBUSR(D, 11122), ADDERROR(22,”Clogged filter U  ")); 
+IF (MODBUSR(D, 11123), ADDERROR(23,”AI input fault IN1 U  ")); 
+IF (MODBUSR(D, 11124), ADDERROR(24,”AI input IN2 fault U  ")); 
+IF (MODBUSR(D, 11125), ADDERROR(25,”AI input fault INk1 / 1 U  ")); 
+IF (MODBUSR(D, 11126), ADDERROR(26,”AI input fault INk2 / 1 U  ")); 
+IF (MODBUSR(D, 11127), ADDERROR(27,”AI input fault INk3 / 1 U  ")); 
+IF (MODBUSR(D, 11128), ADDERROR(28,”AI input fault INk4 / 1 U  ")); 
+IF (MODBUSR(D, 11129), ADDERROR(29,”AI input fault INk1 / 2 U  ")); 
+IF (MODBUSR(D, 11130), ADDERROR(30,”AI input fault INk2 / 2 U  ")); 
+IF (MODBUSR(D, 11131), ADDERROR(31,”AI input fault INk3 / 2 U  ")); 
+IF (MODBUSR(D, 11132), ADDERROR(32,”AI input fault INk4 / 2 U  ")); 
+IF (MODBUSR(D, 11140), ADDERROR(40,”Unit not operational U  ")); 
+IF (MODBUSR(D, 11141), ADDERROR(41,”Configuration file   is missing ")); 
+IF (MODBUSR(D, 11143), ADDERROR(44,”Insufficient preheating power   ")); 
+IF (MODBUSR(D, 11144), ADDERROR(43,”Illegal heater combination   ")); 
+IF (MODBUSR(D, 11145), ADDERROR(45,”Pressure gauge fault DP3   ")); 
+IF (MODBUSR(D, 11146), ADDERROR(46,”External manometer fault   ")); 
+IF (MODBUSR(D, 11147), ADDERROR(47,”RD5-K / 1 A module fault  ")); 
+IF (MODBUSR(D, 11148), ADDERROR(48,”RD5-K / 2 A module fault  ")); 
+IF (MODBUSR(D, 11149), ADDERROR(49,”DHW defrost  ")); 
+IF (MODBUSR(D, 11150), ADDERROR(50,”TRk1 sensor fault - Adr.1 ")); 
+IF (MODBUSR(D, 11151), ADDERROR(51,”TRk2 sensor fault - Adr.1 ")); 
+IF (MODBUSR(D, 11152), ADDERROR(52,”TRk3 sensor fault - Adr.1 ")); 
+IF (MODBUSR(D, 11153), ADDERROR(53,”TRk4 sensor fault - Adr.1 ")); 
+IF (MODBUSR(D, 11154), ADDERROR(54,”TRk5 sensor fault - Adr.1 ")); 
+IF (MODBUSR(D, 11155), ADDERROR(55,”TRk1 sensor fault - Adr.2 ")); 
+IF (MODBUSR(D, 11156), ADDERROR(56,”TRk2 sensor fault - Adr.2 ")); 
+IF (MODBUSR(D, 11157), ADDERROR(57,”TRk3 sensor fault - Adr.2 ")); 
+IF (MODBUSR(D, 11158), ADDERROR(58,”TRk4 sensor fault - Adr.2 ")); 
+IF (MODBUSR(D, 11159), ADDERROR(59,”TRk5 sensor fault - Module adr.2 ")); 
+IF (MODBUSR(D, 11160), ADDERROR(60,”An update is in progress")); 
+IF (MODBUSR(D, 11162), ADDERROR(62,”Illegal cooling configuration”)); 
+IF (MODBUSR(D, 11165), ADDERROR(65,”Emergency mode active")); 
+IF (MODBUSR(D, 11166), ADDERROR(66,”Frost protection-capillary")); 
+IF (MODBUSR(D, 11167), ADDERROR(67,”Frost protection configuration")); 
+IF (MODBUSR(D, 11168), ADDERROR(68,”Unfinished learning unit")); 
+IF (MODBUSR(D, 11169), ADDERROR(69,”T-ODA sensor fault")); 
+IF (MODBUSR(D, 11170), ADDERROR(70,”T-ETA / T-IDA sensor fault")); 
+IF (MODBUSR(D, 11171), ADDERROR(71,”Cooling is not available")); 
+IF (MODBUSR(D, 11172), ADDERROR(72,”Heating is not available")); 
+IF (MODBUSR(D, 11173), ADDERROR(73,”Evaporation active")); 
+IF (MODBUSR(D, 11174), ADDERROR(74,”Increased ignition power”)); 
+IF (MODBUSR(D, 11175), ADDERROR(75,”Illegal flow setting")); 
+IF (MODBUSR(D, 11183), ADDERROR(83,”Filter change interval")); 
+IF (MODBUSR(D, 11184), ADDERROR(84,”Filter test configuration"));</ReadScript>
+        <PrefetchModeId>0</PrefetchModeId>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+        <MaxPrefetchGroupSize>10</MaxPrefetchGroupSize>
+        <Variables>[]</Variables>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>DA1 Output</Name>
+          <Id>-2</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 10207, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Filter state</Name>
+          <Id>-3</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadState>MODBUSR(D, 11122, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Indoor Temperature External sensor</Name>
+          <Id>-4</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState></ReadState>
+            <WriteState>MODBUSW(H, 10214, Int16, Va*10)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Inlet Air Temperature</Name>
+          <Id>-5</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadTemperature>MODBUSR(A, 10212, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>KK Output State</Name>
+          <Id>-6</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadSwitchState>MODBUSR(C, 10200, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(C, 1, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>M1 Ventilation State</Name>
+          <Id>-7</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 10200, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>M2 Ventilation State</Name>
+          <Id>-8</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 10201, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Mode Control</Name>
+          <Id>-9</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>7</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>OFF</Value0Name>
+            <Value1Name>Auto</Value1Name>
+            <Value2Name>Ventilation</Value2Name>
+            <Value3Name>Circulation + Ventilation</Value3Name>
+            <Value4Name>Circulation</Value4Name>
+            <Value5Name>Night Precooling</Value5Name>
+            <Value6Name>Balance</Value6Name>
+            <Value7Name>Overpressure</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>24</Value0IconId>
+            <Value1IconId>113</Value1IconId>
+            <Value2IconId>28</Value2IconId>
+            <Value3IconId>115</Value3IconId>
+            <Value4IconId>116</Value4IconId>
+            <Value5IconId>121</Value5IconId>
+            <Value6IconId>214</Value6IconId>
+            <Value7IconId>123</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 10705, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 10709, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Outdoor Temperature</Name>
+          <Id>-10</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadTemperature>MODBUSR(A, 10211, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Outdoor Temperature External sensor</Name>
+          <Id>-11</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState></ReadState>
+            <WriteState>MODBUSW(H, 10213, Int16, Va*10)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>SA2 Ouptut</Name>
+          <Id>-12</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 10203, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>SE Output State</Name>
+          <Id>-13</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadSwitchState>MODBUSR(C, 10215, Bool)</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Source for Intdoor Temperature Metering</Name>
+          <Id>-14</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadSwitchState>MODBUSR(C, 10514, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(C, 10514, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Source for Outdoor Temperature Metering</Name>
+          <Id>-15</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadSwitchState>MODBUSR(C, 10510, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(C, 10510, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Temperature in unit</Name>
+          <Id>-16</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadTemperature>MODBUSR(A, 10215, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Thermostat</Name>
+          <Id>-17</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadCurrentTemperature>MODBUSR(A, 10212, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 10716, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 10710, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Ventilation level</Name>
+          <Id>-18</Id>
+          <Model>ModbusDimmer</Model>
+          <DeviceProperties>
+            <DeviceType>2008</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadLevel>MODBUSR(H, 10704, Int16) / 100</ReadLevel>
+            <WriteLevel>MODBUSWNE(H, 10708, Int16, Le * 100)</WriteLevel>
+            <IconId>3007</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>YV1 Output State</Name>
+          <Id>-19</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <ReadSwitchState>MODBUSR(C, 10201, Bool)</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

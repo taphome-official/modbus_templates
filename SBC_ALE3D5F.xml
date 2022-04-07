@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="e23a2794-b0fa-44e6-894f-edef09e5c03c" revision="1.0">
+    <Name>SBC_ALE3D5F</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>SBC</Producer>
+    <Model>ALE3D5F</Model>
+    <Category>7</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>SBC_ALE3D5F</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Voltage of Phase 1 (V)</Name>
+          <Id>-2</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 35, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Current of Phase 1 (A)</Name>
+          <Id>-3</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 36, Int16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Active Power of Phase 1 (kW)</Name>
+          <Id>-4</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 37, Int16)/(100)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Voltage of Phase 2 (V)</Name>
+          <Id>-5</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 40, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Current of Phase 2 (A)</Name>
+          <Id>-6</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41, Int16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Active Power of Phase 2 (kW)</Name>
+          <Id>-7</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 42, Int16)/(100)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Voltage of Phase 3 (V)</Name>
+          <Id>-8</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 45, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Current of Phase 3 (A)</Name>
+          <Id>-9</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 46, Int16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Active Power of Phase 3 (kW)</Name>
+          <Id>-10</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 47, Int16)/(100)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Active Power All Phases (kW)</Name>
+          <Id>-11</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 50, Int16)/(100)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Reactive Power of all Phases (kvar)</Name>
+          <Id>-12</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 51, Int16)/(100)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Reactive Power of Phase 1 (kvar)</Name>
+          <Id>-13</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 38, Int16)/100</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Reactive Power of Phase 2 (kvar)</Name>
+          <Id>-14</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 43, Int16)/(100)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Reactive Power of Phase 3 (kvar)</Name>
+          <Id>-15</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 48, Int16)/(100)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="b3e69ff6-a5b3-47ac-ae6b-98ddfebfdea0" revision="1.0">
+    <Name>SOLAX Hybrid SK-SU 5000/3000</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>Solax</Producer>
+    <Model>SK-SU 5000/3000</Model>
+    <Category>8</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>SOLAX Hybrid SK-SU 5000/3000</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>SOLAX kapacita baterie</Name>
+          <Id>-2</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>60000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 0x1C, UInt16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>SOLAX BATERIA odber/dodávka W</Name>
+          <Id>-3</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>30000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 0x16, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Solax elektromer denná výroba a okažitá výroba</Name>
+          <Id>-4</Id>
+          <Model>ModbusElectricityMeter</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadTotalConsumption>MODBUSR(A, 0x50, UInt16) /10</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(A,0x02, Int16)/1000</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Solax teplota meniča</Name>
+          <Id>-5</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>60000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(A, 0x08, Int16) </ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Solax teplota baterie</Name>
+          <Id>-6</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InternalPollInterval>80000</InternalPollInterval>
+            <ReadTemperature>MODBUSR(A, 0x55, UInt16) /10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Solax Run  mode</Name>
+          <Id>-7</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 0x09, UInt16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Solax  aktualna výroba v kW</Name>
+          <Id>-8</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>60000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A,0x02, Int16)/ 1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Solax PV 1 výroba vo Watoch</Name>
+          <Id>-9</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>60000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A,0x0a, UInt16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Solax PV 2 výroba vo Watoch</Name>
+          <Id>-10</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A,0x0b, UInt16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Solax porucha meniča</Name>
+          <Id>-11</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>50000</InternalPollInterval>
+            <ReadState>MODBUSR(A,0x40, UInt16)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Solax porucha nabijania</Name>
+          <Id>-12</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>50000</InternalPollInterval>
+            <ReadState>MODBUSR(A,0x42, UInt16)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Solax porucha riadenia meniča</Name>
+          <Id>-13</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>90000</InternalPollInterval>
+            <ReadState>MODBUSR(A,0x43, UInt16)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Solax celková vyrobená energia v kW</Name>
+          <Id>-14</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>150000</InternalPollInterval>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 0x52,LittleEndianInt32) / 1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Solax dodávka/odber zo siete vo Watoch</Name>
+          <Id>-15</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>50000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 0x46,LittleEndianInt32)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

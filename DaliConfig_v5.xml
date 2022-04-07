@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="61">
+  <Template id="f925b4ba-72f8-440f-9b59-fd38f2afd7a5" revision="1.0">
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <Baudrate>9600</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>255</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>Resi Dali - Configuration</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer></Producer>
+    <Model></Model>
+    <Description></Description>
+    <Category>9</Category>
+    <Module>
+      <Name>Resi Dali - Configuration</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>2500</InternalPollInterval>
+        <PrefetchModeId>2</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Slave ID","Section":null},"ReadFormula":"modbusr(H,65221,uint16)"}
+,{"AttributeDefinition":{"Name":"Gear 0","Section":null},"ReadFormula":"var ShortAddress := 0;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 1","Section":null},"ReadFormula":"var ShortAddress := 1;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 2","Section":null},"ReadFormula":"var ShortAddress := 2;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 3","Section":null},"ReadFormula":"var ShortAddress := 3;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 4","Section":null},"ReadFormula":"var ShortAddress := 4;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 5","Section":null},"ReadFormula":"var ShortAddress := 5;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 6","Section":null},"ReadFormula":"var ShortAddress := 6;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 7","Section":null},"ReadFormula":"var ShortAddress := 7;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 8","Section":null},"ReadFormula":"var ShortAddress := 8;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 9","Section":null},"ReadFormula":"var ShortAddress := 9;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 10","Section":null},"ReadFormula":"var ShortAddress := 10;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 11","Section":null},"ReadFormula":"var ShortAddress := 11;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 12","Section":null},"ReadFormula":"var ShortAddress := 12;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 13","Section":null},"ReadFormula":"var ShortAddress := 13;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 14","Section":null},"ReadFormula":"var ShortAddress := 14;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 15","Section":null},"ReadFormula":"var ShortAddress := 15;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 16","Section":null},"ReadFormula":"var ShortAddress := 16;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 17","Section":null},"ReadFormula":"var ShortAddress := 17;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 18","Section":null},"ReadFormula":"var ShortAddress := 18;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 19","Section":null},"ReadFormula":"var ShortAddress := 19;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 20","Section":null},"ReadFormula":"var ShortAddress := 20;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 21","Section":null},"ReadFormula":"var ShortAddress := 21;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 22","Section":null},"ReadFormula":"var ShortAddress := 22;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 23","Section":null},"ReadFormula":"var ShortAddress := 23;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 24","Section":null},"ReadFormula":"var ShortAddress := 24;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 25","Section":null},"ReadFormula":"var ShortAddress := 25;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 26","Section":null},"ReadFormula":"var ShortAddress := 26;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 27","Section":null},"ReadFormula":"var ShortAddress := 27;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 28","Section":null},"ReadFormula":"var ShortAddress := 28;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 29","Section":null},"ReadFormula":"var ShortAddress := 29;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 30","Section":null},"ReadFormula":"var ShortAddress := 30;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 31","Section":null},"ReadFormula":"var ShortAddress := 31;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 32","Section":null},"ReadFormula":"var ShortAddress := 32;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 33","Section":null},"ReadFormula":"var ShortAddress := 33;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 34","Section":null},"ReadFormula":"var ShortAddress := 34;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 35","Section":null},"ReadFormula":"var ShortAddress := 35;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 36","Section":null},"ReadFormula":"var ShortAddress := 36;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 37","Section":null},"ReadFormula":"var ShortAddress := 37;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 38","Section":null},"ReadFormula":"var ShortAddress := 38;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 39","Section":null},"ReadFormula":"var ShortAddress := 39;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 40","Section":null},"ReadFormula":"var ShortAddress := 40;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 41","Section":null},"ReadFormula":"var ShortAddress := 41;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 42","Section":null},"ReadFormula":"var ShortAddress := 42;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 43","Section":null},"ReadFormula":"var ShortAddress := 43;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 44","Section":null},"ReadFormula":"var ShortAddress := 44;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 45","Section":null},"ReadFormula":"var ShortAddress := 45;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 46","Section":null},"ReadFormula":"var ShortAddress := 46;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 47","Section":null},"ReadFormula":"var ShortAddress := 47;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 48","Section":null},"ReadFormula":"var ShortAddress := 48;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 49","Section":null},"ReadFormula":"var ShortAddress := 49;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 50","Section":null},"ReadFormula":"var ShortAddress := 50;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 51","Section":null},"ReadFormula":"var ShortAddress := 51;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 52","Section":null},"ReadFormula":"var ShortAddress := 52;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 53","Section":null},"ReadFormula":"var ShortAddress := 53;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 54","Section":null},"ReadFormula":"var ShortAddress := 54;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 55","Section":null},"ReadFormula":"var ShortAddress := 55;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 56","Section":null},"ReadFormula":"var ShortAddress := 56;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 57","Section":null},"ReadFormula":"var ShortAddress := 57;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 58","Section":null},"ReadFormula":"var ShortAddress := 58;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 59","Section":null},"ReadFormula":"var ShortAddress := 59;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 60","Section":null},"ReadFormula":"var ShortAddress := 60;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 61","Section":null},"ReadFormula":"var ShortAddress := 61;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 62","Section":null},"ReadFormula":"var ShortAddress := 62;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+,{"AttributeDefinition":{"Name":"Gear 63","Section":null},"ReadFormula":"var ShortAddress := 63;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
+]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Reset GW","NumericParameters":null,"BoolParameters":null,"EnumParameters":null},"Script":"modbusw(SH,6000,uint16,1)"},{"ActionDefinition":{"Name":"Set Slave ID","NumericParameters":[{"FriendlyName":"Slave ID","Abbreviation":"SID","IsFloat":true,"MinValue":1.0,"MaxValue":255.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 65221, uint16, SID);\r\n\r\nmodbusw(SH,6000, uint16, 1);"},{"ActionDefinition":{"Name":"Turn On - all lamps","NumericParameters":null,"BoolParameters":null,"EnumParameters":null},"Script":"modbusw(SH, 530, uint16, 0xFE)"},{"ActionDefinition":{"Name":"Turn Off - all lamps","NumericParameters":null,"BoolParameters":null,"EnumParameters":null},"Script":"modbusw(SH, 530, uint16, 0x00)"}]</ServiceActionsScripts>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <ModuleVariables>[{"Name":"SEARCHADDRH","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"SEARCHADDRM","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"SEARCHADDRL","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"SHORTADDR","ValueTypeId":1,"NumericValue":64.0,"StringValue":null},{"Name":"iterator","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null}]</ModuleVariables>
+        <MaxPrefetchGroupSize>10</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+        <Variables>[]</Variables>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Search new devices</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>100</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>2</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>7</Value7Index>
+            <Value8Index>8</Value8Index>
+            <Value9Index>9</Value9Index>
+            <Value0Name>TERMINATE</Value0Name>
+            <Value1Name>Start</Value1Name>
+            <Value2Name>Scan short addresses</Value2Name>
+            <Value3Name>Set SEARCHADDR</Value3Name>
+            <Value4Name>COMPARE</Value4Name>
+            <Value5Name>PROGRAM SHORT ADDRESS</Value5Name>
+            <Value6Name>Check</Value6Name>
+            <Value7Name>Debug</Value7Name>
+            <Value8Name>Reset Short Addresses</Value8Name>
+            <Value9Name>Finish</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>6</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>var x := 0x8000; var rx := 0;
+
+if Mu = 1
+    # check SEARCHADDRH
+    modbusw(SH, 541, uint16, 0xB500 + getbyte(SEARCHADDRH,0));
+    sleep(50);
+    modbusw(SH, 541, uint16, 0xB300 + getbyte(SEARCHADDRH,1));
+    sleep(50);
+    modbusw(SH, 541, uint16, 0xB100 + getbyte(SEARCHADDRH,2));
+    sleep(50);
+    modbusw(SH, 541, uint16, 0xA900);
+    sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+    x := modbusr(SH, 541, uint16);
+    if rx
+        return(2);
+    else
+        status := 255;
+        return(9);
+    end
+end
+if Mu = 2
+    # find max short address
+    if SHORTADDR &gt;= 63
+        status := 254;
+        return(9);
+    end
+    if iterator &gt;= 64
+        status := 10;
+        return(3);
+    end
+    modbusw(SH, 511, uint16, (iterator &lt;&lt; 8) + 0x91);
+    sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+    x := modbusr(SH, 511, uint16);
+    if (x = 0xFF, SHORTADDR := iterator); 
+    iterator := iterator + 1;
+end
+if Mu = 3
+    # set SEARCHADDR
+    SEARCHADDRM := SEARCHADDRH - ((SEARCHADDRH - SEARCHADDRL) &gt;&gt; 1);
+    if(SEARCHADDRM = SEARCHADDRH or SEARCHADDRM = SEARCHADDRL, return(6));
+    modbusw(SH, 541, uint16, 0xB500 + getbyte(SEARCHADDRM,0));
+    sleep(50);
+    modbusw(SH, 541, uint16, 0xB300 + getbyte(SEARCHADDRM,1));
+    sleep(50);
+    modbusw(SH, 541, uint16, 0xB100 + getbyte(SEARCHADDRM,2));
+    sleep(50);
+    return(4);
+end
+if Mu = 4
+    # COMPARE
+    modbusw(SH, 541, uint16, 0xA900);
+    sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2);
+    if !rx
+        sleep(50);
+        rx := getbits(modbusr(SH, 550, uint16), 0, 2);
+    end
+    if rx
+        x := modbusr(SH, 541, uint16);
+        #collision or match: lets search the lower segment
+        SEARCHADDRH := SEARCHADDRM;
+    else
+        #no response: lets look up in the higher segment
+        SEARCHADDRL := SEARCHADDRM;
+    end
+    return(3);
+end
+if Mu = 6
+    # check SEARCHADDRL
+    modbusw(SH, 541, uint16, 0xB500 + getbyte(SEARCHADDRL,0));
+    sleep(50);
+    modbusw(SH, 541, uint16, 0xB300 + getbyte(SEARCHADDRL,1));
+    sleep(50);
+    modbusw(SH, 541, uint16, 0xB100 + getbyte(SEARCHADDRL,2));
+    sleep(50);
+    modbusw(SH, 541, uint16, 0xA900);
+    sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2);
+    if !rx
+        sleep(50);
+        rx := getbits(modbusr(SH, 550, uint16), 0, 2);
+    end
+    if rx
+        x := modbusr(SH, 541, uint16);
+        if getbyte(x, 0) = 0xFF
+            #exact match: we have it, lets finish
+            return(5);
+        else
+            #collision: 2 gear with same SEARCHADDR or something went wrong, start over
+            return(1);
+        end
+    end
+    # check SEARCHADDRH
+    modbusw(SH, 541, uint16, 0xB500 + getbyte(SEARCHADDRH,0));
+    sleep(50);
+    modbusw(SH, 541, uint16, 0xB300 + getbyte(SEARCHADDRH,1));
+    sleep(50);
+    modbusw(SH, 541, uint16, 0xB100 + getbyte(SEARCHADDRH,2));
+    sleep(50);
+    modbusw(SH, 541, uint16, 0xA900);
+    sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2);
+    if !rx
+        sleep(50);
+        rx := getbits(modbusr(SH, 550, uint16), 0, 2);
+    end    
+    if rx
+        x := modbusr(SH, 541, uint16);
+        if getbyte(x, 0) = 0xFF
+            #exact match: we have it, lets finish
+            return(5);
+        else
+            #collision: 2 gear with same SEARCHADDR or something went wrong, start over
+            return(1);
+        end
+    else
+        #no response: something went wrong, finish with error
+        status := 220;
+        return(9);
+    end
+end
+if Mu = 5
+    # PROGRAM SHORT ADDRESS
+    SHORTADDR := SHORTADDR + 1;
+    #program
+    modbusw(SH, 542, uint16, 0xB701 + (SHORTADDR &lt;&lt; 1));
+    sleep(100);
+    #verify
+    modbusw(SH, 541, uint16, 0xB901 + (SHORTADDR &lt;&lt; 1));
+    sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+    x := modbusr(SH, 541, uint16);
+    if getbyte(x, 0) = 0xFF
+        status := 0;
+    else
+        status := 230;
+        return(9);
+    end
+    #blink
+    modbusw(SH, 511, uint16, SHORTADDR + 0x06);
+    sleep(500);
+    modbusw(SH, 511, uint16, SHORTADDR + 0x05);
+    sleep(500);
+    modbusw(SH, 511, uint16, SHORTADDR + 0x06);
+    #WITHDRAW
+    modbusw(SH, 541, uint16, 0xAB00);
+    sleep(100);
+    SEARCHADDRH := 0xFFFFFF;
+    SEARCHADDRL := 0;
+    return(1);
+end
+if Mu = 9
+    # finish
+    if(status = 99, adderror("Timeout!"));
+    if(status = 220, adderror("Check failed! (" + tostring(SEARCHADDRH, "X2") + " | " + tostring(SEARCHADDRL, "X2") + " )"));
+    if(status = 230, adderror("Verify short address failed! (" + tostring(SHORTADDR, "X2") + " | " + tostring(x, "X2") + 
+        " | " + tostring(SEARCHADDRH, "X2") + " | " + tostring(SEARCHADDRM, "X2") + " | " + tostring(SEARCHADDRL, "X2") + " )"));
+    if(status = 231, adderror("Short address mismatch! (" + tostring(SHORTADDR, "X2") + " | " + tostring(x, "X2") + " )"));
+    if(status = 254, adderror("All short addresses are in use!"));
+    if status = 255
+        modbusw(SH, 531, uint16, 0x96);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        x := modbusr(SH, 531, uint16);
+        if getbyte(x, 0) = 0xFF
+            adderror("Some gear is still missing short address, but no response from SEARCHADDRH! ( " + tostring(SEARCHADDRH, "X2") + " )");
+        else    
+            status := 1;
+        end
+    end
+    if(status = 1, addinfo("Search finished")); 
+    if(status = 200 or status = 230 or status = 231 or status = 254, iterator := 0); 
+end
+#debug
+if(Mu = 7, addinfo("Debug:" + tostring(x, "X2") + " | " + status),0);
+
+#if(Mu = 1, status := "rx:" + getbits(y, 0, 2) + "|" + getbits(y, 4, 1) + "|" + getbits(y, 5, 1), 0);
+#if(Mu = 1, return(7),0);
+
+return(Mu);</ReadSwitchState>
+            <WriteSwitchState># TERMINATE
+if(Mu = 0, modbusw(SH, 542, uint16, 0xA100), 0);
+# INITIALIZE:CONTROL GEARS WITHOUT SHORT ADDRESS
+if(Mu = 1, modbusw(SH, 542, uint16, 0xA5FF), 0);
+if(Mu = 1, sleep(100));
+# RANDOMIZE
+if(Mu = 1, modbusw(SH, 542, uint16, 0xA700), 0);
+if(Mu = 1, sleep(100));
+# Init SEARCHADDR variables
+if(Mu = 1, SEARCHADDRH := 0xFFFFFF, 0);
+#if(Mu = 1, SEARCHADDRM := SEARCHADDRH / 2, 0);
+if(Mu = 1, SEARCHADDRL := 0, 0);
+if(Mu = 1, if(iterator &lt; 64, SHORTADDR := -1, 0), 0);
+if(Mu = 1, if(iterator &lt; 64, iterator := 0, 0), 0);
+# Reset Short Addresses 
+if(Mu = 8, modbusw(h, 541, uint16, 0xA3FF), 0);
+if(Mu = 8, sleep(100));
+if(Mu = 8, modbusw(h, 532, uint16, 0x80), 0);
+if(Mu = 8, SHORTADDR := -1, 0);
+if(Mu = 8, iterator := 64, 0);
+
+sleep(100);
+</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

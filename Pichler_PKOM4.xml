@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="8680351d-d5ce-4490-9788-08cb88751d84" revision="1.0">
+    <Name>Pichler_PKOM4</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>Pichler</Producer>
+    <Model>PKOM4</Model>
+    <Category>2</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>Pichler_PKOM4</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Zvolená úroveň vetrání</Name>
+          <Id>-2</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Auto</Value0Name>
+            <Value1Name>1</Value1Name>
+            <Value2Name>2</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>113</Value0IconId>
+            <Value1IconId>25</Value1IconId>
+            <Value2IconId>26</Value2IconId>
+            <Value3IconId>27</Value3IconId>
+            <Value4IconId>28</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 46, UInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 46, UInt16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Provozní režim</Name>
+          <Id>-3</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>2</Value1Index>
+            <Value2Index>3</Value2Index>
+            <Value3Index>1</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>OFF</Value0Name>
+            <Value1Name>Leto</Value1Name>
+            <Value2Name>Zima</Value2Name>
+            <Value3Name>Auto</Value3Name>
+            <Value4Name>Dovolena</Value4Name>
+            <Value5Name>Ohrev vody</Value5Name>
+            <Value6Name>Nastav. ventilu pro vetrani</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>Test</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>66</Value1IconId>
+            <Value2IconId>2</Value2IconId>
+            <Value3IconId>113</Value3IconId>
+            <Value4IconId>49</Value4IconId>
+            <Value5IconId>191</Value5IconId>
+            <Value6IconId>76</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>185</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 0, UInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 0, UInt16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Regulace prostorové teploty</Name>
+          <Id>-4</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 1, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 1, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Aktivní chlazení</Name>
+          <Id>-5</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>66</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Ne</Value0Name>
+            <Value1Name>Ano</Value1Name>
+            <Value2Name>Ano, pri Ecotarifu</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>33</Value0IconId>
+            <Value1IconId>2</Value1IconId>
+            <Value2IconId>39</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 9, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 9, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Max. povolená humidita</Name>
+          <Id>-6</Id>
+          <Model>ModbusDimmer</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadLevel>MODBUSR(H, 102, UInt16) / 1000</ReadLevel>
+            <WriteLevel>MODBUSWNE(H, 102, UInt16, Le * 1000)</WriteLevel>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Teplota pro spuštení chlazení </Name>
+          <Id>-7</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(A, 19, Int16) / 100</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 19, Int16) / 100</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 19, UInt16, Se * 100)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Požadovaná teplota TUV</Name>
+          <Id>-8</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(A,162 , UInt16) / 100</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 129, UInt16) / 100</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 129, UInt16, Se * 100)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Filtr zbývajíciho času</Name>
+          <Id>-9</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 315, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Nastavení teploty PKOM4</Name>
+          <Id>-10</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(A, 19, Int16) / 100</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 10, Int16) / 100</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 10, UInt16, Se * 100)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Aktualní objem vzduchu m3/h</Name>
+          <Id>-11</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 23, Int16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Spotřeba energie na větráni (kWh)</Name>
+          <Id>-12</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 29, Int16)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Spotřeba energie na topení (kWh)</Name>
+          <Id>-13</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 64, Int16)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Celková spotřeba energie (kWh)</Name>
+          <Id>-14</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 65, Int16)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Funkce ochrany pred legionellou</Name>
+          <Id>-15</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>66</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Vypnuto</Value0Name>
+            <Value1Name>Zapnuto</Value1Name>
+            <Value2Name>2</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>61</Value0IconId>
+            <Value1IconId>16</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 141, UInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 141, UInt16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Provozni hodiny - Filtr PKOM4</Name>
+          <Id>-16</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 314, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

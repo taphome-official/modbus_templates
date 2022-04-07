@@ -1,0 +1,747 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="fd7c2524-4184-4bb6-98d2-a3b2d1d6127d" revision="1.0">
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <Baudrate>9600</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>Wattsonic Hybrid Inverter WTS-10KW-3P</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>Wattsonic</Producer>
+    <Model>Hybrid Inverter WTS-10KW-3P</Model>
+    <Description></Description>
+    <Category>8</Category>
+    <Module>
+      <Name>Wattsonic Hybrid Inverter WTS-10KW-3P</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>5000</InternalPollInterval>
+        <PrefetchModeId>0</PrefetchModeId>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <MaxPrefetchGroupSize>10</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Backup Output energy on that day [kWh]</Name>
+          <Id>-2</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41002, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Backup_B_F [Hz]</Name>
+          <Id>-3</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 40212, UInt16)/100</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Backup_C_V [V]</Name>
+          <Id>-4</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 40220, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Battery Charge Energy on that day [kWh]</Name>
+          <Id>-5</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41003, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Battery Current [A]</Name>
+          <Id>-6</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 40255, Int16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Battery Discharge Energy on that day [kWh]</Name>
+          <Id>-7</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41004, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Battery Mode</Name>
+          <Id>-8</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 40256, UInt16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Battery Power [kW]</Name>
+          <Id>-9</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 40258, Int32)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Battery Voltage [V]</Name>
+          <Id>-10</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 40254, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Grid Frequency [Hz]</Name>
+          <Id>-11</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11015, UInt16)/100</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Grid Injection energy on that day [kWh]</Name>
+          <Id>-12</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41000, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Grid Phase A Current [A]</Name>
+          <Id>-13</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11010, UInt16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Grid Phase A Voltage [V]</Name>
+          <Id>-14</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11009, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Grid Phase B Current [A]</Name>
+          <Id>-15</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11012, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Grid Phase B Voltage [V]</Name>
+          <Id>-16</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11011, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Grid Phase C Current [A]</Name>
+          <Id>-17</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11014, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Grid Phase C Voltage [V]</Name>
+          <Id>-18</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11013, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Grid Purchasing on that day [kWh]</Name>
+          <Id>-19</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41001, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Invt_A_P [kW]</Name>
+          <Id>-20</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 40236, Int32)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Loading Energy on that day [kWh]</Name>
+          <Id>-21</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41006, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Phase Voltage L1-L2 [V]</Name>
+          <Id>-22</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11006, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Phase Voltage L1-L3 [V]</Name>
+          <Id>-23</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11007, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Phase Voltage L2-L3 [V]</Name>
+          <Id>-24</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11008, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>PV Generation Energy on that day [kWh]</Name>
+          <Id>-25</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41005, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>PV1 Current [A]</Name>
+          <Id>-26</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11039, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>PV1 Input Power [kW]</Name>
+          <Id>-27</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11062, UInt32)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>PV1 Voltage [V]</Name>
+          <Id>-28</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11038, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>PV2 Current [A]</Name>
+          <Id>-29</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11041, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>PV2 Input Power [kW]</Name>
+          <Id>-30</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11064, UInt32)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>PV2 Voltage [V]</Name>
+          <Id>-31</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11040, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Energy Charged to Battery [kWh]</Name>
+          <Id>-32</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41108, UInt32)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Energy Discharged from Battery [kWh]</Name>
+          <Id>-33</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41110, UInt32)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Energy injected to grid [kWh]</Name>
+          <Id>-34</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41102, UInt32)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Energy Purchased from Grid at inverter side [kWh]</Name>
+          <Id>-35</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41118, UInt32)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Energy Purchased from Grid from Meter [kWh]</Name>
+          <Id>-36</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41104, UInt32)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Inverter-Power_AC [kWh]</Name>
+          <Id>-37</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11016, Int32)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Loading consumed Energy on grid side [kWh]</Name>
+          <Id>-38</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41114, UInt32)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Output Energy on backup port [kWh]</Name>
+          <Id>-39</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41106, UInt32)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total PV Generated Energy [kWh]</Name>
+          <Id>-40</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 41112, UInt32)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total PV Generation from installation [kWh]</Name>
+          <Id>-41</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11020, UInt32)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total PV generation time from installation [Hours]</Name>
+          <Id>-42</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11022, UInt32)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="32af6317-854a-4f7a-82f8-39099cea394c" revision="1.0">
+    <Name>WELLPRO WP8027ADAM</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>WellPro</Producer>
+    <Model>WP8027ADAM</Model>
+    <Category>6</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>WELLPRO WP8027ADAM</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>DI 1 -RTU</Name>
+          <Id>-2</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 0, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI2 - RTU</Name>
+          <Id>-3</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 1, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI3 - RTU</Name>
+          <Id>-4</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 2, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI4 -RTU</Name>
+          <Id>-5</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 3, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI5 - RTU</Name>
+          <Id>-6</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 4, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI6 - RTU</Name>
+          <Id>-7</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 5, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI7 -RTU</Name>
+          <Id>-8</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 6, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI8 -RTU</Name>
+          <Id>-9</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 7, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI9 -RTU</Name>
+          <Id>-10</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 8, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI10 - RTU</Name>
+          <Id>-11</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 9, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI11 - RTU</Name>
+          <Id>-12</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 10, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI12 -RTU</Name>
+          <Id>-13</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 11, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI13 - RTU</Name>
+          <Id>-14</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 12, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI14 - RTU</Name>
+          <Id>-15</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 13, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI15 -RTU</Name>
+          <Id>-16</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 14, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DI16 -RTU</Name>
+          <Id>-17</Id>
+          <Model>ModbusReedContact</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadState>MODBUSR(D, 15, Bool)</ReadState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="51757997-c0d4-4329-bc69-ea110fdbe7c8" revision="1.0">
+    <Name>IntesisBOX FJ-RC-MBS-1</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>Intesis</Producer>
+    <Model>FJ-RC-MBS-1</Model>
+    <Category>3</Category>
+    <Description>Fujitsu</Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>IntesisBOX FJ-RC-MBS-1</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>AC Unit ON/OFF</Name>
+          <Id>-2</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 0, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 0, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Unit Mode</Name>
+          <Id>-3</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Auto</Value0Name>
+            <Value1Name>Heat</Value1Name>
+            <Value2Name>Dry</Value2Name>
+            <Value3Name>Fan</Value3Name>
+            <Value4Name>Cool</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>113</Value0IconId>
+            <Value1IconId>1</Value1IconId>
+            <Value2IconId>64</Value2IconId>
+            <Value3IconId>28</Value3IconId>
+            <Value4IconId>18</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 1, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 1, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Unit FAN Speed</Name>
+          <Id>-4</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>69</Value2Index>
+            <Value3Index>2</Value3Index>
+            <Value4Index>3</Value4Index>
+            <Value5Index>68</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Auto</Value0Name>
+            <Value1Name>Low</Value1Name>
+            <Value2Name>Position-5</Value2Name>
+            <Value3Name>Mid</Value3Name>
+            <Value4Name>High</Value4Name>
+            <Value5Name>Turbo</Value5Name>
+            <Value6Name>Position-6</Value6Name>
+            <Value7Name>Position-7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>113</Value0IconId>
+            <Value1IconId>25</Value1IconId>
+            <Value2IconId>10</Value2IconId>
+            <Value3IconId>26</Value3IconId>
+            <Value4IconId>28</Value4IconId>
+            <Value5IconId>28</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 2, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 2, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Unit Vane Position</Name>
+          <Id>-5</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>8</Value5Index>
+            <Value6Index>71</Value6Index>
+            <Value7Index>70</Value7Index>
+            <Value8Index>5</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Auto</Value0Name>
+            <Value1Name>Position-1 (Horizontal)</Value1Name>
+            <Value2Name>Position-2 (Horizontal)</Value2Name>
+            <Value3Name>Position-3 (Medium)</Value3Name>
+            <Value4Name>Position-4 (Vertical)</Value4Name>
+            <Value5Name>Swing ON</Value5Name>
+            <Value6Name>Position-7</Value6Name>
+            <Value7Name>Position-6</Value7Name>
+            <Value8Name>Poistion-5 (Vetical)</Value8Name>
+            <Value9Name>Swirl</Value9Name>
+            <Value0IconId>113</Value0IconId>
+            <Value1IconId>131</Value1IconId>
+            <Value2IconId>132</Value2IconId>
+            <Value3IconId>133</Value3IconId>
+            <Value4IconId>134</Value4IconId>
+            <Value5IconId>140</Value5IconId>
+            <Value6IconId>137</Value6IconId>
+            <Value7IconId>136</Value7IconId>
+            <Value8IconId>135</Value8IconId>
+            <Value9IconId>138</Value9IconId>
+            <ReadSwitchState>MODBUSR(H, 3, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 3, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Unit Thermostat</Name>
+          <Id>-6</Id>
+          <Model>ModbusThermostat</Model>
+          <DeviceProperties>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <ReadCurrentTemperature>MODBUSR(H, 5, Int16) / 100</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 4, Int16) / 100</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 4, Int16, Se * 100)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+            <ReadValveState></ReadValveState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Unit Error Code</Name>
+          <Id>-7</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="350a1a63-bdee-4c09-be03-e76b838b43b2" revision="1.0">
+    <Name>IntesisBox General System Control</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>intesis</Producer>
+    <Model></Model>
+    <Category>6</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <SuggestedCCUParameters>
+      <Baudrate>9600</Baudrate>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <StopBits>One</StopBits>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>IntesisBox General System Control</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>System On/Off</Name>
+          <Id>-2</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 0, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 0, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Outdoor temperature [°C]</Name>
+          <Id>-3</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 1, Int16)</ReadState>
+            <WriteState>MODBUSWNE(H, 1, Int16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Outgoing water temperature [°C]</Name>
+          <Id>-4</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 2, Uint16)</ReadState>
+            <WriteState>MODBUSWNE(H, 2, Uint16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Ingoing water temperature [°C]</Name>
+          <Id>-5</Id>
+          <Model>ModbusVariable</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadState>MODBUSR(H, 3, Uint16)</ReadState>
+            <WriteState>MODBUSWNE(H, 3, Uint16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Operating mode</Name>
+          <Id>-6</Id>
+          <Model>ModbusMultiValueSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 4, Unt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 4, Uint16, Mu)</WriteSwitchState>
+            <Value0IconId>0</Value0IconId>
+            <Value0Name>None</Value0Name>
+            <Value1IconId>1</Value1IconId>
+            <Value1Name>Heat</Value1Name>
+            <Value2IconId>37</Value2IconId>
+            <Value2Name>Heat/Tank</Value2Name>
+            <Value3IconId>49</Value3IconId>
+            <Value3Name>Tank</Value3Name>
+            <Value4IconId>28</Value4IconId>
+            <Value4Name>Cool/Tank</Value4Name>
+            <Value5IconId>2</Value5IconId>
+            <Value5Name>Cool</Value5Name>
+            <Value6Index>64</Value6Index>
+            <Value7Index>65</Value7Index>
+            <Value8Index>66</Value8Index>
+            <Value9Index>67</Value9Index>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

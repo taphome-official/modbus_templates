@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="6465c80f-bc95-452f-b508-e65a35287d6b" revision="1.0">
+    <Name>GTD8</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>GTD</Producer>
+    <Model>GTD8</Model>
+    <Category>13</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <ImportParameters>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>GTD8</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Switch 1</Name>
+          <Id>-2</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 0, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 0, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 1 LED</Name>
+          <Id>-3</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 10, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 10, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 2</Name>
+          <Id>-4</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 1, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 1, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 2 LED</Name>
+          <Id>-5</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 11, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 11, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 3</Name>
+          <Id>-6</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 2, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 2, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 3 LED</Name>
+          <Id>-7</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 12, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 12, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 4</Name>
+          <Id>-8</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 3, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 3, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 4 LED</Name>
+          <Id>-9</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 13, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 13, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 5</Name>
+          <Id>-10</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 4, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 4, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 5 LED</Name>
+          <Id>-11</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 14, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 14, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 6</Name>
+          <Id>-12</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 5, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 5, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 6 LED</Name>
+          <Id>-13</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 15, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 15, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 7</Name>
+          <Id>-14</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 6, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 6, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 7 LED</Name>
+          <Id>-15</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 16, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 16, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 8</Name>
+          <Id>-16</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 7, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 7, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Switch 8 LED</Name>
+          <Id>-17</Id>
+          <Model>ModbusSwitch</Model>
+          <DeviceProperties>
+            <InternalPollInterval>500</InternalPollInterval>
+            <ReadSwitchState>MODBUSR(H, 17, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 17, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

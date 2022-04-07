@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+  <Template id="f15c16ca-2104-4d62-93fe-1e991adc366e" revision="1.0">
+    <Name>Sfar MOD-1TE (PT100/PT500/PT1000)</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>Sfar</Producer>
+    <Model>MOD-1TE</Model>
+    <Category>10</Category>
+    <Description></Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <SuggestedCCUParameters>
+      <Baudrate>19200</Baudrate>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <StopBits>One</StopBits>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Name>InputSettingsRegister</Name>
+        <Value>18</Value>
+        <Id>InputSettingsRegister</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+        <Id>SlaveId</Id>
+      </Parameter>
+      <Parameter>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
+      </Parameter>
+    </ImportParameters>
+    <Module>
+      <Name>Sfar MOD-1TE (PT100/PT500/PT1000)</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Modbus PT temperature sensor</Name>
+          <Id>-2</Id>
+          <Model>ModbusTemperatureSensor</Model>
+          <DeviceProperties>
+            <InitializeScript>MODBUSWNE(H, 61, Int16, $[InputSettingsRegister])</InitializeScript>
+            <ReadTemperature>MODBUSR(A, 51, Int16)/10</ReadTemperature>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>

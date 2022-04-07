@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="54">
+	<Template id="b2737379-2874-4c78-88c3-fa29e3f70840" revision="1.0">
+		<Name>Orno OR-WE-517</Name>
+		<CcuModel>ModbusRtuCCU</CcuModel>
+		<Producer>Orno</Producer>
+		<Model>OR-WE-517</Model>
+		<Category>7</Category>
+		<Description>3-Phase metering</Description>
+		<RevisionHistory>
+			<Revision id="1.0">Initial version</Revision>
+		</RevisionHistory>
+		<SuggestedCCUParameters>
+			<UseAsciiCommunication>False</UseAsciiCommunication>
+			<StopBits>One</StopBits>
+			<DataBits>8</DataBits>
+			<Parity>Even</Parity>
+			<Baudrate>9600</Baudrate>
+			<DelayBetweenRequests>-1</DelayBetweenRequests>
+			<ReadWriteTimeout>1000</ReadWriteTimeout>
+		</SuggestedCCUParameters>
+		<ImportParameters>
+			<Parameter>
+				<Name>${device_SlaveId}</Name>
+				<Value>1</Value>
+				<Id>SlaveId</Id>
+			</Parameter>
+			<Parameter>
+				<Name>${ipAddress}</Name>
+				<Value>192.168.0.1</Value>
+				<Id>IpAddress</Id>
+			</Parameter>
+		</ImportParameters>
+		<Module>
+			<Name>Orno OR-WE-517</Name>
+			<Id>-1</Id>
+			<Model>ModbusModule</Model>
+			<DeviceProperties>
+				<DeviceType>7001</DeviceType>
+				<InternalPollInterval>5000</InternalPollInterval>
+				<PrefetchModeId>0</PrefetchModeId>
+				<SlaveId>$[SlaveId]</SlaveId>
+				<MaxPrefetchGroupSize>10</MaxPrefetchGroupSize>
+				<IpAddress>$[IpAddress]</IpAddress>
+			</DeviceProperties>
+			<Devices>
+				<Device>
+					<Name>L1 Active Power</Name>
+					<Id>-2</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1000</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 30, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>L1 Apparent Power</Name>
+					<Id>-3</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1500</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 46, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>L1 Current</Name>
+					<Id>-4</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1500</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 22, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>L1 Reactive Power</Name>
+					<Id>-5</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1500</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 38, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>L1 Total Active Energy</Name>
+					<Id>-6</Id>
+					<Model>ModbusElectricityMeter</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>15000</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<ReadTotalConsumption>MODBUSR(H, 258, Float)</ReadTotalConsumption>
+						<ReadDemand>MODBUSR(H, 30, Float)</ReadDemand>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>L2 Active Power</Name>
+					<Id>-7</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1000</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 32, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>L2 Apparent Power</Name>
+					<Id>-8</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1500</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 48, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>L2 Current</Name>
+					<Id>-9</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1500</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 24, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>L2 Reactive Power</Name>
+					<Id>-10</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1500</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 40, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>L2 Total Active Energy</Name>
+					<Id>-11</Id>
+					<Model>ModbusElectricityMeter</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>15000</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<ReadTotalConsumption>MODBUSR(H, 260, Float)</ReadTotalConsumption>
+						<ReadDemand>MODBUSR(H, 32, Float)</ReadDemand>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>L3 Active Power</Name>
+					<Id>-12</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1000</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 34, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>L3 Apparent Power</Name>
+					<Id>-13</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1500</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 50, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>L3 Current</Name>
+					<Id>-14</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1500</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 26, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>L3 Reactive Power</Name>
+					<Id>-15</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1500</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 42, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>L3 Total Active Energy</Name>
+					<Id>-16</Id>
+					<Model>ModbusElectricityMeter</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>15000</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<ReadTotalConsumption>MODBUSR(H, 262, Float)</ReadTotalConsumption>
+						<ReadDemand>MODBUSR(H, 34, Float)</ReadDemand>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>Modbus Slave ID Address</Name>
+					<Id>-17</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>5000</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 0x002, Int16)</ReadState>
+						<WriteState>MODBUSWNE(H, 0x002, Int16, Va)</WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>T1 Total Active Energy</Name>
+					<Id>-18</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1000</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 304, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>T2 Total Active Energy</Name>
+					<Id>-19</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1000</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 316, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>T3 Total Active Energy</Name>
+					<Id>-20</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1000</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 328, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>T4 Total Active Energy</Name>
+					<Id>-21</Id>
+					<Model>ModbusVariable</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1000</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<IsReadOnly>False</IsReadOnly>
+						<ReadState>MODBUSR(H, 340, Float)</ReadState>
+						<WriteState></WriteState>
+					</DeviceProperties>
+				</Device>
+				<Device>
+					<Name>Total Energy</Name>
+					<Id>-22</Id>
+					<Model>ModbusElectricityMeter</Model>
+					<DeviceProperties>
+						<DeviceType>0</DeviceType>
+						<InternalPollInterval>1000</InternalPollInterval>
+						<InitializeScript></InitializeScript>
+						<ReadErrorsScript></ReadErrorsScript>
+						<PrefetchModeId>0</PrefetchModeId>
+						<ReadTotalConsumption>MODBUSR(H, 256, Float)</ReadTotalConsumption>
+						<ReadDemand>MODBUSR(H, 28, Float)</ReadDemand>
+					</DeviceProperties>
+				</Device>
+			</Devices>
+		</Module>
+	</Template>
+</Templates>
