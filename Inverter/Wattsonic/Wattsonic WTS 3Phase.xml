@@ -59,7 +59,8 @@ IF(GETBIT(DeviceError, 6)=1, ADDERROR(39, "Internal Fan Fault"));
 IF(GETBIT(DeviceError, 7)=1, ADDERROR(40, "External Fan Fault"));
 </ReadScript>
         <PrefetchModeId>0</PrefetchModeId>
-        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Model info","Section":null},"ReadFormula":"SWITCH(GETBITS(MODBUSR(H, 10008, Uint16), 1, 8),\n  0, \"WTS-4P-3P\",\n  1, \"WTS-5KW-3P\",\n  2, \"WTS-6KW-3P\",\n  3, \"WTS-8KW-3P\",\n  4, \"WTS-10KW-3P\",\n  5, \"WTS-12KW-3P\",\n\"Unknown\")"},{"AttributeDefinition":{"Name":"Date and time","Section":null},"ReadFormula":"\"20\" + \nTOSTRING(GETBITS(MODBUSR(H, 20000, Uint16),8,8), \"\") + \"/\" + TOSTRING(GETBITS(MODBUSR(H, 20000, Uint16),0,8), \"\") + \"/\" + \nTOSTRING(GETBITS(MODBUSR(H, 20001, Uint16),8,8), \"\") + \" \" + TOSTRING(GETBITS(MODBUSR(H, 20001, Uint16),0,8), \"\") + \":\" + \nTOSTRING(GETBITS(MODBUSR(H, 20002, Uint16),8,8), \"\") + \":\" + TOSTRING(GETBITS(MODBUSR(H, 20002, Uint16),0,8), \"\");"},{"AttributeDefinition":{"Name":"Inverter Running Status","Section":null},"ReadFormula":"SWITCH (MODBUSR(H, 10105, Uint16), \r\n0, \"Wait, wait for on grid\",\r\n1, \"check/self-test\",\r\n2, \"On Grid\",\r\n3, \"Fault\" ,\r\n4, \"flash, firmware\",\r\n5, \"Off Grid\",\r\n\"Cannot read status\")"}]</ServiceAttributesFormulas>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Model info","Section":null},"ReadFormula":"SWITCH(GETBITS(MODBUSR(H, 10008, Uint16), 1, 8),\n  0, \"WTS-4P-3P\",\n  1, \"WTS-5KW-3P\",\n  2, \"WTS-6KW-3P\",\n  3, \"WTS-8KW-3P\",\n  4, \"WTS-10KW-3P\",\n  5, \"WTS-12KW-3P\",\n\"Unknown\")"},{"AttributeDefinition":{"Name":"Date and time","Section":null},"ReadFormula":"\"20\" + \nTOSTRING(GETBITS(MODBUSR(H, 20000, Uint16),8,8), \"\") + \"/\" + TOSTRING(GETBITS(MODBUSR(H, 20000, Uint16),0,8), \"\") + \"/\" + \nTOSTRING(GETBITS(MODBUSR(H, 20001, Uint16),8,8), \"\") + \" \" + TOSTRING(GETBITS(MODBUSR(H, 20001, Uint16),0,8), \"\") + \":\" + \nTOSTRING(GETBITS(MODBUSR(H, 20002, Uint16),8,8), \"\") + \":\" + TOSTRING(GETBITS(MODBUSR(H, 20002, Uint16),0,8), \"\");"},{"AttributeDefinition":{"Name":"Inverter Running Status","Section":null},"ReadFormula":"SWITCH (MODBUSR(H, 10105, Uint16), \r\n0, \"Wait, wait for on grid\",\r\n1, \"check/self-test\",\r\n2, \"On Grid\",\r\n3, \"Fault\" ,\r\n4, \"flash, firmware\",\r\n5, \"Off Grid\",\r\n\"Cannot read status\")"},{"AttributeDefinition":{"Name":"Charge Start Time","Section":null},"ReadFormula":"var out := ModbusR(H, 53000, Uint16);\r\nGETBYTE(out, 1) + \":\" + GETBYTE(out, 0)"},{"AttributeDefinition":{"Name":"Charge Stop Time","Section":null},"ReadFormula":"var out := ModbusR(H, 53001, Uint16);\r\nGETBYTE(out, 1) + \":\" + GETBYTE(out, 0)"},{"AttributeDefinition":{"Name":"Discharge Start Time","Section":null},"ReadFormula":"var out := ModbusR(H, 53003, Uint16);\r\nGETBYTE(out, 1) + \":\" + GETBYTE(out, 0)"},{"AttributeDefinition":{"Name":"Discharge Stop Time","Section":null},"ReadFormula":"var out := ModbusR(H, 53004, Uint16);\r\nGETBYTE(out, 1) + \":\" + GETBYTE(out, 0)"},{"AttributeDefinition":{"Name":"Running Mode","Section":null},"ReadFormula":"var out := ModbusR(H, 50000, Uint16);\r\nIF(GETBYTE(out, 1) = 1,\r\nSWITCH(GETBYTE(out, 0),1, \"General Mode\", 2 , \"Economic Mode\", 3, \"UPS Mode\", \"Unknown\"), \"Off Grid Mode\")\r\n"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Charge Start Time","NumericParameters":[{"FriendlyName":"Hours","Abbreviation":"Ho","IsFloat":false,"MinValue":0.0,"MaxValue":23.0},{"FriendlyName":"Minutes","Abbreviation":"min","IsFloat":false,"MinValue":0.0,"MaxValue":59.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"ModbusW(H, 53000, Uint16, (Ho&lt;&lt;8 )+ min)"},{"ActionDefinition":{"Name":"Running Mode Setting","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Mode","Abbreviation":"mod","Values":[{"Item1":257.0,"Item2":"General Mode"},{"Item1":258.0,"Item2":"Economic Mode"},{"Item1":259.0,"Item2":"UPS Mode"},{"Item1":512.0,"Item2":"Off-Grid"}]}]},"Script":"ModbusW(H, 50000, Uint16, mod)"},{"ActionDefinition":{"Name":"Clear over-load protection flag","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"ModbusW(H, 50201, Uint16, 1)"}]</ServiceActionsScripts>
         <SlaveId>$[SlaveId]</SlaveId>
         <MaxPrefetchGroupSize>10</MaxPrefetchGroupSize>
         <IpAddress>$[IpAddress]</IpAddress>
@@ -88,12 +89,12 @@ IF(GETBIT(DeviceError, 7)=1, ADDERROR(40, "External Fan Fault"));
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Backup Output energy on that day [kWh]</Name>
+          <Name>Backup Output energy on that day </Name>
           <Model>ModbusVariable</Model>
           <Id>-3</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions />
+            <SerializedValueLogTypeConversions>{"59":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":59}\"}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>1000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -116,7 +117,7 @@ IF(GETBIT(DeviceError, 7)=1, ADDERROR(40, "External Fan Fault"));
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
             <PrefetchModeId>0</PrefetchModeId>
-            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Battery Voltage [V]","Section":null},"ReadFormula":"MODBUSR(H, 40254, UInt16)/10"},{"AttributeDefinition":{"Name":"Battery Health","Section":null},"ReadFormula":"Modbusr(H, 43001, Uint16)/100 + \"%\""},{"AttributeDefinition":{"Name":"Battery Current [A]","Section":null},"ReadFormula":"MODBUSR(H, 40255, Int16)/10"},{"AttributeDefinition":{"Name":"Battery Power [kW]","Section":null},"ReadFormula":"MODBUSR(H, 40258, Int32)/1000"},{"AttributeDefinition":{"Name":"Battery Charge Energy on that day [kWh]","Section":null},"ReadFormula":"MODBUSR(H, 41003, UInt16)/10"},{"AttributeDefinition":{"Name":"Battery Discharge Energy on that day [kWh]","Section":null},"ReadFormula":"MODBUSR(H, 41004, UInt16)/10"},{"AttributeDefinition":{"Name":"Total Energy Charged to Battery [kWh]","Section":null},"ReadFormula":"MODBUSR(H, 41108, UInt32)/10"},{"AttributeDefinition":{"Name":"Total Energy Discharged from Battery [kWh]","Section":null},"ReadFormula":"MODBUSR(H, 41110, UInt32)/10"}]</ServiceAttributesFormulas>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Battery Health","Section":null},"ReadFormula":"Modbusr(H, 43001, Uint16)/100 + \"%\""},{"AttributeDefinition":{"Name":"Battery Voltage [V]","Section":null},"ReadFormula":"MODBUSR(H, 40254, UInt16)/10"},{"AttributeDefinition":{"Name":"Battery Current [A]","Section":null},"ReadFormula":"MODBUSR(H, 40255, Int16)/10"},{"AttributeDefinition":{"Name":"Battery Power [kW]","Section":null},"ReadFormula":"MODBUSR(H, 40258, Int32)/1000"},{"AttributeDefinition":{"Name":"Battery Charge Energy on that day [kWh]","Section":null},"ReadFormula":"MODBUSR(H, 41003, UInt16)/10"},{"AttributeDefinition":{"Name":"Battery Discharge Energy on that day [kWh]","Section":null},"ReadFormula":"MODBUSR(H, 41004, UInt16)/10"},{"AttributeDefinition":{"Name":"Total Energy Charged to Battery [kWh]","Section":null},"ReadFormula":"MODBUSR(H, 41108, UInt32)/10"},{"AttributeDefinition":{"Name":"Total Energy Discharged from Battery [kWh]","Section":null},"ReadFormula":"MODBUSR(H, 41110, UInt32)/10"}]</ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
             <CustomDeviceVariables>[]</CustomDeviceVariables>
             <ReadLevel>MODBUSR(H, 43000, Uint16) / 10000</ReadLevel>
@@ -165,12 +166,12 @@ IF(GETBIT(DeviceError, 7)=1, ADDERROR(40, "External Fan Fault"));
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Grid Injection energy on that day [kWh]</Name>
+          <Name>Grid Injection energy on that day</Name>
           <Model>ModbusVariable</Model>
           <Id>-7</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions />
+            <SerializedValueLogTypeConversions>{"59":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":59}\"}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>1000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -224,12 +225,12 @@ IF(GETBIT(DeviceError, 7)=1, ADDERROR(40, "External Fan Fault"));
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Grid Purchasing on that day [kWh]</Name>
+          <Name>Grid Purchasing on that day</Name>
           <Model>ModbusVariable</Model>
           <Id>-10</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions />
+            <SerializedValueLogTypeConversions>{"59":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":59}\"}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>1000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -243,12 +244,12 @@ IF(GETBIT(DeviceError, 7)=1, ADDERROR(40, "External Fan Fault"));
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Loading Energy on that day [kWh]</Name>
+          <Name>Loading Energy on that day</Name>
           <Model>ModbusVariable</Model>
           <Id>-11</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions />
+            <SerializedValueLogTypeConversions>{"59":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":59}\"}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>1000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -422,12 +423,12 @@ IF(GETBIT(DeviceError, 7)=1, ADDERROR(40, "External Fan Fault"));
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>PV Generation Energy on that day [kWh]</Name>
+          <Name>PV Generation Energy on that day</Name>
           <Model>ModbusVariable</Model>
           <Id>-20</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions />
+            <SerializedValueLogTypeConversions>{"59":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":59}\"}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>1000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -549,12 +550,12 @@ IF(GETBIT(DeviceError, 7)=1, ADDERROR(40, "External Fan Fault"));
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Total Inverter-Power_AC [kWh]</Name>
+          <Name>Total Inverter-Power_AC </Name>
           <Model>ModbusVariable</Model>
           <Id>-27</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions />
+            <SerializedValueLogTypeConversions>{"60":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":60}\"}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>1000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -568,12 +569,12 @@ IF(GETBIT(DeviceError, 7)=1, ADDERROR(40, "External Fan Fault"));
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Total PV Generated Energy [kWh]</Name>
+          <Name>Total PV Generated Energy</Name>
           <Model>ModbusVariable</Model>
           <Id>-28</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions />
+            <SerializedValueLogTypeConversions>{"59":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":59}\"}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>1000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
