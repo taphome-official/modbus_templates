@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Templates format="2" protocolVersion="63">
-  <Template revision="1.0">
+  <Template id="f925b4ba-72f8-440f-9b59-fd38f2afd7a5" revision="1.0">
     <SuggestedCCUParameters>
       <UseAsciiCommunication>False</UseAsciiCommunication>
       <StopBits>One</StopBits>
