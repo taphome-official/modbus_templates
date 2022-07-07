@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="61" locationId="901b9186-1ec0-44ae-aaca-4c758de154e9">
+  <Template revision="1.0">
+    <SuggestedCCUParameters>
+      <TcpPort>502</TcpPort>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>Slave Id</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>IP address</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>Atrea RD5</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer></Producer>
+    <Model></Model>
+    <Description></Description>
+    <Module>
+      <Name>Atrea RD5</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>5000</InternalPollInterval>
+        <ReadScript>IF(ModbusR(D, 11100, Bool), ADDERROR("Device Overheating"));
+IF(ModbusR(D, 11101, Bool), ADDERROR("Orientation not set"));
+IF(ModbusR(D, 11102, Bool), ADDERROR("Type of Heater not set"));
+IF(ModbusR(D, 11104, Bool), ADDERROR("STP Contact is active"));
+IF(ModbusR(D, 11105, Bool), ADDERROR("Manometer DP1 failure"));
+IF(ModbusR(D, 11106, Bool), ADDERROR("Manometer DP2 failure"));
+IF(ModbusR(D, 11107, Bool), ADDERROR("Sensor TU1 failure"));
+IF(ModbusR(D, 11108, Bool), ADDERROR("Sensor TU2 failure"));
+IF(ModbusR(D, 11108, Bool), ADDERROR("Sensor TU2 failure"));
+IF(ModbusR(D, 11109, Bool), ADDERROR("Sensor TEa failure"));
+IF(ModbusR(D, 11110, Bool), ADDERROR("Sensor TEb failure"));
+IF(ModbusR(D, 11111, Bool), ADDERROR("Sensor TA2 failure"));
+IF(ModbusR(D, 11112, Bool), ADDERROR("RD-IO Communication failure"));
+IF(ModbusR(D, 11114, Bool), ADDERROR("Unbalanced Flow"));
+IF(ModbusR(D, 11116, Bool), ADDERROR("Indoor Sensor failure"));
+IF(ModbusR(D, 11117, Bool), ADDWARNING("Recuperator Freezing"));
+IF(ModbusR(D, 11118, Bool), ADDWARNING("Unfreezing Recuperator... "));
+IF(ModbusR(D, 11119, Bool), ADDWARNING("High Tariff"));
+IF(ModbusR(D, 11119, Bool), ADDWARNING("High Tariff"));
+IF(ModbusR(D, 11120, Bool), ADDWARNING("Insufficient flow"));
+IF(ModbusR(D, 11121, Bool), ADDWARNING("Insufficient primary heating output"));
+IF(ModbusR(D, 11122, Bool), ADDWARNING("Clogged Filter"));
+IF(ModbusR(D, 11123, Bool), ADDWARNING("Fault at AI input IN1"));
+IF(ModbusR(D, 11124, Bool), ADDWARNING("Fault at AI input IN2"));
+IF(ModbusR(D, 11125, Bool), ADDWARNING("Fault at AI input INk1/1"));
+IF(ModbusR(D, 11126, Bool), ADDWARNING("Fault at AI input INk2/1"));
+IF(ModbusR(D, 11127, Bool), ADDWARNING("Fault at AI input INk3/1"));
+IF(ModbusR(D, 11128, Bool), ADDWARNING("Fault at AI input INk4/1"));
+IF(ModbusR(D, 11129, Bool), ADDWARNING("Fault at AI input INk1/2"));
+IF(ModbusR(D, 11130, Bool), ADDWARNING("Fault at AI input INk2/2"));
+IF(ModbusR(D, 11131, Bool), ADDWARNING("Fault at AI input INk3/2"));
+IF(ModbusR(D, 11132, Bool), ADDWARNING("Fault at AI input INk4/2"));
+IF(ModbusR(D, 11140, Bool), ADDWARNING("Unit is not in Operation"));
+IF(ModbusR(D, 11141, Bool), ADDERROR("Configuration File is Missing"));
+IF(ModbusR(D, 11143, Bool), ADDERROR("Insufficient Pre-heating Power"));
+IF(ModbusR(D, 11144, Bool), ADDERROR("This combination of heaters is not allowed"));
+IF(ModbusR(D, 11145, Bool), ADDERROR("Manometer DP3 failure"));
+IF(ModbusR(D, 11146, Bool), ADDERROR("External Manometer Failure"));
+IF(ModbusR(D, 11147, Bool), ADDERROR("Modul RD5-K/1"));
+IF(ModbusR(D, 11148, Bool), ADDERROR("Modul RD5-K/2"));
+IF(ModbusR(D, 11149, Bool), ADDERROR("Unfreezing Heat Pump..."));
+IF(ModbusR(D, 11160, Bool), ADDWARNING("Updating..."));
+IF(ModbusR(D, 11162, Bool), ADDERROR("This cooler configuration is not allowed"));
+IF(ModbusR(D, 11165, Bool), ADDWARNING("Safe Mode Active"));
+IF(ModbusR(D, 11166, Bool), ADDERROR("Frost protection-capillary"));
+IF(ModbusR(D, 11167, Bool), ADDERROR("Frost protection configuration"));
+IF(ModbusR(D, 11168, Bool), ADDWARNING("Unfinished Unit Learning"));
+IF(ModbusR(D, 11169, Bool), ADDERROR("T-ODA Sensor failure"));
+IF(ModbusR(D, 11170, Bool), ADDERROR("T-ETA/T-IDA Sensor failure"));
+IF(ModbusR(D, 11171, Bool), ADDWARNING("Cooling is not available"));
+IF(ModbusR(D, 11172, Bool), ADDERROR("Heating is not available"));
+IF(ModbusR(D, 11173, Bool), ADDWARNING("Evaporation on"));
+IF(ModbusR(D, 11174, Bool), ADDWARNING("Increased ignition power"));
+IF(ModbusR(D, 11175, Bool), ADDERROR("Illegal flow setting"));
+IF(ModbusR(D, 11184, Bool), ADDWARNING("Filter test configuration"));</ReadScript>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Unit Orientation"},"ReadFormula":"SWITCH(MODBUSR(H, 10501, Uint16), 0, \u0022Not Set\u0022, 1, \u0022M1 Supply\u0022,2, \u0022M2 Supply\u0022, \u0022Unknown\u0022)"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Set Supply Orientation","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Supply","Abbreviation":"Sup","Values":[{"Item1":0,"Item2":"Not Set"},{"Item1":1,"Item2":"Supply M1"},{"Item1":2,"Item2":"Supply M2"}]}]},"Script":"ModbusW(H, 10501, Uint16, Sup);"}]</ServiceActionsScripts>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+        <MaxPrefetchGroupSize>10</MaxPrefetchGroupSize>
+        <Variables>[]</Variables>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Atrea Thermostat</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Heating Water Valve YV1"},"ReadFormula":"IF(MODBUSR(C, 10201, Bool), \u0022Open\u0022, \u0022Closed\u0022)"},{"AttributeDefinition":{"Name":"Heating Water Pump KK"},"ReadFormula":"IF(MODBUSR(C, 10200, Bool), \u0022ON\u0022, \u0022OFF\u0022)"},{"AttributeDefinition":{"Name":" Heating (Water or Electric) SA2"},"ReadFormula":"var he := MODBUSR(H, 10203, Int16);\r\nIF(he\u003E0, \u0022Active\u0022, \u0022Inactive\u0022)"},{"AttributeDefinition":{"Name":"Heat Pump (Heating) DA1"},"ReadFormula":"var da := MODBUSR(H, 10207, Int16);\r\nIF(da\u003E0, \u0022ON\u0022, \u0022OFF\u0022)"},{"AttributeDefinition":{"Name":"Heat Pump (Heating) SE"},"ReadFormula":"IF(MODBUSR(C, 10215, Bool), \u0022Active\u0022, \u0022Inactive\u0022);"},{"AttributeDefinition":{"Name":"Heat Pump (Cooling) DA1"},"ReadFormula":"IF(MODBUSR(H, 00205, Int16) \u003E 0, \u0022ON\u0022, \u0022OFF\u0022)"},{"AttributeDefinition":{"Name":"Heat Pump (Cooling) SC"},"ReadFormula":"IF(MODBUSR(C, 10216, Bool), \u0022Active\u0022, \u0022Inactive\u0022)"},{"AttributeDefinition":{"Name":"Temp. sensor for Room Control"},"ReadFormula":"SWITCH(MODBUSR(H, 10514, Uint16), 0, \u0022CP\u0022, 1, \u0022T-ETA\u0022, 2, \u0022TRKn\u0022, 3, \u0022BMS\u0022, \u0022Unknown\u0022 )"},{"AttributeDefinition":{"Name":"Preheating"},"ReadFormula":"SWITCH(MODBUSR(H, 10504, Uint16), 0, \u0022None\u0022, 1, \u0022Electric\u0022, 2, \u0022Liquid\u0022, \u0022Unknown\u0022 );"},{"AttributeDefinition":{"Name":"Cooling"},"ReadFormula":"SWITCH(MODBUSR(H, 10507, Uint16), 0, \u0022None\u0022, 1, \u0022Water\u0022, 2, \u0022Direct\u0022, \u0022Unknown\u0022)"},{"AttributeDefinition":{"Name":"Capillary freezing"},"ReadFormula":"IF(MODBUSR(H, 10530, Uint16) \u003E 0,\u0022 DIsabled\u0022, \u0022Enabled\u0022);"},{"AttributeDefinition":{"Name":"Primary Heating"},"ReadFormula":"SWITCH (MODBUSR(H, 10503, Uint16), 0, \u0022None\u0022, 1, \u0022Contact-Water\u0022, 2, \u0022Analog Water\u0022, 3, \u0022PWM-electric\u0022, 4, \u0022Contact-Electric\u0022, 5, \u0022Thermal pump\u0022, \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"Secondary heating"},"ReadFormula":"SWITCH(MODBUSR(H, 10517, Uint16),0 , \u0022None\u0022, 1,  \u0022Contact-Water\u0022, 2, \u0022Analog water\u0022, 3, \u0022PWM-electric\u0022, \u0022Unknown\u0022);"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Temp. sensor for Room Control","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Sensor","Abbreviation":"sens","Values":[{"Item1":0,"Item2":"CP"},{"Item1":1,"Item2":"T-ETA"},{"Item1":2,"Item2":"TRKn"},{"Item1":3,"Item2":"BMS"}]}]},"Script":"MODBUSW(H, 10514, Uint16, sens);"},{"ActionDefinition":{"Name":"Primary Heating","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Heating Source","Abbreviation":"he","Values":[{"Item1":0,"Item2":"None"},{"Item1":1,"Item2":"Contact-Water"},{"Item1":2,"Item2":"Analog Water"},{"Item1":3,"Item2":"PWM-electric"},{"Item1":4,"Item2":"Contact-Electric"},{"Item1":5,"Item2":"Thermal Pump"}]}]},"Script":"MODBUSW(H, 10503, Uint16, he)"},{"ActionDefinition":{"Name":"Secondary heating","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Source","Abbreviation":"Soc","Values":[{"Item1":0,"Item2":"None"},{"Item1":1,"Item2":"Contact-Water"},{"Item1":2,"Item2":"Analog Water"},{"Item1":3,"Item2":"PWM-electric"}]}]},"Script":"MODBUSW(H, 10517, Uint16, Soc)"},{"ActionDefinition":{"Name":"Preheating","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Preheating","Abbreviation":"Pre","Values":[{"Item1":0,"Item2":"None"},{"Item1":1,"Item2":"Electric"},{"Item1":2,"Item2":"Liquid"}]}]},"Script":"MODBUSW(H, 10504, Uint16, Pre);"},{"ActionDefinition":{"Name":"Cooling","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Cooling","Abbreviation":"Coo","Values":[{"Item1":0,"Item2":"None"},{"Item1":1,"Item2":"Water"},{"Item1":2,"Item2":"Direct"}]}]},"Script":"MODBUSW(H, 10507, Uint16, Coo)"},{"ActionDefinition":{"Name":"Capillary Freezing","NumericParameters":[],"BoolParameters":[{"FriendlyName":"Capillary Freezing","Abbreviation":"CaF","OffValueName":"Disabled","OnValueName":"Enabled"}],"EnumParameters":[]},"Script":"MODBUSW(H, 10530, Uint16, CaF);"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <MinTemperature>10</MinTemperature>
+            <MaxTemperature>30</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(A, 10212, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 10716, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 10710, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Incoming Air Temperature T-SUP</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>3001</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(A, 10212, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Indoor Air Temperature T-IDA</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Source"},"ReadFormula":"var va := MODBUSR(H, 10514, Int16);\r\nSWITCH(va, 0, \u0022CP\u0022,1, \u0022ETA\u0022, 2, \u0022TRKn\u0022, 3, \u0022BMS\u0022, \u0022Unknown\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Source of T-IDA","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Source","Abbreviation":"So","Values":[{"Item1":0,"Item2":"CP"},{"Item1":1,"Item2":"ETA"},{"Item1":2,"Item2":"TRKn"},{"Item1":3,"Item2":"BMS"}]}]},"Script":"MODBUSW(H, 10514, Int16, So)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(A, 10215, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Mode Control</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>7</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>OFF</Value0Name>
+            <Value1Name>Auto</Value1Name>
+            <Value2Name>Ventilation</Value2Name>
+            <Value3Name>Circulation + Ventilation</Value3Name>
+            <Value4Name>Circulation</Value4Name>
+            <Value5Name>Night Precooling</Value5Name>
+            <Value6Name>Balance</Value6Name>
+            <Value7Name>Overpressure</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>24</Value0IconId>
+            <Value1IconId>113</Value1IconId>
+            <Value2IconId>28</Value2IconId>
+            <Value3IconId>115</Value3IconId>
+            <Value4IconId>116</Value4IconId>
+            <Value5IconId>121</Value5IconId>
+            <Value6IconId>214</Value6IconId>
+            <Value7IconId>123</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 10705, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 10709, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Outdoor Air Temperature T-ODA</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Source for T-ODA"},"ReadFormula":"var source := MODBUSR(C, 10510, Bool);\r\nIF(source = 1, \u0022Data from BMS\u0022, \u0022Built-in sensor\u0022)"},{"AttributeDefinition":{"Name":"Sensor Position"},"ReadFormula":"SWITCH(MODBUSR(H,10508, Uint16), 0, \u0022Internal\u0022, 1, \u0022External\u0022, \u0022Unknown\u0022);"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Choose Source","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Source","Abbreviation":"So","Values":[{"Item1":1,"Item2":"Data from BMS"},{"Item1":0,"Item2":"Indoor Air Conditioning Sensor"}]}]},"Script":"MODBUSW(C, 10510, Bool, So)"},{"ActionDefinition":{"Name":"T-ODA Sensor Position","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Position","Abbreviation":"pos","Values":[{"Item1":0,"Item2":"Internal"},{"Item1":1,"Item2":"External"}]}]},"Script":"MODBUSW(H,10508, Uint16, pos)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(A, 10211, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Outgoing Air Temperature T-ETA</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>3001</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(A, 10213, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Ventilation</Name>
+          <Model>ModbusDimmer</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>2008</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"M1"},"ReadFormula":"MODBUSR(H, 10200, Int16)/100 \u002B \u0022%\u0022"},{"AttributeDefinition":{"Name":"M2"},"ReadFormula":"MODBUSR(H, 10201, Int16)/100 \u002B \u0022%\u0022"},{"AttributeDefinition":{"Name":"Regulation M1 / M2"},"ReadFormula":"SWITCH(MODBUSR(H, 10510, Uint16), 0, \u0022Direct\u0022, 1, \u0022Constant flow\u0022, 2, \u0022Constant Pressure\u0022, 3, \u0022IN1 \u002B IN2\u0022, \u0022Unknown\u0022 );"},{"AttributeDefinition":{"Name":"Ventilation Interval (Auto)"},"ReadFormula":"MODBUSR(H, 10502, Uint16) \u002B\u0022 min\u0022;"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Regulation M1/M2","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Regulation","Abbreviation":"Reg","Values":[{"Item1":0,"Item2":"Direct"},{"Item1":1,"Item2":"Const. Flow"},{"Item1":2,"Item2":"Const. pressure"},{"Item1":3,"Item2":"IN1 \u002B IN2"}]}]},"Script":"MODBUSW(H, 10510, Uint16, Reg);"},{"ActionDefinition":{"Name":"Ventilation Interval (Auto)","NumericParameters":[{"FriendlyName":"Interval","Abbreviation":"Inter","IsFloat":false,"MinValue":0,"MaxValue":60}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 10502, Uint16, Inter);"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadLevel>MODBUSR(H, 10704, Int16) / 100</ReadLevel>
+            <WriteLevel>MODBUSWNE(H, 10708, Int16, Le * 100)</WriteLevel>
+            <IconId>3007</IconId>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
