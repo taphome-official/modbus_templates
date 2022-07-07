@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="67" locationId="91f85b51-4d5d-4c08-ba7d-7726b8640b0c">
-  <Template revision="1.0">
+<Templates format="2" protocolVersion="67">
+  <Template id="3800d7d4-5764-4649-90c8-12b4a2756269" revision="1.0">
     <SuggestedCCUParameters>
       <UseAsciiCommunication>False</UseAsciiCommunication>
       <StopBits>One</StopBits>
@@ -25,11 +25,12 @@
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
     </RevisionHistory>
-    <Name>ModbusModule-1</Name>
+    <Name>Helios Controls</Name>
     <CcuModel>ModbusRtuCCU</CcuModel>
-    <Producer></Producer>
-    <Model></Model>
+    <Producer>Helios</Producer>
+    <Model>easyControls 3.0</Model>
     <Description></Description>
+	<Category>1</Category>
     <Module>
       <Name>ModbusModule-1</Name>
       <Id>-1</Id>
