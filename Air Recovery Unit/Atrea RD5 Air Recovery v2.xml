@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="61">
-   <Template id="11c0acad-ea92-4066-86fd-aacc9b3807b5" revision="4.0">
+<Templates format="2" protocolVersion="61" locationId="901b9186-1ec0-44ae-aaca-4c758de154e9">
+  <Template revision="1.0">
     <SuggestedCCUParameters>
       <TcpPort>502</TcpPort>
       <DelayBetweenRequests>-1</DelayBetweenRequests>
@@ -9,27 +9,23 @@
     <ImportParameters>
       <Parameter>
         <Id>SlaveId</Id>
-		<Name>${device_SlaveId}</Name>
+        <Name>Slave Id</Name>
         <Value>1</Value>
       </Parameter>
       <Parameter>
         <Id>IpAddress</Id>
-        <Name>${ipAddress}</Name>
+        <Name>IP address</Name>
         <Value>192.168.1.0</Value>
       </Parameter>
     </ImportParameters>
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
-	  	 <Revision id="2.0">Completely reworked</Revision>
-		 <Revision id="3.0">Updated</Revision>
-		 <Revision id="4.0">Completely Reworked/Simplified</Revision>
     </RevisionHistory>
     <Name>Atrea RD5</Name>
     <CcuModel>ModbusTcpCCU</CcuModel>
-    <Producer>Atrea</Producer>
-    <Model>RD5 Air Recovery</Model>
+    <Producer></Producer>
+    <Model></Model>
     <Description></Description>
-	<Category>1</Category>
     <Module>
       <Name>Atrea RD5</Name>
       <Id>-1</Id>
