@@ -9,10 +9,12 @@
     <ImportParameters>
       <Parameter>
         <Id>SlaveId</Id>
+		<Name>${device_SlaveId}</Name>
         <Value>1</Value>
       </Parameter>
       <Parameter>
         <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
         <Value>192.168.1.0</Value>
       </Parameter>
     </ImportParameters>
