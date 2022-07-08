@@ -133,16 +133,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -231,16 +238,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":1.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -329,16 +343,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":2.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -427,16 +448,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":3.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -525,16 +553,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":4.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -623,16 +658,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":5.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -721,16 +763,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":6.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -819,16 +868,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":7.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -917,16 +973,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":8.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -1015,16 +1078,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":9.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -1113,16 +1183,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":10.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -1211,16 +1288,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":11.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -1309,16 +1393,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":12.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -1407,16 +1498,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":13.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -1505,16 +1603,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":14.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -1603,16 +1708,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":15.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -1701,16 +1813,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":16.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -1799,16 +1918,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":17.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -1897,16 +2023,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":18.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -1995,16 +2128,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":19.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -2093,16 +2233,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":20.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -2191,16 +2338,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":21.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -2289,16 +2443,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":22.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -2387,16 +2548,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":23.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -2485,16 +2653,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":24.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -2583,16 +2758,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":25.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -2681,16 +2863,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":26.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -2779,16 +2968,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":27.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -2877,16 +3073,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":28.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -2975,16 +3178,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":29.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -3073,16 +3283,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":30.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -3171,16 +3388,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":31.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -3269,16 +3493,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":32.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -3367,16 +3598,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":33.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -3465,16 +3703,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":34.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -3563,16 +3808,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":35.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -3661,16 +3913,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":36.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -3759,16 +4018,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":37.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -3857,16 +4123,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":38.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -3955,16 +4228,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":39.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -4053,16 +4333,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":40.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -4151,16 +4438,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":41.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -4249,16 +4543,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":42.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -4347,16 +4648,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":43.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -4445,16 +4753,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":44.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -4543,16 +4858,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":45.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -4641,16 +4963,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":46.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -4739,16 +5068,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":47.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -4837,16 +5173,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":48.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -4935,16 +5278,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":49.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -5033,16 +5383,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":50.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -5131,16 +5488,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":51.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -5229,16 +5593,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":52.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -5327,16 +5698,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":53.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -5425,16 +5803,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":54.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -5523,16 +5908,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":55.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -5621,16 +6013,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":56.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -5719,16 +6118,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":57.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -5817,16 +6223,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":58.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -5915,16 +6328,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":59.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -6013,16 +6433,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":60.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -6111,16 +6538,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":61.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -6209,16 +6643,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":62.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>﻿        <Device>
@@ -6307,16 +6748,23 @@ end
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Add to Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x60 + grp);"},{"ActionDefinition":{"Name":"Remove from Group","NumericParameters":[{"FriendlyName":"Group ID","Abbreviation":"grp","IsFloat":false,"MinValue":0.0,"MaxValue":15.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x70 + grp);"},{"ActionDefinition":{"Name":"Reset to Default settings","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x20);"},{"ActionDefinition":{"Name":"Set startup levels to current level","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x21);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2c);\r\nsleep(10);\r\nmodbusw(SH, 512, uint16, (ShortAddress &lt;&lt; 8) + 0x2d);"}]</ServiceActionsScripts>
             <CustomDeviceVariables>[{"Name":"ShortAddress","ValueTypeId":1,"NumericValue":63.0,"StringValue":null},{"Name":"Status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppLampFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"suppPowerFailure","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"checkStatus","ValueTypeId":1,"NumericValue":0},{"Name":"minLevel","ValueTypeId":1,"NumericValue":0},{"Name":"maxLevel","ValueTypeId":1,"NumericValue":254}]</CustomDeviceVariables>
             <ReadLevel>if Status = 0
+    if minLevel = 0
+        modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA2);
+        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        var x := modbusr(SH, 511, uint16);
+        if (x != 0x8000, minLevel := x );
+    end
     modbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0xA0);
     sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     var x := modbusr(SH, 511, uint16);
     if (x != 0x8000 or rx, checkStatus := 60);
-    if (x != 0x8000, return( linear(x , minLevel, 0, maxLevel, 1)  ), return (Le));
+    if (x != 0x8000, return( if(x = 0, 0, linear(x , minLevel, 0.01, maxLevel, 1))  ), return (Le));
 else
     return(NaN);
 end</ReadLevel>
-            <WriteLevel>modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + round(linear(Le, 0, minLevel, 1, maxLevel)) );
-</WriteLevel>
+            <WriteLevel>var level := 0;
+if(Le &gt; 0, level := round(linear(Le, 0.01, minLevel, 1, maxLevel)));
+modbusw(SH, 510, uint16, (ShortAddress &lt;&lt; 8) + level );</WriteLevel>
             <IconId>0</IconId>
           </DeviceProperties>
         </Device>
