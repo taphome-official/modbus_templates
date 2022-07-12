@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="70" locationId="5cdf3b63-2d41-4353-a192-a53d368823fb">
-  <Template revision="1.0">
+<Templates format="2" protocolVersion="70">
+  <Template id="7878b6ff-a153-45f2-8742-0cc099706561" revision="1.0">
     <SuggestedCCUParameters>
       <UseAsciiCommunication>False</UseAsciiCommunication>
       <StopBits>One</StopBits>
@@ -13,12 +13,12 @@
     <ImportParameters>
       <Parameter>
         <Id>SlaveId</Id>
-        <Name>Slave Id</Name>
+        <Name>${device_SlaveId}</Name>
         <Value>1</Value>
       </Parameter>
       <Parameter>
         <Id>IpAddress</Id>
-        <Name>IP address</Name>
+        <Name>${ipAddress}</Name>
         <Value>192.168.1.0</Value>
       </Parameter>
     </ImportParameters>
@@ -30,6 +30,7 @@
     <Producer></Producer>
     <Model></Model>
     <Description></Description>
+    <Category>1</Category>
     <Module>
       <Name>Pichler LG-350 Airvent</Name>
       <Id>-1</Id>
