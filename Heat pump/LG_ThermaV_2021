@@ -107,11 +107,11 @@ end</ReadSwitchState>
 var operateMode := Mu;
 
 if operate = 0 and operateMode &gt; 0
-    MODBUSW(C, 1, Bool, 1); # turn on
+    MODBUSW(C, 0, Bool, 1); # turn on
 end
 
 if operateMode = 0
-    MODBUSW(C, 1, Bool, 0); # off
+    MODBUSW(C, 0, Bool, 0); # off
 elseif operateMode = 1 
     MODBUSW(H, 0, Int16, 3); # auto
 elseif operateMode = 2 
