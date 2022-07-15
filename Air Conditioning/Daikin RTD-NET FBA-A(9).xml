@@ -25,14 +25,14 @@
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
     </RevisionHistory>
-    <Name>ModbusModule-1</Name>
+    <Name>Daikin RTD-NET FBA-A(9)</Name>
     <CcuModel>ModbusRtuCCU</CcuModel>
     <Producer>Daikin</Producer>
     <Model> RTD-NET FBA-A(9)</Model>
     <Description></Description>
 	<Category>3</Category>
     <Module>
-      <Name>ModbusModule-1</Name>
+      <Name>Daikin RTD-NET FBA-A(9)</Name>
       <Id>-1</Id>
       <Model>ModbusModule</Model>
       <DeviceProperties>
