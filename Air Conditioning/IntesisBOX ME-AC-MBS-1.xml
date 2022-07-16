@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="54">
+<Templates format="2" protocolVersion="70">
   <Template id="b6bd85e2-8ff3-4922-a80c-bdb95defcc1b" revision="1.0">
-    <Name>IntesisBOX ME-AC-MBS-1</Name>
-    <CcuModel>ModbusTcpCCU</CcuModel>
-    <Producer>Intesis</Producer>
-    <Model>ME-AC-MBS-1</Model>
-    <Category>3</Category>
-    <Description>Mitsubishi</Description>
-    <RevisionHistory>
-      <Revision id="1.0">Initial version</Revision>
-    </RevisionHistory>
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <Baudrate>9600</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
     <ImportParameters>
       <Parameter>
         <Name>${device_SlaveId}</Name>
@@ -22,71 +22,60 @@
         <Id>IpAddress</Id>
       </Parameter>
     </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>IntesisBOX ME-AC-MBS-1</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>Intesis</Producer>
+    <Model>>ME-AC-MBS-1</Model>
+    <Description>Mitsubishi</Description>
+    <Category>3</Category>
     <Module>
       <Name>IntesisBOX ME-AC-MBS-1</Name>
       <Id>-1</Id>
       <Model>ModbusModule</Model>
       <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <PrefetchModeId>0</PrefetchModeId>
         <SlaveId>$[SlaveId]</SlaveId>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
         <IpAddress>$[IpAddress]</IpAddress>
       </DeviceProperties>
       <Devices>
         <Device>
-          <Name>AC Unit ON/OFF</Name>
+          <Name>AC Unit Error Code</Name>
+          <Model>ModbusVariable</Model>
           <Id>-2</Id>
-          <Model>ModbusSwitch</Model>
           <DeviceProperties>
-            <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(H, 0, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(H, 0, Bool, St)</WriteSwitchState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>AC Unit Mode</Name>
-          <Id>-3</Id>
-          <Model>ModbusMultiValueSwitch</Model>
-          <DeviceProperties>
-            <InternalPollInterval>2500</InternalPollInterval>
-            <Value0Index>0</Value0Index>
-            <Value1Index>1</Value1Index>
-            <Value2Index>2</Value2Index>
-            <Value3Index>3</Value3Index>
-            <Value4Index>4</Value4Index>
-            <Value5Index>69</Value5Index>
-            <Value6Index>70</Value6Index>
-            <Value7Index>71</Value7Index>
-            <Value8Index>72</Value8Index>
-            <Value9Index>73</Value9Index>
-            <Value0Name>Auto</Value0Name>
-            <Value1Name>Heat</Value1Name>
-            <Value2Name>Dry</Value2Name>
-            <Value3Name>Fan</Value3Name>
-            <Value4Name>Cool</Value4Name>
-            <Value5Name>5</Value5Name>
-            <Value6Name>6</Value6Name>
-            <Value7Name>7</Value7Name>
-            <Value8Name>8</Value8Name>
-            <Value9Name>9</Value9Name>
-            <Value0IconId>113</Value0IconId>
-            <Value1IconId>1</Value1IconId>
-            <Value2IconId>64</Value2IconId>
-            <Value3IconId>28</Value3IconId>
-            <Value4IconId>18</Value4IconId>
-            <Value5IconId>10</Value5IconId>
-            <Value6IconId>11</Value6IconId>
-            <Value7IconId>12</Value7IconId>
-            <Value8IconId>13</Value8IconId>
-            <Value9IconId>14</Value9IconId>
-            <ReadSwitchState>MODBUSR(H, 1, Int16)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(H, 1, Int16, Mu)</WriteSwitchState>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 11, Int16)</ReadState>
+            <WriteState></WriteState>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>AC Unit FAN Speed</Name>
-          <Id>-4</Id>
           <Model>ModbusMultiValueSwitch</Model>
+          <Id>-3</Id>
           <DeviceProperties>
+            <DeviceType>0</DeviceType>
             <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
             <Value0Index>0</Value0Index>
             <Value1Index>1</Value1Index>
             <Value2Index>69</Value2Index>
@@ -117,16 +106,115 @@
             <Value7IconId>12</Value7IconId>
             <Value8IconId>13</Value8IconId>
             <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
             <ReadSwitchState>MODBUSR(H, 2, Int16)</ReadSwitchState>
             <WriteSwitchState>MODBUSWNE(H, 2, Int16, Mu)</WriteSwitchState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>AC Unit Vane Position</Name>
-          <Id>-5</Id>
+          <Name>AC Unit Mode</Name>
           <Model>ModbusMultiValueSwitch</Model>
+          <Id>-4</Id>
           <DeviceProperties>
+            <DeviceType>0</DeviceType>
             <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Auto</Value0Name>
+            <Value1Name>Heat</Value1Name>
+            <Value2Name>Dry</Value2Name>
+            <Value3Name>Fan</Value3Name>
+            <Value4Name>Cool</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>113</Value0IconId>
+            <Value1IconId>1</Value1IconId>
+            <Value2IconId>64</Value2IconId>
+            <Value3IconId>28</Value3IconId>
+            <Value4IconId>18</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 1, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 1, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Unit ON/OFF</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 0, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 0, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Unit Thermostat</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <MinTemperature>10</MinTemperature>
+            <MaxTemperature>30</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(H, 5, Int16)</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 4, Int16)</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSWNE(H, 4, Int16, Se)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>AC Unit Vane Position</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
             <Value0Index>0</Value0Index>
             <Value1Index>1</Value1Index>
             <Value2Index>2</Value2Index>
@@ -157,32 +245,9 @@
             <Value7IconId>11</Value7IconId>
             <Value8IconId>12</Value8IconId>
             <Value9IconId>138</Value9IconId>
+            <OffStateValue>0</OffStateValue>
             <ReadSwitchState>MODBUSR(H, 3, Int16)</ReadSwitchState>
             <WriteSwitchState>MODBUSWNE(H, 3, Int16, Mu)</WriteSwitchState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>AC Unit Thermostat</Name>
-          <Id>-6</Id>
-          <Model>ModbusThermostat</Model>
-          <DeviceProperties>
-            <InternalPollInterval>2500</InternalPollInterval>
-            <ReadCurrentTemperature>MODBUSR(H, 5, Int16) / 100</ReadCurrentTemperature>
-            <ReadDesiredTemperature>MODBUSR(H, 4, Int16) / 100</ReadDesiredTemperature>
-            <WriteDesiredTemperature>MODBUSWNE(H, 4, Int16, Se * 100)</WriteDesiredTemperature>
-            <ReadHumidity></ReadHumidity>
-            <ReadValveState></ReadValveState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>AC Unit Error Code</Name>
-          <Id>-7</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>15000</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 11, Int16)</ReadState>
-            <WriteState></WriteState>
           </DeviceProperties>
         </Device>
       </Devices>
