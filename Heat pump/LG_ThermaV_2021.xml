@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="70" locationId="5cdf3b63-2d41-4353-a192-a53d368823fb">
-  <Template revision="1.0">
+<Templates format="2" protocolVersion="70">
+  <Template id="6aa492d4-4434-4125-9491-c60f0888dc64" revision="1.0">
     <SuggestedCCUParameters>
       <UseAsciiCommunication>False</UseAsciiCommunication>
       <StopBits>One</StopBits>
@@ -30,6 +30,7 @@
     <Producer></Producer>
     <Model></Model>
     <Description></Description>
+    <Category>2</Category>
     <Module>
       <Name>LG ThermaV</Name>
       <Id>-1</Id>
