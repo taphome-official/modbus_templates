@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="61">
+  <Template id="5e78956c-ef3c-4900-87e9-3890d26ee331" revision="1.0">
+    <SuggestedCCUParameters>
+      <TcpPort>502</TcpPort>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>Keba KeContact</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>Keba</Producer>
+    <Model>KeContact P30</Model>
+	<Category></Category>
+    <Description></Description>
+    <Module>
+      <Name>KeContact</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Serial Number"},"ReadFormula":"MODBUSR(H, 1014, Uint32);"},{"AttributeDefinition":{"Name":"Firmware"},"ReadFormula":"var reg := MODBUSR(H, 1018, Uint32, 2);\r\nGetByte(reg, 3) \u002B \u0022.\u0022 \u002B GetByte(reg, 2) \u002B \u0022.\u0022 \u002B GetByte(reg, 1)"},{"AttributeDefinition":{"Name":"Product Type"},"ReadFormula":"var type := Floor(MODBUSR(H, 1016, Uint32,2)/100000);\r\nIF(type = 3,\u0022KC-P30\u0022 ,\u0022Unknown\u0022)"},{"AttributeDefinition":{"Name":"Cable / Socket"},"ReadFormula":"var cable := Floor(MOD(MODBUSR(H, 1016, Uint32,2),100000)/10000);\r\nSWITCH(cable, 0, \u0022Socket\u0022, 1, \u0022Cable\u0022, \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"Supported Current"},"ReadFormula":"var supcur := Floor(MOD(MODBUSR(H, 1016, Uint32,2),10000)/1000);\r\nSWITCH(supcur, 1, \u002213 A\u0022, 2, \u002216 A\u0022,3, \u002220 A\u0022, 4, \u002232 A\u0022, \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"Device Series"},"ReadFormula":"var series := Floor(MOD(MODBUSR(H, 1016, Uint32,2),1000)/100);\r\nSWITCH(series,0,\u0022x-series\u0022, 1, \u0022c-series\u0022, \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"Energy Meter"},"ReadFormula":"var meter := Floor(MOD(MODBUSR(H, 1016, Uint32,2),100)/10);\r\nSWITCH(meter, 1, \u0022Standard not calibrated\u0022, 2, \u0022Calibrated, MID\u0022, 3, \u0022Calibratable measuring instrument for electrical energy with national certification\u0022, \u0022Unknown\u0022);"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Failsafe Activation","NumericParameters":[{"FriendlyName":"Failsafe Current(6A - 32A)","Abbreviation":"fc","IsFloat":false,"MinValue":6.0,"MaxValue":32.0},{"FriendlyName":"Failsafe Timeout (10s - 600s)","Abbreviation":"Ftim","IsFloat":false,"MinValue":10.0,"MaxValue":600.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 5016, Uint16, fc);\r\nMODBUSW(H, 5018, Uint16, ftim);"},{"ActionDefinition":{"Name":"Failsafe Deactivation","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 5018, Uint16, 0);"},{"ActionDefinition":{"Name":"Charging Station Enable/Disable","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Charging Station","Abbreviation":"endis","Values":[{"Item1":1.0,"Item2":"Enable"},{"Item1":0.0,"Item2":"Disable"}]}]},"Script":"MODBUSW(H, 5014, Uint16, endis);"}]</ServiceActionsScripts>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Cable</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Unlock Plug","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 5012, Uint16, 0)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>69</Value2Index>
+            <Value3Index>2</Value3Index>
+            <Value4Index>70</Value4Index>
+            <Value5Index>3</Value5Index>
+            <Value6Index>71</Value6Index>
+            <Value7Index>4</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>No cable plugged</Value0Name>
+            <Value1Name>Connected to the charging station</Value1Name>
+            <Value2Name>2</Value2Name>
+            <Value3Name> Connected to station and locked</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>Connected to the car</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>Cable is connected and charging</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>223</Value0IconId>
+            <Value1IconId>224</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>220</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>222</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>226</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 1004, Uint32,2)</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Energy Meter</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Power Factor (cos phi)","Section":null},"ReadFormula":"(MODBUSR(H, 1046, Uint32,2)/10 ) + \"%\""},{"AttributeDefinition":{"Name":"Max Charge Current","Section":null},"ReadFormula":"(MODBUSR(H, 1100, Uint32,2)/1000) + \" A\";"},{"AttributeDefinition":{"Name":"Max Supported Current","Section":null},"ReadFormula":"MODBUSR(H, 1110, Uint32, 2)/1000 + \" A\""},{"AttributeDefinition":{"Name":"U1","Section":null},"ReadFormula":"MODBUSR(H, 1040, Uint32,2) + \" V\""},{"AttributeDefinition":{"Name":"L1","Section":null},"ReadFormula":"(MODBUSR(H, 1008, Uint32, 2)/1000) + \" A\";"},{"AttributeDefinition":{"Name":"L2","Section":null},"ReadFormula":"(MODBUSR(H, 1010, Uint32, 2)/1000) + \" A\";"},{"AttributeDefinition":{"Name":"U2","Section":null},"ReadFormula":"MODBUSR(H, 1042, Uint32,2) + \" V\""},{"AttributeDefinition":{"Name":"U3","Section":null},"ReadFormula":"MODBUSR(H, 1044, Uint32,2) + \" V\""},{"AttributeDefinition":{"Name":"L3","Section":null},"ReadFormula":"(MODBUSR(H, 1012, Uint32,2)/1000) + \" A\";"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(H, 1036, Uint32,2) / 1000</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 1020, Uint32,2) / 1000</ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Charged Energy in This Session</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"59":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:59}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>5000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 1502, Uint32)/1000 ;</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Charging State</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>6102</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript>IF(MODBUSR(H, 1000, Uint32) = 4, ADDERROR("An error has occurred with charger"));
+</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Atrib\u00FAt"}}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Set Charging Current","NumericParameters":[{"FriendlyName":"Current (6A - 63A)","Abbreviation":"curr","IsFloat":false,"MinValue":6,"MaxValue":63}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 5004, Uint16, curr*1000);"},{"ActionDefinition":{"Name":"Set Charging Session","NumericParameters":[{"FriendlyName":"Energy Transmisson (Wh)","Abbreviation":"wh","IsFloat":false,"MinValue":1,"MaxValue":100}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 5010, Uint16, wh/10 );"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Start-up of Charging</Value0Name>
+            <Value1Name>Not Ready For Charging</Value1Name>
+            <Value2Name>Ready for Charging</Value2Name>
+            <Value3Name>Charging</Value3Name>
+            <Value4Name>Error</Value4Name>
+            <Value5Name>Interrupted</Value5Name>
+            <Value6Name></Value6Name>
+            <Value7Name></Value7Name>
+            <Value8Name>${error}</Value8Name>
+            <Value9Name>${notAuthorized}</Value9Name>
+            <Value0IconId>228</Value0IconId>
+            <Value1IconId>229</Value1IconId>
+            <Value2IconId>230</Value2IconId>
+            <Value3IconId>231</Value3IconId>
+            <Value4IconId>232</Value4IconId>
+            <Value5IconId>233</Value5IconId>
+            <Value6IconId>0</Value6IconId>
+            <Value7IconId>0</Value7IconId>
+            <Value8IconId>232</Value8IconId>
+            <Value9IconId>233</Value9IconId>
+            <OffStateValue>1</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 1000, Uint32)</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
