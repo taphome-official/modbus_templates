@@ -25,7 +25,7 @@
     <CcuModel>ModbusTcpCCU</CcuModel>
     <Producer>Keba</Producer>
     <Model>KeContact P30</Model>
-	<Category></Category>
+	<Category>17</Category>
     <Description></Description>
     <Module>
       <Name>KeContact</Name>
