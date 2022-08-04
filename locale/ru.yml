@@ -1,0 +1,5 @@
+ru:
+    valueLogType_ElectricVoltage: 'Электрическое напряжение'
+    valueLogType_ElectricCurrent: 'Электрический ток'
+    template_phase: Фаза
+    template_reactive_power: ''

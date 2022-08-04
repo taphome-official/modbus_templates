@@ -1,0 +1,5 @@
+ar:
+    valueLogType_ElectricVoltage: 'الجهد الكهربائي'
+    valueLogType_ElectricCurrent: 'التيار الكهربائي'
+    template_phase: مرحلة
+    template_reactive_power: ''

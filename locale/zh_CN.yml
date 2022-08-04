@@ -1,0 +1,5 @@
+zh_CN:
+    valueLogType_ElectricVoltage: 电压
+    valueLogType_ElectricCurrent: 电流
+    template_phase: 阶段
+    template_reactive_power: ''

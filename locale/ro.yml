@@ -1,0 +1,5 @@
+ro:
+    valueLogType_ElectricVoltage: 'Tensiune electrică'
+    valueLogType_ElectricCurrent: 'Curent electric'
+    template_phase: Fază
+    template_reactive_power: ''

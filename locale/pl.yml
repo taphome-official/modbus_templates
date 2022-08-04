@@ -1,0 +1,5 @@
+pl:
+    valueLogType_ElectricVoltage: 'Napięcie elektryczne'
+    valueLogType_ElectricCurrent: 'Prąd elektryczny'
+    template_phase: Faza
+    template_reactive_power: ''

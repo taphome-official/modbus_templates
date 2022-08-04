@@ -1,0 +1,6 @@
+en:
+    valueLogType_ElectricVoltage: 'Electric voltage'
+    valueLogType_ElectricCurrent: 'Electric current'
+    template_phase: Phase
+    template_reactive_power: 'Reactive power'
+    template_apparent_power: 'Apparent power'

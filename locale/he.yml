@@ -1,0 +1,5 @@
+he:
+    valueLogType_ElectricVoltage: 'מתח חשמלי'
+    valueLogType_ElectricCurrent: 'זרם חשמלי'
+    template_phase: שלב
+    template_reactive_power: ''

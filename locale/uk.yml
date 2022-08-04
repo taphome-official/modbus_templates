@@ -1,0 +1,5 @@
+uk:
+    valueLogType_ElectricVoltage: 'Електрична напруга'
+    valueLogType_ElectricCurrent: 'Електричний струм'
+    template_phase: Фаза
+    template_reactive_power: ''

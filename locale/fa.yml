@@ -1,0 +1,5 @@
+fa:
+    valueLogType_ElectricVoltage: 'ولتاژ برق'
+    valueLogType_ElectricCurrent: 'جریان الکتریسیته'
+    template_phase: فاز
+    template_reactive_power: ''

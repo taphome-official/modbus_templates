@@ -1,0 +1,5 @@
+hr:
+    valueLogType_ElectricVoltage: 'Električni napon'
+    valueLogType_ElectricCurrent: 'Električna struja'
+    template_phase: Faza
+    template_reactive_power: ''
