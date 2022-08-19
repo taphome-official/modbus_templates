@@ -168,7 +168,7 @@ if Mu = 1
     modbusw(SH, 541, uint16, 0xB100 + getbyte(SEARCHADDRH,2));
     sleep(50);
     modbusw(SH, 541, uint16, 0xA900);
-    sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+    sleep(5); rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     x := modbusr(SH, 541, uint16);
     if rx
         return(2);
@@ -188,7 +188,7 @@ if Mu = 2
         return(3);
     end
     modbusw(SH, 511, uint16, (iterator &lt;&lt; 8) + 0x91);
-    sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+    sleep(5); rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     x := modbusr(SH, 511, uint16);
     if (x = 0xFF, SHORTADDR := iterator); 
     iterator := iterator + 1;
@@ -208,7 +208,7 @@ end
 if Mu = 4
     # COMPARE
     modbusw(SH, 541, uint16, 0xA900);
-    sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2);
+    sleep(5); rx := getbits(modbusr(SH, 550, uint16), 0, 2);
     if !rx
         sleep(50);
         rx := getbits(modbusr(SH, 550, uint16), 0, 2);
@@ -232,7 +232,7 @@ if Mu = 6
     modbusw(SH, 541, uint16, 0xB100 + getbyte(SEARCHADDRL,2));
     sleep(50);
     modbusw(SH, 541, uint16, 0xA900);
-    sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2);
+    sleep(5); rx := getbits(modbusr(SH, 550, uint16), 0, 2);
     if !rx
         sleep(50);
         rx := getbits(modbusr(SH, 550, uint16), 0, 2);
@@ -255,7 +255,7 @@ if Mu = 6
     modbusw(SH, 541, uint16, 0xB100 + getbyte(SEARCHADDRH,2));
     sleep(50);
     modbusw(SH, 541, uint16, 0xA900);
-    sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2);
+    sleep(5); rx := getbits(modbusr(SH, 550, uint16), 0, 2);
     if !rx
         sleep(50);
         rx := getbits(modbusr(SH, 550, uint16), 0, 2);
@@ -283,7 +283,7 @@ if Mu = 5
     sleep(100);
     #verify
     modbusw(SH, 541, uint16, 0xB901 + (SHORTADDR &lt;&lt; 1));
-    sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+    sleep(5); rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
     x := modbusr(SH, 541, uint16);
     if getbyte(x, 0) = 0xFF
         status := 0;
@@ -314,7 +314,7 @@ if Mu = 9
     if(status = 254, adderror("All short addresses are in use!"));
     if status = 255
         modbusw(SH, 531, uint16, 0x96);
-        sleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
+        sleep(5); rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
         x := modbusr(SH, 531, uint16);
         if getbyte(x, 0) = 0xFF
             adderror("Some gear is still missing short address, but no response from SEARCHADDRH! ( " + tostring(SEARCHADDRH, "X2") + " )");
