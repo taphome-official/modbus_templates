@@ -1,5 +1,0 @@
-el:
-    valueLogType_ElectricVoltage: 'Ηλεκτρική τάση'
-    valueLogType_ElectricCurrent: 'Ηλεκτρικό ρεύμα'
-    template_phase: Φάση
-    template_reactive_power: ''

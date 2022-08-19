@@ -1,5 +1,0 @@
-sl:
-    valueLogType_ElectricVoltage: 'Električna napetost'
-    valueLogType_ElectricCurrent: 'Električni tok'
-    template_phase: Faza
-    template_reactive_power: ''

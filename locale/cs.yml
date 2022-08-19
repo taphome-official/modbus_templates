@@ -1,5 +1,0 @@
-cs:
-    valueLogType_ElectricVoltage: 'Elektrické napětí'
-    valueLogType_ElectricCurrent: 'Elektrický proud'
-    template_phase: Fáze
-    template_reactive_power: ''

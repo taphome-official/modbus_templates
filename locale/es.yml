@@ -1,5 +1,0 @@
-es:
-    valueLogType_ElectricVoltage: 'Voltaje eléctrico'
-    valueLogType_ElectricCurrent: 'Corriente eléctrica'
-    template_phase: Fase
-    template_reactive_power: ''

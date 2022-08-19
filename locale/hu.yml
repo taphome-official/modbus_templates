@@ -1,5 +1,0 @@
-hu:
-    valueLogType_ElectricVoltage: 'Elektromos feszültség'
-    valueLogType_ElectricCurrent: 'Elektromos áram'
-    template_phase: Fázis
-    template_reactive_power: ''

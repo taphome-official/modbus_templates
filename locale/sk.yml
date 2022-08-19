@@ -1,6 +1,0 @@
-sk:
-    valueLogType_ElectricVoltage: 'Elektrické napätie'
-    valueLogType_ElectricCurrent: 'Elektrický prúd'
-    template_phase: Fáza
-    template_reactive_power: 'Jalový výkon'
-    template_apparent_power: 'Zdanlivý výkon'

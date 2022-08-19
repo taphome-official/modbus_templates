@@ -1,5 +1,0 @@
-nl:
-    valueLogType_ElectricVoltage: 'elektrische spanning'
-    valueLogType_ElectricCurrent: 'Elektrische stroom'
-    template_phase: Fase
-    template_reactive_power: ''

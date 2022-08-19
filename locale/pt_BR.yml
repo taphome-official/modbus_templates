@@ -1,5 +1,0 @@
-pt_BR:
-    valueLogType_ElectricVoltage: 'Voltagem elétrica'
-    valueLogType_ElectricCurrent: 'Corrente elétrica'
-    template_phase: Estágio
-    template_reactive_power: ''
