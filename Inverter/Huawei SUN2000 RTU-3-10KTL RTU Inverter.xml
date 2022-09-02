@@ -41,38 +41,38 @@
         <ReadScript>var a1 := MODBUSR(H, 32008, Uint16);
 var a2 := MODBUSR(H, 32009, Uint16);
 IF(GETBIT(a1,0) = 1, ADDERROR("High String Voltage", 2001));
-IF(GETBIT(a1,1) = 1, ADDERROR("DC Arc Fault", 2002));
+IF(GETBIT(a1,1) = 1, ADDERROR(${dc_arc_fault}, 2002));
 IF(GETBIT(a1,2) = 1, ADDERROR("String Reversed", 2011));
 IF(GETBIT(a1,3) = 1, ADDWARNING("PV String Backfeed ", 2012));
 IF(GETBIT(a1,4) = 1, ADDWARNING("Abnormal String", 2013));
-IF(GETBIT(a1,5) = 1, ADDERROR("AFCI Self-test Fault", 2021));
-IF(GETBIT(a1,6)= 1, ADDERROR("Short circuit between phase to PE ", 2021));
-IF(GETBIT(a1,7) = 1, ADDERROR("Power Grid Failure ", 2032));
-IF(GETBIT(a1,8) = 1, ADDERROR("Grid Undervoltage ", 2033));
-IF(GETBIT(a1,9) = 1, ADDERROR("Grid Overvoltage", 2034));
-IF(GETBIT(a1,10) = 1, ADDERROR("Unbalanced Grid Voltage", 2035));
-IF(GETBIT(a1,11) = 1, ADDERROR("Grid Overfrequency", 2036));
-IF(GETBIT(a1,12) = 1, ADDERROR("Grid Underfrequency", 2037));
-IF(GETBIT(a1,13) = 1, ADDERROR("Grid Frequency Instability", 2038));
-IF(GETBIT(a1,14) = 1, ADDERROR("Output Overcurrent ", 2039));
-IF(GETBIT(a1,15) = 1, ADDERROR("Large DC of Output current ", 2040));
-IF(GETBIT(a2,0) = 1, ADDERROR("Abnormal Leakage Current ", 2051));
-IF(GETBIT(a2,1) = 1, ADDERROR("Abnormal Ground.", 2061));
-IF(GETBIT(a2,2) = 1, ADDERROR("Low Insulation Res. ", 2062));
-IF(GETBIT(a2,3) = 1, ADDERROR("High Temperature", 2063));
-IF(GETBIT(a2,4) = 1, ADDERROR("Abnormal Equipment", 2064));
-IF(GETBIT(a2,5) = 1, ADDERROR("Upgrade Failed", 2065));
-IF(GETBIT(a2,6) = 1, ADDWARNING("License Expired", 2066));
-IF(GETBIT(a2,7) = 1, ADDERROR("Abnormal Monitor Unit", 61440));
-IF(GETBIT(a2,8) = 1, ADDERROR("Power collector fault ", 2067));
-IF(GETBIT(a2,9) = 1, ADDERROR("Abnormal energy storage device", 2068));
+IF(GETBIT(a1,5) = 1, ADDERROR(${afci_fault}, 2021));
+IF(GETBIT(a1,6)= 1, ADDERROR(${short_circ_L-PE}, 2021));
+IF(GETBIT(a1,7) = 1, ADDERROR(${power_grid_fail}, 2032));
+IF(GETBIT(a1,8) = 1, ADDERROR(${grid_undervoltage}, 2033));
+IF(GETBIT(a1,9) = 1, ADDERROR(${grid_overvoltage}, 2034));
+IF(GETBIT(a1,10) = 1, ADDERROR(${unbalanced_grid_V}, 2035));
+IF(GETBIT(a1,11) = 1, ADDERROR(${grid_overfrequency}, 2036));
+IF(GETBIT(a1,12) = 1, ADDERROR(${grid_underfrequency}, 2037));
+IF(GETBIT(a1,13) = 1, ADDERROR(${grid_freq_instability}, 2038));
+IF(GETBIT(a1,14) = 1, ADDERROR(${output_overcurr}, 2039));
+IF(GETBIT(a1,15) = 1, ADDERROR(${out_DC_large}, 2040));
+IF(GETBIT(a2,0) = 1, ADDERROR(${abnorm_leak_curr}, 2051));
+IF(GETBIT(a2,1) = 1, ADDERROR(${abnorm_gnd}, 2061));
+IF(GETBIT(a2,2) = 1, ADDERROR(${low_insul_res}, 2062));
+IF(GETBIT(a2,3) = 1, ADDERROR(${high_tempt}, 2063));
+IF(GETBIT(a2,4) = 1, ADDERROR(${abnorm_equip}, 2064));
+IF(GETBIT(a2,5) = 1, ADDERROR(${upgrade_fail}, 2065));
+IF(GETBIT(a2,6) = 1, ADDWARNING(${license_expired}, 2066));
+IF(GETBIT(a2,7) = 1, ADDERROR(${abnorm_monitor_unit}, 61440));
+IF(GETBIT(a2,8) = 1, ADDERROR(${power_collect_fault}, 2067));
+IF(GETBIT(a2,9) = 1, ADDERROR(${abnorm_energy_storage_dev}, 2068));
 IF(GETBIT(a2,10) = 1, ADDERROR("Active islanding", 2070));
 IF(GETBIT(a2,11) = 1, ADDERROR("Passive islanding", 2071));
-IF(GETBIT(a2,12) = 1, ADDERROR("Transient AC overvoltage", 2072));
-IF(GETBIT(a2,15) = 1, ADDERROR("Abnormal PV module configuration", 2080));</ReadScript>
+IF(GETBIT(a2,12) = 1, ADDERROR(${trans_AC_overvoltage}, 2072));
+IF(GETBIT(a2,15) = 1, ADDERROR(${abnorm_PV_module_config}, 2080));</ReadScript>
         <PrefetchModeId>0</PrefetchModeId>
-        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Model Name","Section":null},"ReadFormula":"MODBUSR(H, 30000, String, 15)"},{"AttributeDefinition":{"Name":"SN","Section":null},"ReadFormula":"MODBUSR(H, 30015, String, 10)"},{"AttributeDefinition":{"Name":"PN","Section":null},"ReadFormula":"MODBUSR(H, 30025, String, 10)"},{"AttributeDefinition":{"Name":"Model ID","Section":null},"ReadFormula":"MODBUSR(H, 30070, Uint16)\r\n"},{"AttributeDefinition":{"Name":"Number of Strings","Section":null},"ReadFormula":"MODBUSR(H, 30071, Uint16)"},{"AttributeDefinition":{"Name":"MPPT Number","Section":null},"ReadFormula":"MODBUSR(H, 30072, Uint16)"},{"AttributeDefinition":{"Name":"System Time","Section":null},"ReadFormula":"var reg := MODBUSR(H, 40000, Uint32, 2);\r\nvar min := FLOOR(MOD(reg, 3600)/60);\r\nvar ho := FLOOR(MOD(reg,86400)/3600);\r\nvar day := FLOOR(MOD(reg,2629743)/86400);\r\nvar mon := FLOOR(MOD(reg,31556926)/2629743);\r\nvar year := FLOOR(reg/31556926);\r\nho + \":\" + FLOOR(min);"},{"AttributeDefinition":{"Name":"Time Zone","Section":null},"ReadFormula":"IF(MODBUSR(H, 43006, Int16) = 0, \"UTC±00:00\");\r\nvar time := MODBUSR(H, 43006, Int16)/0.6;\r\nvar zone := IF(MOD(time,100) = 0, time/100 + \":00\", ROUND(time/100) + \":\" + MOD(time,100));\r\nIF(zone &gt; 0, \"UTC+\" + zone, \"UTC-\" + zone )"},{"AttributeDefinition":{"Name":"Inverter Efficiency","Section":null},"ReadFormula":" MODBUSR(H, 32086, Uint16)/100 + \"%\""},{"AttributeDefinition":{"Name":"Cabinet Temperature","Section":null},"ReadFormula":"MODBUSR(H, 32087, Int16) / 10 + \" ℃ \""},{"AttributeDefinition":{"Name":"Insulation Resistance","Section":null},"ReadFormula":"MODBUSR(H, 32088, Uint16)/1000 + \"MΩ \""},{"AttributeDefinition":{"Name":"DSP data collection","Section":null},"ReadFormula":"IF(GETBIT(MODBUSR(H, 32002, Uint16),0) = 1, \"Yes\", \"No\")"}]</ServiceAttributesFormulas>
-        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Time Zone","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Time Zone","Abbreviation":"timz","Values":[{"Item1":-12.0,"Item2":"UTC-12:00"},{"Item1":-11.0,"Item2":"UTC-11:00"},{"Item1":-10.0,"Item2":"UTC-10:00"},{"Item1":-9.5,"Item2":"UTC-09:30"},{"Item1":-9.0,"Item2":"UTC-09:00"},{"Item1":-8.0,"Item2":"UTC-08:00"},{"Item1":-7.0,"Item2":"UTC-07:00"},{"Item1":-6.0,"Item2":"UTC-06:00"},{"Item1":-5.0,"Item2":"UTC-05:00"},{"Item1":-4.0,"Item2":"UTC-04:00"},{"Item1":-3.5,"Item2":"UTC-03:30"},{"Item1":-3.0,"Item2":"UTC-03:00"},{"Item1":-2.0,"Item2":"UTC-02:00"},{"Item1":-1.0,"Item2":"UTC-01:00"},{"Item1":0.0,"Item2":"UTC±00:00"},{"Item1":1.0,"Item2":"UTC+01:00"},{"Item1":2.0,"Item2":"UTC+02:00"},{"Item1":3.0,"Item2":"UTC+03:00"},{"Item1":3.5,"Item2":"UTC+03:30"},{"Item1":4.0,"Item2":"UTC+04:00"},{"Item1":4.5,"Item2":"UTC+04:30"},{"Item1":5.0,"Item2":"UTC+05:00"},{"Item1":5.5,"Item2":"UTC+05:30"},{"Item1":5.75,"Item2":"UTC+05:45"},{"Item1":6.0,"Item2":"UTC+06:00"},{"Item1":6.5,"Item2":"UTC+06:30"},{"Item1":7.0,"Item2":"UTC+07:00"},{"Item1":8.0,"Item2":"UTC+08:00"},{"Item1":8.75,"Item2":"UTC+08:45"},{"Item1":9.0,"Item2":"UTC+09:00"},{"Item1":9.5,"Item2":"UTC+09:30"},{"Item1":10.0,"Item2":"UTC+10:00"},{"Item1":10.5,"Item2":"UTC+10:30"},{"Item1":11.0,"Item2":"UTC+11:00"},{"Item1":12.0,"Item2":"UTC+12:00"},{"Item1":12.75,"Item2":"UTC+12:45"},{"Item1":13.0,"Item2":"UTC+13:00"},{"Item1":14.0,"Item2":"UTC+14:00"}]}]},"Script":"MODBUSWNE(H, 43006, Int16, timz*60)"}]</ServiceActionsScripts>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":${model_name},"Section":null},"ReadFormula":"MODBUSR(H, 30000, String, 15)"},{"AttributeDefinition":{"Name":"SN","Section":null},"ReadFormula":"MODBUSR(H, 30015, String, 10)"},{"AttributeDefinition":{"Name":"PN","Section":null},"ReadFormula":"MODBUSR(H, 30025, String, 10)"},{"AttributeDefinition":{"Name":"Model ID","Section":null},"ReadFormula":"MODBUSR(H, 30070, Uint16)\r\n"},{"AttributeDefinition":{"Name":"Number of Strings","Section":null},"ReadFormula":"MODBUSR(H, 30071, Uint16)"},{"AttributeDefinition":{"Name":"MPPT ${number}","Section":null},"ReadFormula":"MODBUSR(H, 30072, Uint16)"},{"AttributeDefinition":{"Name":${system_time},"Section":null},"ReadFormula":"var reg := MODBUSR(H, 40000, Uint32, 2);\r\nvar min := FLOOR(MOD(reg, 3600)/60);\r\nvar ho := FLOOR(MOD(reg,86400)/3600);\r\nvar day := FLOOR(MOD(reg,2629743)/86400);\r\nvar mon := FLOOR(MOD(reg,31556926)/2629743);\r\nvar year := FLOOR(reg/31556926);\r\nho + \":\" + FLOOR(min);"},{"AttributeDefinition":{"Name":${time_zone},"Section":null},"ReadFormula":"IF(MODBUSR(H, 43006, Int16) = 0, \"UTC±00:00\");\r\nvar time := MODBUSR(H, 43006, Int16)/0.6;\r\nvar zone := IF(MOD(time,100) = 0, time/100 + \":00\", ROUND(time/100) + \":\" + MOD(time,100));\r\nIF(zone &gt; 0, \"UTC+\" + zone, \"UTC-\" + zone )"},{"AttributeDefinition":{"Name":${inverter_efficiency},"Section":null},"ReadFormula":" MODBUSR(H, 32086, Uint16)/100 + \"%\""},{"AttributeDefinition":{"Name":${cabinet_tempt},"Section":null},"ReadFormula":"MODBUSR(H, 32087, Int16) / 10 + \" ℃ \""},{"AttributeDefinition":{"Name":${insul_res},"Section":null},"ReadFormula":"MODBUSR(H, 32088, Uint16)/1000 + \"MΩ \""},{"AttributeDefinition":{"Name":${dsp_data_coll},"Section":null},"ReadFormula":"IF(GETBIT(MODBUSR(H, 32002, Uint16),0) = 1, ${yes}, ${no})"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":${time_zone},"NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Time Zone","Abbreviation":"timz","Values":[{"Item1":-12.0,"Item2":"UTC-12:00"},{"Item1":-11.0,"Item2":"UTC-11:00"},{"Item1":-10.0,"Item2":"UTC-10:00"},{"Item1":-9.5,"Item2":"UTC-09:30"},{"Item1":-9.0,"Item2":"UTC-09:00"},{"Item1":-8.0,"Item2":"UTC-08:00"},{"Item1":-7.0,"Item2":"UTC-07:00"},{"Item1":-6.0,"Item2":"UTC-06:00"},{"Item1":-5.0,"Item2":"UTC-05:00"},{"Item1":-4.0,"Item2":"UTC-04:00"},{"Item1":-3.5,"Item2":"UTC-03:30"},{"Item1":-3.0,"Item2":"UTC-03:00"},{"Item1":-2.0,"Item2":"UTC-02:00"},{"Item1":-1.0,"Item2":"UTC-01:00"},{"Item1":0.0,"Item2":"UTC±00:00"},{"Item1":1.0,"Item2":"UTC+01:00"},{"Item1":2.0,"Item2":"UTC+02:00"},{"Item1":3.0,"Item2":"UTC+03:00"},{"Item1":3.5,"Item2":"UTC+03:30"},{"Item1":4.0,"Item2":"UTC+04:00"},{"Item1":4.5,"Item2":"UTC+04:30"},{"Item1":5.0,"Item2":"UTC+05:00"},{"Item1":5.5,"Item2":"UTC+05:30"},{"Item1":5.75,"Item2":"UTC+05:45"},{"Item1":6.0,"Item2":"UTC+06:00"},{"Item1":6.5,"Item2":"UTC+06:30"},{"Item1":7.0,"Item2":"UTC+07:00"},{"Item1":8.0,"Item2":"UTC+08:00"},{"Item1":8.75,"Item2":"UTC+08:45"},{"Item1":9.0,"Item2":"UTC+09:00"},{"Item1":9.5,"Item2":"UTC+09:30"},{"Item1":10.0,"Item2":"UTC+10:00"},{"Item1":10.5,"Item2":"UTC+10:30"},{"Item1":11.0,"Item2":"UTC+11:00"},{"Item1":12.0,"Item2":"UTC+12:00"},{"Item1":12.75,"Item2":"UTC+12:45"},{"Item1":13.0,"Item2":"UTC+13:00"},{"Item1":14.0,"Item2":"UTC+14:00"}]}]},"Script":"MODBUSWNE(H, 43006, Int16, timz*60)"}]</ServiceActionsScripts>
         <SlaveId>$[SlaveId]</SlaveId>
         <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
         <IpAddress>$[IpAddress]</IpAddress>
@@ -88,17 +88,17 @@ IF(GETBIT(a2,15) = 1, ADDERROR("Abnormal PV module configuration", 2080));</Read
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
             <PrefetchModeId>0</PrefetchModeId>
-            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Active Power peak of this day","Section":null},"ReadFormula":"var pf := MODBUSR(H ,32084, Int16) ;\r\nMODBUSR(H, 32078, Int32, 2) + \" kW\""},{"AttributeDefinition":{"Name":"Reactive Power","Section":null},"ReadFormula":"var pf := MODBUSR(H ,32084, Int16) ;\r\nMODBUSR(H, 32082, Int32, 2)/pf + \" kVar\""},{"AttributeDefinition":{"Name":"Rated Power","Section":null},"ReadFormula":"MODBUSR(H, 30073, Uint32, 2)/1000 + \" kW\""},{"AttributeDefinition":{"Name":"Reactive Power Compensation (PF)","Section":null},"ReadFormula":"MODBUSR(H, 40122, Int16)/1000"},{"AttributeDefinition":{"Name":"Reactive Power Compensation (Q/S)","Section":null},"ReadFormula":"MODBUSR(H, 40123, Int16)/1000"},{"AttributeDefinition":{"Name":"Active Power Derating percent (0.1%)","Section":null},"ReadFormula":"MODBUSR(H, 40122, Int16)/10 + \"%\""},{"AttributeDefinition":{"Name":"Active Power Derating (fixed value W)","Section":null},"ReadFormula":"MODBUSR(H, 40126, Uint32, 2) + \" W\""},{"AttributeDefinition":{"Name":"Maximum Active Power","Section":null},"ReadFormula":"MODBUSR(H, 30075, Uint32, 2)/1000 + \" kW\""},{"AttributeDefinition":{"Name":"Maximum Apparent Power","Section":null},"ReadFormula":"MODBUSR(H, 30077, Uint32, 2)/1000 + \" kVA\""},{"AttributeDefinition":{"Name":"Maximum reactive power (fed to grid)","Section":null},"ReadFormula":"MODBUSR(H, 30079, Uint32, 2)/1000 + \" kVar\""},{"AttributeDefinition":{"Name":"Maximum reactive power (absorbed from grid)","Section":null},"ReadFormula":"MODBUSR(H, 30081, Uint32, 2)/1000 + \" kVar\""}]</ServiceAttributesFormulas>
-            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Reactive Power Compensation (PF)","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Reactive power compensation","Abbreviation":"pf","Values":[{"Item1":-1.0,"Item2":"-1"},{"Item1":-0.9,"Item2":"-0.9"},{"Item1":-0.8,"Item2":"-0.8"},{"Item1":0.8,"Item2":"0.8"},{"Item1":0.9,"Item2":"0.9"},{"Item1":1.0,"Item2":"1"}]}]},"Script":"MODBUSWNE(H, 40122, Int16, pf*1000);"},{"ActionDefinition":{"Name":"Reactive Power Compensation (Q/S)","NumericParameters":[{"FriendlyName":"Reactive power compensation (-1, 1]","Abbreviation":"rpc","IsFloat":true,"MinValue":-1.0,"MaxValue":1.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 40123, Int16, rpc*1000);"},{"ActionDefinition":{"Name":"Active Power Derating Percent(%)","NumericParameters":[{"FriendlyName":"Active Power Derating Percent(%)","Abbreviation":"apdp","IsFloat":false,"MinValue":0.0,"MaxValue":100.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 40125, Uint16, apdp*10)"}]</ServiceActionsScripts>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":${act_pow_peak_thisday},"Section":null},"ReadFormula":"var pf := MODBUSR(H ,32084, Int16) ;\r\nMODBUSR(H, 32078, Int32, 2) + \" kW\""},{"AttributeDefinition":{"Name":${reactive_power},"Section":null},"ReadFormula":"var pf := MODBUSR(H ,32084, Int16) ;\r\nMODBUSR(H, 32082, Int32, 2)/pf + \" kVar\""},{"AttributeDefinition":{"Name":${rated_pow},"Section":null},"ReadFormula":"MODBUSR(H, 30073, Uint32, 2)/1000 + \" kW\""},{"AttributeDefinition":{"Name":${react_pow_compensation} + "(PW)","Section":null},"ReadFormula":"MODBUSR(H, 40122, Int16)/1000"},{"AttributeDefinition":{"Name":${react_pow_compensation} + "(Q/S)","Section":null},"ReadFormula":"MODBUSR(H, 40123, Int16)/1000"},{"AttributeDefinition":{"Name":"${act_pow_derating_%} (0.1%)","Section":null},"ReadFormula":"MODBUSR(H, 40122, Int16)/10 + \"%\""},{"AttributeDefinition":{"Name":"${active_pow_derating} (fixed value W)","Section":null},"ReadFormula":"MODBUSR(H, 40126, Uint32, 2) + \" W\""},{"AttributeDefinition":{"Name":${max_act_pow},"Section":null},"ReadFormula":"MODBUSR(H, 30075, Uint32, 2)/1000 + \" kW\""},{"AttributeDefinition":{"Name":${max_apparent_pow},"Section":null},"ReadFormula":"MODBUSR(H, 30077, Uint32, 2)/1000 + \" kVA\""},{"AttributeDefinition":{"Name":${max_reactive_pow_fedToGrid},"Section":null},"ReadFormula":"MODBUSR(H, 30079, Uint32, 2)/1000 + \" kVar\""},{"AttributeDefinition":{"Name":${max_reactive_pow_absFromGrid},"Section":null},"ReadFormula":"MODBUSR(H, 30081, Uint32, 2)/1000 + \" kVar\""}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"${react_pow_compensation} (PF)","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Reactive power compensation","Abbreviation":"pf","Values":[{"Item1":-1.0,"Item2":"-1"},{"Item1":-0.9,"Item2":"-0.9"},{"Item1":-0.8,"Item2":"-0.8"},{"Item1":0.8,"Item2":"0.8"},{"Item1":0.9,"Item2":"0.9"},{"Item1":1.0,"Item2":"1"}]}]},"Script":"MODBUSWNE(H, 40122, Int16, pf*1000);"},{"ActionDefinition":{"Name":"${react_pow_compensation} (Q/S)","NumericParameters":[{"FriendlyName":"Reactive power compensation (-1, 1]","Abbreviation":"rpc","IsFloat":true,"MinValue":-1.0,"MaxValue":1.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 40123, Int16, rpc*1000);"},{"ActionDefinition":{"Name":${active_pow_derating_%},"NumericParameters":[{"FriendlyName":"Active Power Derating Percent(%)","Abbreviation":"apdp","IsFloat":false,"MinValue":0.0,"MaxValue":100.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 40125, Uint16, apdp*10)"}]</ServiceActionsScripts>
             <CustomDeviceVariables />
             <ReadTotalConsumption></ReadTotalConsumption>
             <ReadDemand>var pf := MODBUSR(H ,32084, Int16) ;
-MODBUSR(H, 32080, Int32,2) /pf</ReadDemand>
+						MODBUSR(H, 32080, Int32,2) /pf</ReadDemand>
             <Calibration>0</Calibration>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Energy Today</Name>
+          <Name>${energy_today}</Name>
           <Model>ModbusVariable</Model>
           <Id>-3</Id>
           <DeviceProperties>
@@ -117,7 +117,7 @@ MODBUSR(H, 32080, Int32,2) /pf</ReadDemand>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Energy Total</Name>
+          <Name>${total_energy}</Name>
           <Model>ModbusVariable</Model>
           <Id>-4</Id>
           <DeviceProperties>
@@ -136,7 +136,7 @@ MODBUSR(H, 32080, Int32,2) /pf</ReadDemand>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Input Power</Name>
+          <Name>${input_pow}</Name>
           <Model>ModbusElectricityMeter</Model>
           <Id>-5</Id>
           <DeviceProperties>
@@ -154,7 +154,7 @@ MODBUSR(H, 32080, Int32,2) /pf</ReadDemand>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Inverter State</Name>
+          <Name>${inverter_state}</Name>
           <Model>ModbusMultiValueSwitch</Model>
           <Id>-6</Id>
           <DeviceProperties>
@@ -176,16 +176,16 @@ MODBUSR(H, 32080, Int32,2) /pf</ReadDemand>
             <Value7Index>6</Value7Index>
             <Value8Index>7</Value8Index>
             <Value9Index>9</Value9Index>
-            <Value0Name>Initializing</Value0Name>
-            <Value1Name>Idle</Value1Name>
-            <Value2Name>Starting</Value2Name>
-            <Value3Name>On-Grid</Value3Name>
+            <Value0Name>${inverter_state}</Value0Name>
+            <Value1Name>${idle}</Value1Name>
+            <Value2Name>${starting}</Value2Name>
+            <Value3Name>On Grid</Value3Name>
             <Value4Name>Shutdown</Value4Name>
             <Value5Name>Grid Dispatch</Value5Name>
             <Value6Name>IV scanning</Value6Name>
             <Value7Name>Spot-Check</Value7Name>
-            <Value8Name>Inspecting</Value8Name>
-            <Value9Name>DC input detection</Value9Name>
+            <Value8Name>${inspecting}</Value8Name>
+            <Value9Name>${dc_input_det }</Value9Name>
             <Value0IconId>227</Value0IconId>
             <Value1IconId>226</Value1IconId>
             <Value2IconId>107</Value2IconId>
@@ -213,7 +213,7 @@ IF(reg = 2304, 9
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>PV1 Current</Name>
+          <Name>PV1 ${current}</Name>
           <Model>ModbusVariable</Model>
           <Id>-7</Id>
           <DeviceProperties>
@@ -232,7 +232,7 @@ IF(reg = 2304, 9
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>PV2 Current</Name>
+          <Name>PV2 ${current}</Name>
           <Model>ModbusVariable</Model>
           <Id>-8</Id>
           <DeviceProperties>
@@ -251,7 +251,7 @@ IF(reg = 2304, 9
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>PV3 Current</Name>
+          <Name>PV3 ${current}</Name>
           <Model>ModbusVariable</Model>
           <Id>-9</Id>
           <DeviceProperties>
@@ -270,7 +270,7 @@ IF(reg = 2304, 9
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>PV4 Current</Name>
+          <Name>PV4 ${current}</Name>
           <Model>ModbusVariable</Model>
           <Id>-10</Id>
           <DeviceProperties>
