@@ -1,0 +1,277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="61">
+  <Template id="7074bbf4-6c89-4028-b28b-9e5d0e33d819" revision="1.0">
+    <SuggestedCCUParameters>
+      <TcpPort>502</TcpPort>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>227</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>Vitron GX Line Inverter</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>Vitron</Producer>
+    <Model>GX line</Model>
+    <Description></Description>
+	<Category>8</Category>
+    <Module>
+      <Name>Vitron GX Line Inverter</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <ReadScript>var temp := MODBUSR(H, 34, Uint16);
+IF(temp = 1, ADDWARNING("Temperature alarm"));
+IF(temp = 2, ADDERROR("Temperature alarm"));
+var low := MODBUSR(H, 35, Uint16);
+IF(low = 1, ADDWARNING("Low Battery alarm"));
+IF(low = 2, ADDERROR("Low Battery alarm"));
+var over := MODBUSR(H, 36, Uint16);
+IF(over = 1, ADDWARNING("Overload alarm"));
+IF(over = 2, ADDERROR("Overload alarm"));
+var seb := MODBUSR(H, 42, Uint16);
+IF(seb = 1, ADDWARNING("Temperature sensor alarm"));
+IF(seb = 2, ADDERROR("Temperature sensor alarm"));
+var vol := MODBUSR(H, 43, Uint16);
+IF(vol = 1, ADDWARNING("Voltage sensor alarm"));
+IF(vol = 2, ADDERROR("Voltage sensor alarm"));
+IF(MODBUSR(H, 63, Uint16) = 1, ADDWARNING("Phase Rotation Warning"));
+IF(MODBUSR(H, 64, Uint16) = 1, ADDERROR("Grid Lost Alarm"));</ReadScript>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Phase Count"},"ReadFormula":"MODBUSR(H, 28, Uint16);"},{"AttributeDefinition":{"Name":"Switch Position"},"ReadFormula":"var reg := MODBUSR(H, 33, Uint16);\r\nSwitch(reg, 1, \u0022Charger Only\u0022, 2, \u0022Inverter Only\u0022, 3 ,\u0022On\u0022, 4, \u0022Off\u0022, \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"Active Input"},"ReadFormula":"var reg := MODBUSR(H, 29, Uint16);\r\nswitch(reg, 0, \u0022AC Input 1\u0022, 1, \u0022AC Input 2\u0022, 240, \u0022Disconnected\u0022, \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"ESS Disable Charge flag phase"},"ReadFormula":"IF(MODBUSR(H, 38, Uint16) = 1, \u0022Charge disabled\u0022, \u0022Charge enabled\u0022)"},{"AttributeDefinition":{"Name":"ESS Disable Charge feedback phase"},"ReadFormula":"IF(MODBUSR(H, 39, Uint16) = 1, \u0022Feed disabled\u0022);\r\nIF(MODBUSR(H, 39, Uint16) = 0, \u0022Feed in enabled\u0022, \u0022Not set\u0022);"},{"AttributeDefinition":{"Name":"ESS power setpoint phase 1"},"ReadFormula":"MODBUSR(H, 37, Uint16) \u002B \u0022 W\u0022;"},{"AttributeDefinition":{"Name":"ESS power setpoint phase 2"},"ReadFormula":"MODBUSR(H, 40, Uint16) \u002B \u0022 W\u0022;"},{"AttributeDefinition":{"Name":"ESS power setpoint phase 3"},"ReadFormula":"MODBUSR(H, 41, Uint16) \u002B \u0022 W\u0022;"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Switch Position","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Switch Position","Abbreviation":"pos","Values":[{"Item1":1,"Item2":"Charger Only"},{"Item1":2,"Item2":"Inverter Only"},{"Item1":3,"Item2":"On"},{"Item1":4,"Item2":"Off"}]}]},"Script":"MODBUSWNE(H, 33, uint16, pos);"},{"ActionDefinition":{"Name":"Charge flag phase","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Charge flag phase","Abbreviation":"chfp","Values":[{"Item1":0,"Item2":"Charge allowed"},{"Item1":1,"Item2":"Charge disabled"}]}]},"Script":"MODBUSWNE(H, 38, Uint16, chfp);"},{"ActionDefinition":{"Name":"Feedback flag phase","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Feedback flag phase","Abbreviation":"ffp","Values":[{"Item1":0,"Item2":"Feed in allowed"},{"Item1":1,"Item2":"Charge disabled"}]}]},"Script":"MODBUSWNE(H, 39, Uint16, ffp);"}]</ServiceActionsScripts>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Active Input Current Limit</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"88":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":88}\"}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Set Limit","NumericParameters":[{"FriendlyName":"Active Input Current Limit [A]","Abbreviation":"aic","IsFloat":true,"MinValue":0.0,"MaxValue":100.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSWNE(H, 22, Int16, aic*10)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 22, int16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Battery</Name>
+          <Model>ModbusDimmer</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript>var reg := MODBUSR(H, 32, Uint16);
+SWITCH(reg, 1, ADDERROR("VE.Bus Error 1: Device is switched off because one of the other phases in the system has switched of"), 2, "VE.Bus Error 2: New and old types MK2 are mixed in the system", 3, "VE.Bus Error 3: Not all- or more than- the expected devices were found in the system", 4, "VE.Bus Error 4: No other device whatsoever detected", 5, "VE.Bus Error 5: Overvoltage on AC-out", 6, "VE.Bus Error 6: Error in DDC Program", 7, "VE.Bus BMS connected- which requires an Assistant- but no assistant found", 10, "VE.Bus Error 10: System time synchronisation problem occurred", 14, "VE.Bus Error 14: Device cannot transmit data", 16, "VE.Bus Error 16: Dongle missing", 17, "VE.Bus Error 17: One of the devices assumed master status because the original master failed",18, "VE.Bus Error 18: AC Overvoltage on the output of a slave has occurred while already switched off", 22, "VE.Bus Error 22: This device cannot function as slave", 24, "VE.Bus Error 24: Switch-over system protection initiated", 25, "VE.Bus Error 25: Firmware incompatibility. The firmware of one of the connected device is not sufficiently up to date to operate in conjunction with this device", 26, "VE.Bus Error 26: Internal error", "No error");
+IF(MODBUSR(H, 60, Uint16) = 1, ADDERROR("VE.Bus BMS error"));</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Battery Voltage"},"ReadFormula":"MODBUSR(H, 26, Uint16)/100 \u002B \u0022 V\u0022;"},{"AttributeDefinition":{"Name":"Battery Current"},"ReadFormula":"ABS(MODBUSR(H, 27, int16)/10) \u002B \u0022 A\u0022;\r\n"},{"AttributeDefinition":{"Name":"Flow"},"ReadFormula":"var reg := MODBUSR(H, 27, int16);\r\nIF(reg = 0, \u0022-\u0022);\r\nIF(reg \u003C 0, \u0022DC system to Multi\u0022, \u0022Multi to DC system\u0022);"},{"AttributeDefinition":{"Name":"Battery Temperature"},"ReadFormula":"var tempt := MODBUSR(H, 61, Int16)/10; \r\nIF(tempt = 0, \u0022Unknown\u0022, tempt \u002B \u0022 \u00B0C\u0022)"},{"AttributeDefinition":{"Name":"State"},"ReadFormula":"var reg := MODBUSR(H, 31, Uint16);\r\nSWITCH(reg, 0, \u0022Off\u0022,\r\n 1, \u0022Low Power\u0022,\r\n 2, \u0022Fault\u0022,\r\n 3, \u0022Bulk\u0022,\r\n 4, \u0022Absorbtion\u0022,\r\n 5, \u0022Float\u0022, \r\n 6, \u0022Storage\u0022, \r\n 7, \u0022Equalize\u0022, \r\n 8, \u0022Passtru\u0022, \r\n 9, \u0022Inverting\u0022, \r\n 10, \u0022Power Assist\u0022, \r\n 11, \u0022Power Supply\u0022, \r\n 252, \u0022Bulk protection\u0022,\r\n \u0022Unknown\u0022 );"},{"AttributeDefinition":{"Name":"VE.Bus BMS allows battery to be charged"},"ReadFormula":"SWITCH(MODBUSR(H, 57, Uint16), 0, \u0022No\u0022, 1, \u0022Yes\u0022, \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"VE.Bus BMS allows battery to be discharged"},"ReadFormula":"SWITCH(MODBUSR(H, 58, Uint16), 0, \u0022No\u0022, 1, \u0022Yes\u0022, \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"VE.Bus BMS is expected"},"ReadFormula":"SWITCH(MODBUSR(H, 59, Uint16), 0, \u0022No\u0022, 1, \u0022Yes\u0022, \u0022Unknown\u0022);"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"VE.Bus Reset","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Reset","Abbreviation":"res","Values":[{"Item1":1,"Item2":"Reset"}]}]},"Script":"MODBUSW(H, 62, Uint16, res);"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadLevel>MODBUSR(H, 30, UInt16) / 1000</ReadLevel>
+            <WriteLevel></WriteLevel>
+            <IconId>0</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Feed DC overvoltage into grid</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Maximum overvoltage feed-in power L1"},"ReadFormula":"MODBUSR(H, 66, Uint16)/ 0.01 \u002B \u0022 W\u0022;"},{"AttributeDefinition":{"Name":"Maximum overvoltage feed-in power L2"},"ReadFormula":"MODBUSR(H, 67, Uint16)/ 0.01 \u002B \u0022 W\u0022;"},{"AttributeDefinition":{"Name":"Maximum overvoltage feed-in power L3"},"ReadFormula":"MODBUSR(H, 68, Uint16)/ 0.01 \u002B \u0022 W\u0022;"},{"AttributeDefinition":{"Name":"AC input 1 "},"ReadFormula":"SWITCH(MODBUSR(H, 69, Uint16), 0, \u0022not ignored\u0022, 1, \u0022ignored\u0022, \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"AC input 2"},"ReadFormula":"SWITCH(MODBUSR(H, 70, Uint16), 0, \u0022not ignored\u0022, 1, \u0022ignored\u0022, \u0022Unknown\u0022);"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Maximum overvoltage feed-in power","NumericParameters":[{"FriendlyName":"L1[W]","Abbreviation":"L1","IsFloat":false,"MinValue":0,"MaxValue":6553500},{"FriendlyName":"L2[W]","Abbreviation":"L2","IsFloat":false,"MinValue":0,"MaxValue":6553500},{"FriendlyName":"L3[W]","Abbreviation":"L3","IsFloat":false,"MinValue":0,"MaxValue":65535}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSWNE(H, 66, Uint16, L1)/100;\r\nMODBUSWNE(H, 67, Uint16, L2)/100;\r\nMODBUSWNE(H, 68, Uint16, L2)/100;"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <NegateState>True</NegateState>
+            <OnStateIconId>107</OnStateIconId>
+            <OffStateIconId>108</OffStateIconId>
+            <OnStateName>Feed in overvoltage</OnStateName>
+            <OffStateName>Don't feed in overvoltage</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 65, Uint16);</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 65, Uint16, St);</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Input Power 1</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Input Voltage L1"},"ReadFormula":"MODBUSR(H, 3, Uint16)/10  \u002B \u0022 V\u0022"},{"AttributeDefinition":{"Name":"Input Current L1"},"ReadFormula":"MODBUSR(H, 6, Int16)/10  \u002B \u0022 A\u0022;"},{"AttributeDefinition":{"Name":"Input Frequency 1"},"ReadFormula":"MODBUSR(H, 9, Int16)/100  \u002B \u0022 Hz\u0022;"},{"AttributeDefinition":{"Name":"ESS power setpoint phase 1"},"ReadFormula":"MODBUSR(H, 37, int16) \u002B \u0022 W\u0022;"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"ESS power setpoint phase 1","NumericParameters":[{"FriendlyName":"Power setpoint L1 [W]","Abbreviation":"L1","IsFloat":false,"MinValue":-32768,"MaxValue":32768}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 37, int16, L1);"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption></ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 12, Int16) / 100</ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Input Power 2</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Input Voltage L2"},"ReadFormula":"MODBUSR(H, 4, Uint16)/10  \u002B \u0022 V\u0022"},{"AttributeDefinition":{"Name":"Input Current L2"},"ReadFormula":"MODBUSR(H, 7, Int16)/10  \u002B \u0022 A\u0022;"},{"AttributeDefinition":{"Name":"Input Frequency 2"},"ReadFormula":"MODBUSR(H, 10, Int16)/100  \u002B \u0022 Hz\u0022;"},{"AttributeDefinition":{"Name":"ESS power setpoint phase 2"},"ReadFormula":"MODBUSR(H, 40, int16) \u002B \u0022 W\u0022;"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"ESS power setpoint phase 2","NumericParameters":[{"FriendlyName":"ESS Power setpoint L2 [W]","Abbreviation":"L2","IsFloat":false,"MinValue":-32768,"MaxValue":32768}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 40, Int16, L2)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption></ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 13, Int16) / 100</ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Input Power 3</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Input Voltage L3"},"ReadFormula":"MODBUSR(H, 5, Uint16)/10  \u002B \u0022 V\u0022"},{"AttributeDefinition":{"Name":"Input Current L3"},"ReadFormula":"MODBUSR(H, 8, Int16)/10  \u002B \u0022 A\u0022;"},{"AttributeDefinition":{"Name":"Input Frequency 3"},"ReadFormula":"MODBUSR(H, 11, Int16)/100  \u002B \u0022 Hz\u0022;"},{"AttributeDefinition":{"Name":"ESS power setpoint phase 3"},"ReadFormula":"MODBUSR(H, 41, int16) \u002B \u0022 W\u0022;"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"ESS power setpoint phase 3","NumericParameters":[{"FriendlyName":"ESS power setpoint L3 [W]","Abbreviation":"L3","IsFloat":false,"MinValue":-32768,"MaxValue":32768}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 41, Int16, L3)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption></ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 14, Int16) / 100</ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Output power 1</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>5000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript>var tem := MODBUSR(H, 44, Uint16);
+SWITCH(tem,1, ADDWARNING("Temperature Alarm L1"), 2, ADDERROR("Temperature Alarm L1"),"");
+var bat := MODBUSR(H, 45, Uint16);
+SWITCH(bat,1, ADDWARNING("Low Battery Alarm L1"), 2, ADDERROR("Low Battery Alarm L1"),"");
+var ove := MODBUSR(H, 46, Uint16);
+SWITCH(ove,1, ADDWARNING("Overload Alarm L1"), 2, ADDERROR("Overload Alarm L1"),"");
+var rip := MODBUSR(H, 47, Uint16);
+SWITCH(rip,1, ADDWARNING("Ripple Alarm L1"), 2, ADDERROR("Ripple Alarm L1"),"");</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Output Voltage L1","Section":null},"ReadFormula":"MODBUSR(H, 15, UInt16)/10  + \" V\";"},{"AttributeDefinition":{"Name":"Output Current L1","Section":null},"ReadFormula":"MODBUSR(H, 18, Int16)/10  + \" A\";"},{"AttributeDefinition":{"Name":"Output Frequency","Section":null},"ReadFormula":"MODBUSR(H, 21, Int16)/100 + \" Hz\";"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption></ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 18, Int16) / 100</ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Output Power 2</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript>var tem := MODBUSR(H, 48, Uint16);
+SWITCH(tem,1, ADDWARNING("Temperature Alarm L2"), 2, ADDERROR("Temperature Alarm L2"),"");
+var bat := MODBUSR(H, 49, Uint16);
+SWITCH(bat,1, ADDWARNING("Low Battery Alarm L2"), 2, ADDERROR("Low Battery Alarm L2"),"");
+var ove := MODBUSR(H, 50, Uint16);
+SWITCH(ove,1, ADDWARNING("Overload Alarm L2"), 2, ADDERROR("Overload Alarm L2"),"");
+var rip := MODBUSR(H, 51, Uint16);
+SWITCH(rip,1, ADDWARNING("Ripple Alarm L2"), 2, ADDERROR("Ripple Alarm L2"),"");</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Output voltage L2","Section":null},"ReadFormula":"MODBUSR(H, 16, UInt16)/10  + \" V\";"},{"AttributeDefinition":{"Name":"Output Current L2","Section":null},"ReadFormula":"MODBUSR(H, 19, Int16)/10  + \" A\";"},{"AttributeDefinition":{"Name":"Output Frequency","Section":null},"ReadFormula":"MODBUSR(H, 21, Int16)/100 + \" Hz\";"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption></ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 24, Int16) / 100</ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Output Power 3</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript>var tem := MODBUSR(H, 52, Uint16);
+SWITCH(tem,1, ADDWARNING("Temperature Alarm L3"), 2, ADDERROR("Temperature Alarm L3"),"");
+var bat := MODBUSR(H, 53, Uint16);
+SWITCH(bat,1, ADDWARNING("Low Battery Alarm L3"), 2, ADDERROR("Low Battery Alarm L3"),"");
+var ove := MODBUSR(H, 54, Uint16);
+SWITCH(ove,1, ADDWARNING("Overload Alarm L3"), 2, ADDERROR("Overload Alarm L3"),"");
+var rip := MODBUSR(H, 55, Uint16);
+SWITCH(rip,1, ADDWARNING("Ripple Alarm L3"), 2, ADDERROR("Ripple Alarm L3"),"");</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Output Voltage L3"},"ReadFormula":"MODBUSR(H, 17, UInt16)/10  \u002B \u0022 V\u0022;"},{"AttributeDefinition":{"Name":"Output Current L3"},"ReadFormula":"MODBUSR(H, 20, Int16)/10  \u002B \u0022 A\u0022;"},{"AttributeDefinition":{"Name":"Output Frequency"},"ReadFormula":"MODBUSR(H, 21, Int16)/100 \u002B \u0022 Hz\u0022;"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption></ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 25, Int16) / 100</ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>PV inverter </Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-11</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <NegateState>False</NegateState>
+            <OnStateIconId>227</OnStateIconId>
+            <OffStateIconId>226</OffStateIconId>
+            <OnStateName>PV disabled</OnStateName>
+            <OffStateName>PV enabled</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 56, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 56, Uint16, St);</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
