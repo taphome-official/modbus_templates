@@ -25,13 +25,13 @@
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
     </RevisionHistory>
-    <Name>Sinclair Uni Split</Name>
+    <Name>Sinclair</Name>
     <CcuModel>ModbusRtuCCU</CcuModel>
     <Producer>Sinclair</Producer>
     <Model></Model>
     <Description>Uni Split</Description>
     <Module>
-      <Name>Sinclair Terrel</Name>
+      <Name>Sinclair</Name>
       <Id>-1</Id>
       <Model>ModbusModule</Model>
       <DeviceProperties>
@@ -113,9 +113,59 @@
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Mode</Name>
+          <Name>Left&amp;Right Swing</Name>
           <Model>ModbusMultiValueSwitch</Model>
           <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>66</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Off</Value0Name>
+            <Value1Name>left to right swing
+</Value1Name>
+            <Value2Name>1 position</Value2Name>
+            <Value3Name>2 position</Value3Name>
+            <Value4Name>3 position</Value4Name>
+            <Value5Name>4 position</Value5Name>
+            <Value6Name>5 position</Value6Name>
+            <Value7Name>Air Swing at Opposite Direction</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>15 position</Value9Name>
+            <Value0IconId>139</Value0IconId>
+            <Value1IconId>138</Value1IconId>
+            <Value2IconId>137</Value2IconId>
+            <Value3IconId>136</Value3IconId>
+            <Value4IconId>135</Value4IconId>
+            <Value5IconId>134</Value5IconId>
+            <Value6IconId>133</Value6IconId>
+            <Value7IconId>262</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>132</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>var reg := MODBUSR(H, 23, UInt16);
+reg</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 23, Uint16, Mu);</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Mode</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-5</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>2500</InternalPollInterval>
@@ -158,15 +208,13 @@
             <OffStateValue>-1</OffStateValue>
             <ReadSwitchState>var reg := MODBUSR(H, 17, uInt16);
 reg</ReadSwitchState>
-            <WriteSwitchState>var reg := SWITCH(Mu, 1, 1, 2, 16, 3, 17, 4, 256, 5, 257, 257);
-MODBUSW(H, 17, Uint16, Mu);
-var pec := MODBUSR(H, 17, Uint16);</WriteSwitchState>
+            <WriteSwitchState>MODBUSW(H, 17, Uint16, Mu);</WriteSwitchState>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>Outdoor Temperature</Name>
           <Model>ModbusTemperatureSensor</Model>
-          <Id>-5</Id>
+          <Id>-6</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>15000</InternalPollInterval>
@@ -184,7 +232,7 @@ var pec := MODBUSR(H, 17, Uint16);</WriteSwitchState>
         <Device>
           <Name>Power</Name>
           <Model>ModbusSwitch</Model>
-          <Id>-6</Id>
+          <Id>-7</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>5000</InternalPollInterval>
@@ -207,7 +255,7 @@ MODBUSWNE(H, 2, Uint16, res);</WriteSwitchState>
         <Device>
           <Name>Sleep Mode</Name>
           <Model>ModbusMultiValueSwitch</Model>
-          <Id>-7</Id>
+          <Id>-8</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>2500</InternalPollInterval>
@@ -250,6 +298,54 @@ MODBUSWNE(H, 2, Uint16, res);</WriteSwitchState>
             <OffStateValue>0</OffStateValue>
             <ReadSwitchState>MODBUSR(H, 25, Uint16);</ReadSwitchState>
             <WriteSwitchState>MODBUSW(H, 25, Uint16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Up&amp;Down Swing</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>66</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Off</Value0Name>
+            <Value1Name>up and down</Value1Name>
+            <Value2Name>1 position</Value2Name>
+            <Value3Name>2 position</Value3Name>
+            <Value4Name>3 position</Value4Name>
+            <Value5Name>4 position</Value5Name>
+            <Value6Name>5 position</Value6Name>
+            <Value7Name>35 air swing</Value7Name>
+            <Value8Name>25 air swing</Value8Name>
+            <Value9Name>24 air swing</Value9Name>
+            <Value0IconId>141</Value0IconId>
+            <Value1IconId>140</Value1IconId>
+            <Value2IconId>136</Value2IconId>
+            <Value3IconId>135</Value3IconId>
+            <Value4IconId>134</Value4IconId>
+            <Value5IconId>133</Value5IconId>
+            <Value6IconId>132</Value6IconId>
+            <Value7IconId>129</Value7IconId>
+            <Value8IconId>127</Value8IconId>
+            <Value9IconId>126</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 22, Uint16);</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 22, UInt16, Mu);</WriteSwitchState>
           </DeviceProperties>
         </Device>
       </Devices>
