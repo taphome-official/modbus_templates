@@ -26,7 +26,7 @@
       <Revision id="1.0">Initial version</Revision>
 	  <Revision id="2.0">Update with translation</Revision>
     </RevisionHistory>
-    <Name>Modbus Module 1</Name>
+    <Name>Samsung</Name>
     <CcuModel>ModbusRtuCCU</CcuModel>
     <Producer>Samsung</Producer>
     <Model>HE/HT/EHS</Model>
