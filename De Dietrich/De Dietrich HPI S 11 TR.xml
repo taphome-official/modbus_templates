@@ -1,0 +1,713 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="61">
+  <Template revision="1.0" id ="5dcb824b-d2fc-42bc-8c56-c5ced0f5c58f" >
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <Baudrate>9600</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version - soon to be translated</Revision>
+    </RevisionHistory>
+    <Name>De Dietrich HPI</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>De Dietrich</Producer>
+    <Model>HPI S 11 TR S/E</Model>
+    <Description>GTW08</Description>
+    <Module>
+      <Name>De Dietrich HPI</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <ReadScript>IF(MODBUSR(H, 512, Uint16) = 1, ADDINFO("Je vyžadován servis"));
+IF(MODBUSR(H, 532, Uint16) != 65535,
+ADDERROR(Switch(Modbusr(H, 533, Uint16), 0, "Zajištení", 3, "Zablokování",
+6, "Výstraha", "Chyba"
+ ) + " zařízení 1 " + MODBUSR(H, 532, Uint16)
+ )
+ );
+ 
+ IF(MODBUSR(H, 534, Uint16) != 65535,
+ ADDERROR(Switch(Modbusr(H, 535, Uint16), 0, "Zajištení", 3, "Zablokování",
+6, "Výstraha", "Chyba"
+ ) + " zařízení 2 " + MODBUSR(H, 534, Uint16)
+ )
+ );
+ 
+  IF(MODBUSR(H, 536, Uint16) != 65535,
+  ADDERROR(Switch(Modbusr(H, 537, Uint16), 0, "Zajištení", 3, "Zablokování",
+6, "Výstraha", "Chyba"
+ ) + " zařízení 3 " + MODBUSR(H, 536, Uint16)
+ )
+ );
+ 
+  IF(MODBUSR(H, 538, Uint16) != 65535,
+  ADDERROR(Switch(Modbusr(H, 539, Uint16), 0, "Zajištení", 3, "Zablokování",
+6, "Výstraha", "Chyba"
+ ) + " zařízení 4 " + MODBUSR(H, 538, Uint16)
+ )
+ );
+ 
+   IF(MODBUSR(H, 540, Uint16) != 65535,
+   ADDERROR(Switch(Modbusr(H, 541, Uint16), 0, "Zajištení", 3, "Zablokování",
+6, "Výstraha", "Chyba"
+ ) + " zařízení 5 " + MODBUSR(H, 540, Uint16)
+ )
+ );
+ 
+    IF(MODBUSR(H, 542, Uint16) != 65535,
+    ADDERROR(Switch(Modbusr(H, 543, Uint16), 0, "Zajištení", 3, "Zablokování",
+6, "Výstraha", "Chyba"
+ ) + " zařízení 6 " + MODBUSR(H, 542, Uint16)
+ )
+ );
+ 
+    IF(MODBUSR(H, 544, Uint16) != 65535,
+    ADDERROR(Switch(Modbusr(H, 545, Uint16), 0, "Zajištení", 3, "Zablokování",
+6, "Výstraha", "Chyba"
+ ) + " zařízení 7 " + MODBUSR(H, 544, Uint16)
+ )
+ );
+ 
+    IF(MODBUSR(H, 546, Uint16) != 65535,
+    ADDERROR(Switch(Modbusr(H, 547, Uint16), 0, "Zajištení", 3, "Zablokování",
+6, "Výstraha", "Chyba"
+ ) + " zařízení 8 " + MODBUSR(H, 546, Uint16)
+ )
+ );
+ 
+    IF(MODBUSR(H, 548, Uint16) != 65535,
+    ADDERROR(Switch(Modbusr(H, 549, Uint16), 0, "Zajištení", 3, "Zablokování",
+6, "Výstraha", "Chyba"
+ ) + " zařízení 9 " + MODBUSR(H, 548, Uint16)
+ )
+ );
+ 
+    IF(MODBUSR(H, 550, Uint16) != 65535,
+    ADDERROR(Switch(Modbusr(H, 551, Uint16), 0, "Zajištení", 3, "Zablokování",
+6, "Výstraha", "Chyba"
+ ) + " zařízení 10 " + MODBUSR(H, 550, Uint16)
+ )
+ );</ReadScript>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Cascade Number","Section":null},"ReadFormula":"SWITCH (MODBUSR(H, 7000, Uint16), 1, \"Master\", 255, \"Not a Member\", \"Slave\")"},{"AttributeDefinition":{"Name":"Počet Zón v zařízení","Section":null},"ReadFormula":"MODBUSR(H, 189, Uint16);"},{"AttributeDefinition":{"Name":"Počet deaktivovaných zón přítomných v zařízení","Section":null},"ReadFormula":"MODBUSR(H, 190, Uint16);"},{"AttributeDefinition":{"Name":"Počet zón vytápění přítomných v zařízení","Section":null},"ReadFormula":"MODBUSR(H, 191, Uint16);"},{"AttributeDefinition":{"Name":"Počet zón vytápění/chlazení přítomných v zařízení","Section":null},"ReadFormula":"MODBUSR(H, 192, Uint16);"},{"AttributeDefinition":{"Name":"Počet zón horké vody přítomných v zařízení","Section":null},"ReadFormula":"MODBUSR(H, 193, Uint16);"},{"AttributeDefinition":{"Name":"Počet zón procesu vytápění přítomných v zařízení","Section":null},"ReadFormula":"MODBUSR(H, 194, Uint16);"},{"AttributeDefinition":{"Name":"Počet zón bazénů přítomných v zařízení","Section":null},"ReadFormula":"MODBUSR(H, 195, Uint16);"}]</ServiceAttributesFormulas>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Aktuální výstupní výkon</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 272, Int16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Průtočná teplota</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(H, 403, Int16) / 100</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Režim provozu zóny 1</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zkr\u00E1cen\u00FD n\u00E1zev z\u00F3ny"},"ReadFormula":"MODBUSR(H, 0*512\u002B642, String, 3)"},{"AttributeDefinition":{"Name":"Typ po\u017Eadovan\u00E9 z\u00F3ny"},"ReadFormula":"SWITCH(MODBUSR(H, 0*512\u002B640, Uint16),\r\n 0, \u0022Nen\u00ED p\u0159\u00EDtomno \u0022,\r\n 1, \u0022Pouze \u00DAT\u0022,\r\n 2, \u0022\u00DAT \u002B CHLAZEN\u00CD\u0022,\r\n 3, \u0022TV\u0022,\r\n 4, \u0022Vyt\u00E1p\u011Bn\u00ED v provozu\u0022,\r\n 5, \u0022Baz\u00E9n\u0022,\r\n\u0022Dal\u0161\u00ED\u0022\r\n);"},{"AttributeDefinition":{"Name":"Funkce Z\u00F3ny"},"ReadFormula":"SWITCH(MODBUSR(H, 0*512\u002B640, Uint16),\r\n0, \u0022Neaktivn\u00ED\u0022,\r\n1, \u0022P\u0159\u00EDm\u00E1\u0022,\r\n2, \u0022Sm\u011Bs okruh\u016F\u0022,\r\n3, \u0022Baz\u00E9n\u0022,\r\n4, \u0022Vysok\u00E1 teplota\u0022,\r\n5, \u0022Konvektor s v\u011Btr\u00E1kem\u0022,\r\n6, \u0022Z\u00E1sobn\u00EDk TV\u0022,\r\n7, \u0022Elektrick\u00FD z\u00E1sobn\u00EDk TV\u0022,\r\n8, \u0022\u010Casov\u00FD program\u0022,\r\n9, \u0022Vyt\u00E1p\u011Bn\u00ED v provozu\u0022,\r\n10, \u0022TV po stupn\u00EDch\u0022,\r\n11, \u0022TV BIC\u0022,\r\n12, \u0022TV komer\u010Dn\u00ED z\u00E1sobn\u00EDk\u0022,\r\n\u0022Prim\u00E1rn\u00ED TV\u0022\r\n);"},{"AttributeDefinition":{"Name":"\u010Cerpadlo Z\u00F3ny"},"ReadFormula":"IF(MODBUSR(H, 0*512\u002B1110, Uint16) = 1, \u0022ON\u0022, \u0022OFF\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>Ruční</Value1Name>
+            <Value2Name>Ochrana proti zamrznutí</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>115</Value1IconId>
+            <Value2IconId>3</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>-1</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 0*512+649, UInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 0*512+649, UInt16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Režim provozu zóny 2</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zkr\u00E1cen\u00FD n\u00E1zev z\u00F3ny"},"ReadFormula":"MODBUSR(H, 1*512\u002B642, String, 3)"},{"AttributeDefinition":{"Name":"Typ po\u017Eadovan\u00E9 z\u00F3ny"},"ReadFormula":"SWITCH(MODBUSR(H, 1*512\u002B640, Uint16),\r\n 0, \u0022Nen\u00ED p\u0159\u00EDtomno \u0022,\r\n 1, \u0022Pouze \u00DAT\u0022,\r\n 2, \u0022\u00DAT \u002B CHLAZEN\u00CD\u0022,\r\n 3, \u0022TV\u0022,\r\n 4, \u0022Vyt\u00E1p\u011Bn\u00ED v provozu\u0022,\r\n 5, \u0022Baz\u00E9n\u0022,\r\n\u0022Dal\u0161\u00ED\u0022\r\n);"},{"AttributeDefinition":{"Name":"Funkce Z\u00F3ny"},"ReadFormula":"SWITCH(MODBUSR(H, 1*512\u002B640, Uint16),\r\n0, \u0022Neaktivn\u00ED\u0022,\r\n1, \u0022P\u0159\u00EDm\u00E1\u0022,\r\n2, \u0022Sm\u011Bs okruh\u016F\u0022,\r\n3, \u0022Baz\u00E9n\u0022,\r\n4, \u0022Vysok\u00E1 teplota\u0022,\r\n5, \u0022Konvektor s v\u011Btr\u00E1kem\u0022,\r\n6, \u0022Z\u00E1sobn\u00EDk TV\u0022,\r\n7, \u0022Elektrick\u00FD z\u00E1sobn\u00EDk TV\u0022,\r\n8, \u0022\u010Casov\u00FD program\u0022,\r\n9, \u0022Vyt\u00E1p\u011Bn\u00ED v provozu\u0022,\r\n10, \u0022TV po stupn\u00EDch\u0022,\r\n11, \u0022TV BIC\u0022,\r\n12, \u0022TV komer\u010Dn\u00ED z\u00E1sobn\u00EDk\u0022,\r\n\u0022Prim\u00E1rn\u00ED TV\u0022\r\n);"},{"AttributeDefinition":{"Name":"\u010Cerpadlo Z\u00F3ny"},"ReadFormula":"IF(MODBUSR(H, 1*512\u002B1110, Uint16) = 1, \u0022ON\u0022, \u0022OFF\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>Ruční</Value1Name>
+            <Value2Name>Ochrana proti zamrznutí</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>115</Value1IconId>
+            <Value2IconId>3</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>-1</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 1*512+649, UInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 1*512+649, UInt16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Režim provozu zóny 3</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zkr\u00E1cen\u00FD n\u00E1zev z\u00F3ny"},"ReadFormula":"MODBUSR(H, 2*512\u002B642, String, 3)"},{"AttributeDefinition":{"Name":"Typ po\u017Eadovan\u00E9 z\u00F3ny"},"ReadFormula":"SWITCH(MODBUSR(H, 2*512\u002B640, Uint16),\r\n 0, \u0022Nen\u00ED p\u0159\u00EDtomno \u0022,\r\n 1, \u0022Pouze \u00DAT\u0022,\r\n 2, \u0022\u00DAT \u002B CHLAZEN\u00CD\u0022,\r\n 3, \u0022TV\u0022,\r\n 4, \u0022Vyt\u00E1p\u011Bn\u00ED v provozu\u0022,\r\n 5, \u0022Baz\u00E9n\u0022,\r\n\u0022Dal\u0161\u00ED\u0022\r\n);"},{"AttributeDefinition":{"Name":"Funkce Z\u00F3ny"},"ReadFormula":"SWITCH(MODBUSR(H, 2*512\u002B640, Uint16),\r\n0, \u0022Neaktivn\u00ED\u0022,\r\n1, \u0022P\u0159\u00EDm\u00E1\u0022,\r\n2, \u0022Sm\u011Bs okruh\u016F\u0022,\r\n3, \u0022Baz\u00E9n\u0022,\r\n4, \u0022Vysok\u00E1 teplota\u0022,\r\n5, \u0022Konvektor s v\u011Btr\u00E1kem\u0022,\r\n6, \u0022Z\u00E1sobn\u00EDk TV\u0022,\r\n7, \u0022Elektrick\u00FD z\u00E1sobn\u00EDk TV\u0022,\r\n8, \u0022\u010Casov\u00FD program\u0022,\r\n9, \u0022Vyt\u00E1p\u011Bn\u00ED v provozu\u0022,\r\n10, \u0022TV po stupn\u00EDch\u0022,\r\n11, \u0022TV BIC\u0022,\r\n12, \u0022TV komer\u010Dn\u00ED z\u00E1sobn\u00EDk\u0022,\r\n\u0022Prim\u00E1rn\u00ED TV\u0022\r\n);"},{"AttributeDefinition":{"Name":"\u010Cerpadlo Z\u00F3ny"},"ReadFormula":"IF(MODBUSR(H, 2*512\u002B1110, Uint16) = 1, \u0022ON\u0022, \u0022OFF\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>Ruční</Value1Name>
+            <Value2Name>Ochrana proti zamrznutí</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>115</Value1IconId>
+            <Value2IconId>3</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>-1</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 2*512+649, UInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 2*512+649, UInt16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Režim provozu zóny 4</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zkr\u00E1cen\u00FD n\u00E1zev z\u00F3ny"},"ReadFormula":"MODBUSR(H, 3*512\u002B642, String, 3)"},{"AttributeDefinition":{"Name":"Typ po\u017Eadovan\u00E9 z\u00F3ny"},"ReadFormula":"SWITCH(MODBUSR(H, 3*512\u002B640, Uint16),\r\n 0, \u0022Nen\u00ED p\u0159\u00EDtomno \u0022,\r\n 1, \u0022Pouze \u00DAT\u0022,\r\n 2, \u0022\u00DAT \u002B CHLAZEN\u00CD\u0022,\r\n 3, \u0022TV\u0022,\r\n 4, \u0022Vyt\u00E1p\u011Bn\u00ED v provozu\u0022,\r\n 5, \u0022Baz\u00E9n\u0022,\r\n\u0022Dal\u0161\u00ED\u0022\r\n);"},{"AttributeDefinition":{"Name":"Funkce Z\u00F3ny"},"ReadFormula":"SWITCH(MODBUSR(H, 3*512\u002B640, Uint16),\r\n0, \u0022Neaktivn\u00ED\u0022,\r\n1, \u0022P\u0159\u00EDm\u00E1\u0022,\r\n2, \u0022Sm\u011Bs okruh\u016F\u0022,\r\n3, \u0022Baz\u00E9n\u0022,\r\n4, \u0022Vysok\u00E1 teplota\u0022,\r\n5, \u0022Konvektor s v\u011Btr\u00E1kem\u0022,\r\n6, \u0022Z\u00E1sobn\u00EDk TV\u0022,\r\n7, \u0022Elektrick\u00FD z\u00E1sobn\u00EDk TV\u0022,\r\n8, \u0022\u010Casov\u00FD program\u0022,\r\n9, \u0022Vyt\u00E1p\u011Bn\u00ED v provozu\u0022,\r\n10, \u0022TV po stupn\u00EDch\u0022,\r\n11, \u0022TV BIC\u0022,\r\n12, \u0022TV komer\u010Dn\u00ED z\u00E1sobn\u00EDk\u0022,\r\n\u0022Prim\u00E1rn\u00ED TV\u0022\r\n);"},{"AttributeDefinition":{"Name":"\u010Cerpadlo Z\u00F3ny"},"ReadFormula":"IF(MODBUSR(H, 3*512\u002B1110, Uint16) = 1, \u0022ON\u0022, \u0022OFF\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>Ruční</Value1Name>
+            <Value2Name>Ochrana proti zamrznutí</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>115</Value1IconId>
+            <Value2IconId>3</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>-1</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 3*512+649, UInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 3*512+649, UInt16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Režim provozu zóny 5</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zkr\u00E1cen\u00FD n\u00E1zev z\u00F3ny"},"ReadFormula":"MODBUSR(H, 4*512\u002B642, String, 3)"},{"AttributeDefinition":{"Name":"Typ po\u017Eadovan\u00E9 z\u00F3ny"},"ReadFormula":"SWITCH(MODBUSR(H, 4*512\u002B640, Uint16),\r\n 0, \u0022Nen\u00ED p\u0159\u00EDtomno \u0022,\r\n 1, \u0022Pouze \u00DAT\u0022,\r\n 2, \u0022\u00DAT \u002B CHLAZEN\u00CD\u0022,\r\n 3, \u0022TV\u0022,\r\n 4, \u0022Vyt\u00E1p\u011Bn\u00ED v provozu\u0022,\r\n 5, \u0022Baz\u00E9n\u0022,\r\n\u0022Dal\u0161\u00ED\u0022\r\n);"},{"AttributeDefinition":{"Name":"Funkce Z\u00F3ny"},"ReadFormula":"SWITCH(MODBUSR(H, 4*512\u002B640, Uint16),\r\n0, \u0022Neaktivn\u00ED\u0022,\r\n1, \u0022P\u0159\u00EDm\u00E1\u0022,\r\n2, \u0022Sm\u011Bs okruh\u016F\u0022,\r\n3, \u0022Baz\u00E9n\u0022,\r\n4, \u0022Vysok\u00E1 teplota\u0022,\r\n5, \u0022Konvektor s v\u011Btr\u00E1kem\u0022,\r\n6, \u0022Z\u00E1sobn\u00EDk TV\u0022,\r\n7, \u0022Elektrick\u00FD z\u00E1sobn\u00EDk TV\u0022,\r\n8, \u0022\u010Casov\u00FD program\u0022,\r\n9, \u0022Vyt\u00E1p\u011Bn\u00ED v provozu\u0022,\r\n10, \u0022TV po stupn\u00EDch\u0022,\r\n11, \u0022TV BIC\u0022,\r\n12, \u0022TV komer\u010Dn\u00ED z\u00E1sobn\u00EDk\u0022,\r\n\u0022Prim\u00E1rn\u00ED TV\u0022\r\n);"},{"AttributeDefinition":{"Name":"\u010Cerpadlo Z\u00F3ny"},"ReadFormula":"IF(MODBUSR(H, 4*512\u002B1110, Uint16) = 1, \u0022ON\u0022, \u0022OFF\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Neaktivní</Value0Name>
+            <Value1Name>Ruční</Value1Name>
+            <Value2Name>Ochrana proti zamrznutí</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>115</Value1IconId>
+            <Value2IconId>3</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>-1</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 4*512+649, UInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 4*512+649, UInt16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Režim provozu zóny 6</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zkr\u00E1cen\u00FD n\u00E1zev z\u00F3ny"},"ReadFormula":"MODBUSR(H, 5*512\u002B642, String, 3)"},{"AttributeDefinition":{"Name":"Typ po\u017Eadovan\u00E9 z\u00F3ny"},"ReadFormula":"SWITCH(MODBUSR(H, 5*512\u002B640, Uint16),\r\n 0, \u0022Nen\u00ED p\u0159\u00EDtomno \u0022,\r\n 1, \u0022Pouze \u00DAT\u0022,\r\n 2, \u0022\u00DAT \u002B CHLAZEN\u00CD\u0022,\r\n 3, \u0022TV\u0022,\r\n 4, \u0022Vyt\u00E1p\u011Bn\u00ED v provozu\u0022,\r\n 5, \u0022Baz\u00E9n\u0022,\r\n\u0022Dal\u0161\u00ED\u0022\r\n);"},{"AttributeDefinition":{"Name":"Funkce Z\u00F3ny"},"ReadFormula":"SWITCH(MODBUSR(H, 5*512\u002B640, Uint16),\r\n0, \u0022Neaktivn\u00ED\u0022,\r\n1, \u0022P\u0159\u00EDm\u00E1\u0022,\r\n2, \u0022Sm\u011Bs okruh\u016F\u0022,\r\n3, \u0022Baz\u00E9n\u0022,\r\n4, \u0022Vysok\u00E1 teplota\u0022,\r\n5, \u0022Konvektor s v\u011Btr\u00E1kem\u0022,\r\n6, \u0022Z\u00E1sobn\u00EDk TV\u0022,\r\n7, \u0022Elektrick\u00FD z\u00E1sobn\u00EDk TV\u0022,\r\n8, \u0022\u010Casov\u00FD program\u0022,\r\n9, \u0022Vyt\u00E1p\u011Bn\u00ED v provozu\u0022,\r\n10, \u0022TV po stupn\u00EDch\u0022,\r\n11, \u0022TV BIC\u0022,\r\n12, \u0022TV komer\u010Dn\u00ED z\u00E1sobn\u00EDk\u0022,\r\n\u0022Prim\u00E1rn\u00ED TV\u0022\r\n);"},{"AttributeDefinition":{"Name":"\u010Cerpadlo Z\u00F3ny"},"ReadFormula":"IF(MODBUSR(H, 5*512\u002B1110, Uint16) = 1, \u0022ON\u0022, \u0022OFF\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Neaktivní</Value0Name>
+            <Value1Name>Ruční</Value1Name>
+            <Value2Name>Ochrana proti zamrznutí</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>115</Value1IconId>
+            <Value2IconId>3</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>-1</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 5*512+649, UInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 5*512+649, UInt16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Režim provozu zóny 7</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zkr\u00E1cen\u00FD n\u00E1zev z\u00F3ny"},"ReadFormula":"MODBUSR(H, 6*512\u002B642, String, 3)"},{"AttributeDefinition":{"Name":"Typ po\u017Eadovan\u00E9 z\u00F3ny"},"ReadFormula":"SWITCH(MODBUSR(H, 6*512\u002B640, Uint16),\r\n 0, \u0022Nen\u00ED p\u0159\u00EDtomno \u0022,\r\n 1, \u0022Pouze \u00DAT\u0022,\r\n 2, \u0022\u00DAT \u002B CHLAZEN\u00CD\u0022,\r\n 3, \u0022TV\u0022,\r\n 4, \u0022Vyt\u00E1p\u011Bn\u00ED v provozu\u0022,\r\n 5, \u0022Baz\u00E9n\u0022,\r\n\u0022Dal\u0161\u00ED\u0022\r\n);"},{"AttributeDefinition":{"Name":"Funkce Z\u00F3ny"},"ReadFormula":"SWITCH(MODBUSR(H, 6*512\u002B640, Uint16),\r\n0, \u0022Neaktivn\u00ED\u0022,\r\n1, \u0022P\u0159\u00EDm\u00E1\u0022,\r\n2, \u0022Sm\u011Bs okruh\u016F\u0022,\r\n3, \u0022Baz\u00E9n\u0022,\r\n4, \u0022Vysok\u00E1 teplota\u0022,\r\n5, \u0022Konvektor s v\u011Btr\u00E1kem\u0022,\r\n6, \u0022Z\u00E1sobn\u00EDk TV\u0022,\r\n7, \u0022Elektrick\u00FD z\u00E1sobn\u00EDk TV\u0022,\r\n8, \u0022\u010Casov\u00FD program\u0022,\r\n9, \u0022Vyt\u00E1p\u011Bn\u00ED v provozu\u0022,\r\n10, \u0022TV po stupn\u00EDch\u0022,\r\n11, \u0022TV BIC\u0022,\r\n12, \u0022TV komer\u010Dn\u00ED z\u00E1sobn\u00EDk\u0022,\r\n\u0022Prim\u00E1rn\u00ED TV\u0022\r\n);"},{"AttributeDefinition":{"Name":"\u010Cerpadlo Z\u00F3ny"},"ReadFormula":"IF(MODBUSR(H, 6*512\u002B1110, Uint16) = 1, \u0022ON\u0022, \u0022OFF\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Neaktivní</Value0Name>
+            <Value1Name>Ruční</Value1Name>
+            <Value2Name>Ochrana proti zamrznutí</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>115</Value1IconId>
+            <Value2IconId>3</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>-1</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 6*512+649, UInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 6*512+649, UInt16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Teplota v zóne 1</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-11</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>10</MinTemperature>
+            <MaxTemperature>30</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(H, 0*512+1105, UInt16)/1000</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 0*512+664, UInt16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 0*512+664, UInt16, Se*10) / 10</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Teplota v zóne 2</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-12</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>10</MinTemperature>
+            <MaxTemperature>30</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(H, 1*512+1100, Int16)/1000</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 1*512+664, UInt16)  /100</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 1*512+664, UInt16, Se*100)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Teplota v zóne 3</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-13</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>10</MinTemperature>
+            <MaxTemperature>30</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(H, 2*512+1105, UInt16)/1000
+</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 2*512+664, UInt16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 2*512+664, UInt16, Se*10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Teplota v zóne 4</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-14</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>10</MinTemperature>
+            <MaxTemperature>30</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(H, 3*512+1100, Int16)/100</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 3*512+664, UInt16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 3*512+664, UInt16, Se*10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Teplota v zóne 5</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-15</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>10</MinTemperature>
+            <MaxTemperature>30</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(H, 4*512+1100, UInt16)/1000
+</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 4*512+664, UInt16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 4*512+664, UInt16, Se*10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Teplota v zóne 6</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-16</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>10</MinTemperature>
+            <MaxTemperature>30</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(H, 5*512+1100, Int16)/100</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 5*512+664, UInt16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 5*512+664, UInt16, Se*10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Teplota v zóne 7</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-17</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>10</MinTemperature>
+            <MaxTemperature>30</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(H, 6*512+1100, UInt16)/1000</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 6*512+664, UInt16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 6*512+664, UInt16, Se*10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Tlak Vody</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-18</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"85":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:85}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 409, Int16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Venkovní Teplota</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-19</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Horn\u00ED limit pro vyt\u00E1p\u011Bn\u00ED"},"ReadFormula":"MODBUSR(H, 386, Uint16)/100 \u002B \u0022 \u00B0C\u0022  "}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(H, 384, Int16) / 100</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zpětná teplota </Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-20</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(H, 404, Int16) / 100</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
