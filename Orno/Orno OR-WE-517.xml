@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="66">
+  <Template id="b2737379-2874-4c78-88c3-fa29e3f70840" revision="1.0">
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>Even</Parity>
+      <Baudrate>9600</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>OR-WE-517</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer></Producer>
+    <Model></Model>
+    <Description></Description>
+    <Category>7</Category>
+    <Module>
+      <Name>OR-WE-517</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${device_SlaveId}","Section":null},"ReadFormula":"modbusr(H, 0x02, Uint16)"},{"AttributeDefinition":{"Name":"${baud_rate} [bps]","Section":null},"ReadFormula":"modbusr(H, 0x03, Uint16)"},{"AttributeDefinition":{"Name":"LCD ${cycle_time} [s]","Section":null},"ReadFormula":"modbusr(H, 0x0d, Uint16)"},{"AttributeDefinition":{"Name":"CT Rate","Section":null},"ReadFormula":"modbusr(H, 0x08, Uint16)"},{"AttributeDefinition":{"Name":"S0 output rate [imp/kWh]","Section":null},"ReadFormula":"modbusr(H, 0x09, Float)"},{"AttributeDefinition":{"Name":"${time}","Section":null},"ReadFormula":"var ret := modbusr(H, 0x3c, Uint32);\r\nvar ret1 := modbusr(H, 0x3e, Uint16);\r\nvar xx := modbusr(H, 0x40, Uint16);\r\ntostring(getbyte(ret,1), \"X2\") \r\n+ \":\" + tostring(getbyte(ret,2), \"X2\")\r\n+ \":\" + tostring(getbyte(ret,3), \"X2\")\r\n+ \" \" + switch(getbyte(ret,0), \r\n1, \"(Mo)\",\r\n2, \"(Tu)\",\r\n3, \"(We)\",\r\n4, \"(Th)\",\r\n5, \"(Fr)\",\r\n6, \"(Sa)\",\r\n7, \"(Su)\", \"Err\")\r\n+ \" \" + tostring(getbyte(ret1,1), \"X2\")\r\n+ \".\" + tostring(getbyte(ret1,0), \"X2\")\r\n+ \".20\" + modbusr(H, 0x3f, LittleEndianUint16);\r\n\r\n"},{"AttributeDefinition":{"Name":"${tariff}s (Mo)","Section":null},"ReadFormula":"var wd1 := modbusr(H, 0x300, Uint32);\r\nvar wd2 := modbusr(H, 0x300 +2, Uint32);\r\nvar wd3 := modbusr(H, 0x300 +4, Uint32);\r\nvar wd4 := modbusr(H, 0x300 +6, Uint32);\r\nvar wd5 := modbusr(H, 0x300 +8, Uint32);\r\nvar wd6 := modbusr(H, 0x300 +10, Uint32);\r\n\r\nvar out := \"\";\r\nif ( getbyte(wd1,1) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd1,3), \"X2\") + \":\" + tostring(getbyte(wd1,2), \"X2\") + \"-T\" + tostring(getbyte(wd1,1), \"X2\") + \"]\" );\r\nif ( getbyte(wd2,2) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd1,0), \"X2\") + \":\" + tostring(getbyte(wd2,3), \"X2\") + \"-T\" + tostring(getbyte(wd2,2), \"X2\") + \"]\" );\r\nif ( getbyte(wd3,3) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd2,1), \"X2\") + \":\" + tostring(getbyte(wd2,0), \"X2\") + \"-T\" + tostring(getbyte(wd3,3), \"X2\") + \"]\" );\r\nif ( getbyte(wd3,0) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd3,2), \"X2\") + \":\" + tostring(getbyte(wd3,1), \"X2\") + \"-T\" + tostring(getbyte(wd3,0), \"X2\") + \"]\" );\r\nif ( getbyte(wd4,1) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd4,3), \"X2\") + \":\" + tostring(getbyte(wd4,2), \"X2\") + \"-T\" + tostring(getbyte(wd4,1), \"X2\") + \"]\" );\r\nif ( getbyte(wd5,2) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd4,0), \"X2\") + \":\" + tostring(getbyte(wd5,3), \"X2\") + \"-T\" + tostring(getbyte(wd5,2), \"X2\") + \"]\" );\r\nif ( getbyte(wd6,3) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd5,1), \"X2\") + \":\" + tostring(getbyte(wd5,0), \"X2\") + \"-T\" + tostring(getbyte(wd6,3), \"X2\") + \"]\" );\r\nif ( getbyte(wd6,0) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd6,2), \"X2\") + \":\" + tostring(getbyte(wd6,1), \"X2\") + \"-T\" + tostring(getbyte(wd6,0), \"X2\") + \"]\" );\r\n\r\nreturn(out)\r\n"},{"AttributeDefinition":{"Name":"${tariff}s (Tu)","Section":null},"ReadFormula":"var wd1 := modbusr(H, 0x30c, Uint32);\r\nvar wd2 := modbusr(H, 0x30c +2, Uint32);\r\nvar wd3 := modbusr(H, 0x30c +4, Uint32);\r\nvar wd4 := modbusr(H, 0x30c +6, Uint32);\r\nvar wd5 := modbusr(H, 0x30c +8, Uint32);\r\nvar wd6 := modbusr(H, 0x30c +10, Uint32);\r\n\r\nvar out := \"\";\r\nif ( getbyte(wd1,1) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd1,3), \"X2\") + \":\" + tostring(getbyte(wd1,2), \"X2\") + \"-T\" + tostring(getbyte(wd1,1), \"X2\") + \"]\" );\r\nif ( getbyte(wd2,2) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd1,0), \"X2\") + \":\" + tostring(getbyte(wd2,3), \"X2\") + \"-T\" + tostring(getbyte(wd2,2), \"X2\") + \"]\" );\r\nif ( getbyte(wd3,3) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd2,1), \"X2\") + \":\" + tostring(getbyte(wd2,0), \"X2\") + \"-T\" + tostring(getbyte(wd3,3), \"X2\") + \"]\" );\r\nif ( getbyte(wd3,0) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd3,2), \"X2\") + \":\" + tostring(getbyte(wd3,1), \"X2\") + \"-T\" + tostring(getbyte(wd3,0), \"X2\") + \"]\" );\r\nif ( getbyte(wd4,1) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd4,3), \"X2\") + \":\" + tostring(getbyte(wd4,2), \"X2\") + \"-T\" + tostring(getbyte(wd4,1), \"X2\") + \"]\" );\r\nif ( getbyte(wd5,2) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd4,0), \"X2\") + \":\" + tostring(getbyte(wd5,3), \"X2\") + \"-T\" + tostring(getbyte(wd5,2), \"X2\") + \"]\" );\r\nif ( getbyte(wd6,3) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd5,1), \"X2\") + \":\" + tostring(getbyte(wd5,0), \"X2\") + \"-T\" + tostring(getbyte(wd6,3), \"X2\") + \"]\" );\r\nif ( getbyte(wd6,0) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd6,2), \"X2\") + \":\" + tostring(getbyte(wd6,1), \"X2\") + \"-T\" + tostring(getbyte(wd6,0), \"X2\") + \"]\" );\r\n\r\nreturn(out)\r\n"},{"AttributeDefinition":{"Name":"${tariff}s (We)","Section":null},"ReadFormula":"var wd1 := modbusr(H, 0x318, Uint32);\r\nvar wd2 := modbusr(H, 0x318 +2, Uint32);\r\nvar wd3 := modbusr(H, 0x318 +4, Uint32);\r\nvar wd4 := modbusr(H, 0x318 +6, Uint32);\r\nvar wd5 := modbusr(H, 0x318 +8, Uint32);\r\nvar wd6 := modbusr(H, 0x318 +10, Uint32);\r\n\r\nvar out := \"\";\r\nif ( getbyte(wd1,1) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd1,3), \"X2\") + \":\" + tostring(getbyte(wd1,2), \"X2\") + \"-T\" + tostring(getbyte(wd1,1), \"X2\") + \"]\" );\r\nif ( getbyte(wd2,2) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd1,0), \"X2\") + \":\" + tostring(getbyte(wd2,3), \"X2\") + \"-T\" + tostring(getbyte(wd2,2), \"X2\") + \"]\" );\r\nif ( getbyte(wd3,3) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd2,1), \"X2\") + \":\" + tostring(getbyte(wd2,0), \"X2\") + \"-T\" + tostring(getbyte(wd3,3), \"X2\") + \"]\" );\r\nif ( getbyte(wd3,0) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd3,2), \"X2\") + \":\" + tostring(getbyte(wd3,1), \"X2\") + \"-T\" + tostring(getbyte(wd3,0), \"X2\") + \"]\" );\r\nif ( getbyte(wd4,1) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd4,3), \"X2\") + \":\" + tostring(getbyte(wd4,2), \"X2\") + \"-T\" + tostring(getbyte(wd4,1), \"X2\") + \"]\" );\r\nif ( getbyte(wd5,2) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd4,0), \"X2\") + \":\" + tostring(getbyte(wd5,3), \"X2\") + \"-T\" + tostring(getbyte(wd5,2), \"X2\") + \"]\" );\r\nif ( getbyte(wd6,3) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd5,1), \"X2\") + \":\" + tostring(getbyte(wd5,0), \"X2\") + \"-T\" + tostring(getbyte(wd6,3), \"X2\") + \"]\" );\r\nif ( getbyte(wd6,0) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd6,2), \"X2\") + \":\" + tostring(getbyte(wd6,1), \"X2\") + \"-T\" + tostring(getbyte(wd6,0), \"X2\") + \"]\" );\r\n\r\nreturn(out)\r\n"},{"AttributeDefinition":{"Name":"${tariff}s (Th)","Section":null},"ReadFormula":"var wd1 := modbusr(H, 0x324, Uint32);\r\nvar wd2 := modbusr(H, 0x324 +2, Uint32);\r\nvar wd3 := modbusr(H, 0x324 +4, Uint32);\r\nvar wd4 := modbusr(H, 0x324 +6, Uint32);\r\nvar wd5 := modbusr(H, 0x324 +8, Uint32);\r\nvar wd6 := modbusr(H, 0x324 +10, Uint32);\r\n\r\nvar out := \"\";\r\nif ( getbyte(wd1,1) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd1,3), \"X2\") + \":\" + tostring(getbyte(wd1,2), \"X2\") + \"-T\" + tostring(getbyte(wd1,1), \"X2\") + \"]\" );\r\nif ( getbyte(wd2,2) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd1,0), \"X2\") + \":\" + tostring(getbyte(wd2,3), \"X2\") + \"-T\" + tostring(getbyte(wd2,2), \"X2\") + \"]\" );\r\nif ( getbyte(wd3,3) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd2,1), \"X2\") + \":\" + tostring(getbyte(wd2,0), \"X2\") + \"-T\" + tostring(getbyte(wd3,3), \"X2\") + \"]\" );\r\nif ( getbyte(wd3,0) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd3,2), \"X2\") + \":\" + tostring(getbyte(wd3,1), \"X2\") + \"-T\" + tostring(getbyte(wd3,0), \"X2\") + \"]\" );\r\nif ( getbyte(wd4,1) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd4,3), \"X2\") + \":\" + tostring(getbyte(wd4,2), \"X2\") + \"-T\" + tostring(getbyte(wd4,1), \"X2\") + \"]\" );\r\nif ( getbyte(wd5,2) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd4,0), \"X2\") + \":\" + tostring(getbyte(wd5,3), \"X2\") + \"-T\" + tostring(getbyte(wd5,2), \"X2\") + \"]\" );\r\nif ( getbyte(wd6,3) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd5,1), \"X2\") + \":\" + tostring(getbyte(wd5,0), \"X2\") + \"-T\" + tostring(getbyte(wd6,3), \"X2\") + \"]\" );\r\nif ( getbyte(wd6,0) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd6,2), \"X2\") + \":\" + tostring(getbyte(wd6,1), \"X2\") + \"-T\" + tostring(getbyte(wd6,0), \"X2\") + \"]\" );\r\n\r\nreturn(out)\r\n"},{"AttributeDefinition":{"Name":"${tariff}s (Fr)","Section":null},"ReadFormula":"var wd1 := modbusr(H, 0x330, Uint32);\r\nvar wd2 := modbusr(H, 0x330 +2, Uint32);\r\nvar wd3 := modbusr(H, 0x330 +4, Uint32);\r\nvar wd4 := modbusr(H, 0x330 +6, Uint32);\r\nvar wd5 := modbusr(H, 0x330 +8, Uint32);\r\nvar wd6 := modbusr(H, 0x330 +10, Uint32);\r\n\r\nvar out := \"\";\r\nif ( getbyte(wd1,1) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd1,3), \"X2\") + \":\" + tostring(getbyte(wd1,2), \"X2\") + \"-T\" + tostring(getbyte(wd1,1), \"X2\") + \"]\" );\r\nif ( getbyte(wd2,2) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd1,0), \"X2\") + \":\" + tostring(getbyte(wd2,3), \"X2\") + \"-T\" + tostring(getbyte(wd2,2), \"X2\") + \"]\" );\r\nif ( getbyte(wd3,3) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd2,1), \"X2\") + \":\" + tostring(getbyte(wd2,0), \"X2\") + \"-T\" + tostring(getbyte(wd3,3), \"X2\") + \"]\" );\r\nif ( getbyte(wd3,0) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd3,2), \"X2\") + \":\" + tostring(getbyte(wd3,1), \"X2\") + \"-T\" + tostring(getbyte(wd3,0), \"X2\") + \"]\" );\r\nif ( getbyte(wd4,1) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd4,3), \"X2\") + \":\" + tostring(getbyte(wd4,2), \"X2\") + \"-T\" + tostring(getbyte(wd4,1), \"X2\") + \"]\" );\r\nif ( getbyte(wd5,2) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd4,0), \"X2\") + \":\" + tostring(getbyte(wd5,3), \"X2\") + \"-T\" + tostring(getbyte(wd5,2), \"X2\") + \"]\" );\r\nif ( getbyte(wd6,3) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd5,1), \"X2\") + \":\" + tostring(getbyte(wd5,0), \"X2\") + \"-T\" + tostring(getbyte(wd6,3), \"X2\") + \"]\" );\r\nif ( getbyte(wd6,0) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd6,2), \"X2\") + \":\" + tostring(getbyte(wd6,1), \"X2\") + \"-T\" + tostring(getbyte(wd6,0), \"X2\") + \"]\" );\r\n\r\nreturn(out)\r\n"},{"AttributeDefinition":{"Name":"${tariff}s (Sa)","Section":null},"ReadFormula":"var wd1 := modbusr(H, 0x33c, Uint32);\r\nvar wd2 := modbusr(H, 0x33c +2, Uint32);\r\nvar wd3 := modbusr(H, 0x33c +4, Uint32);\r\nvar wd4 := modbusr(H, 0x33c +6, Uint32);\r\nvar wd5 := modbusr(H, 0x33c +8, Uint32);\r\nvar wd6 := modbusr(H, 0x33c +10, Uint32);\r\n\r\nvar out := \"\";\r\nif ( getbyte(wd1,1) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd1,3), \"X2\") + \":\" + tostring(getbyte(wd1,2), \"X2\") + \"-T\" + tostring(getbyte(wd1,1), \"X2\") + \"]\" );\r\nif ( getbyte(wd2,2) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd1,0), \"X2\") + \":\" + tostring(getbyte(wd2,3), \"X2\") + \"-T\" + tostring(getbyte(wd2,2), \"X2\") + \"]\" );\r\nif ( getbyte(wd3,3) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd2,1), \"X2\") + \":\" + tostring(getbyte(wd2,0), \"X2\") + \"-T\" + tostring(getbyte(wd3,3), \"X2\") + \"]\" );\r\nif ( getbyte(wd3,0) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd3,2), \"X2\") + \":\" + tostring(getbyte(wd3,1), \"X2\") + \"-T\" + tostring(getbyte(wd3,0), \"X2\") + \"]\" );\r\nif ( getbyte(wd4,1) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd4,3), \"X2\") + \":\" + tostring(getbyte(wd4,2), \"X2\") + \"-T\" + tostring(getbyte(wd4,1), \"X2\") + \"]\" );\r\nif ( getbyte(wd5,2) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd4,0), \"X2\") + \":\" + tostring(getbyte(wd5,3), \"X2\") + \"-T\" + tostring(getbyte(wd5,2), \"X2\") + \"]\" );\r\nif ( getbyte(wd6,3) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd5,1), \"X2\") + \":\" + tostring(getbyte(wd5,0), \"X2\") + \"-T\" + tostring(getbyte(wd6,3), \"X2\") + \"]\" );\r\nif ( getbyte(wd6,0) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd6,2), \"X2\") + \":\" + tostring(getbyte(wd6,1), \"X2\") + \"-T\" + tostring(getbyte(wd6,0), \"X2\") + \"]\" );\r\n\r\nreturn(out)\r\n"},{"AttributeDefinition":{"Name":"${tariff}s (Su)","Section":null},"ReadFormula":"var wd1 := modbusr(H, 0x348, Uint32);\r\nvar wd2 := modbusr(H, 0x348 +2, Uint32);\r\nvar wd3 := modbusr(H, 0x348 +4, Uint32);\r\nvar wd4 := modbusr(H, 0x348 +6, Uint32);\r\nvar wd5 := modbusr(H, 0x348 +8, Uint32);\r\nvar wd6 := modbusr(H, 0x348 +10, Uint32);\r\n\r\nvar out := \"\";\r\nif ( getbyte(wd1,1) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd1,3), \"X2\") + \":\" + tostring(getbyte(wd1,2), \"X2\") + \"-T\" + tostring(getbyte(wd1,1), \"X2\") + \"]\" );\r\nif ( getbyte(wd2,2) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd1,0), \"X2\") + \":\" + tostring(getbyte(wd2,3), \"X2\") + \"-T\" + tostring(getbyte(wd2,2), \"X2\") + \"]\" );\r\nif ( getbyte(wd3,3) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd2,1), \"X2\") + \":\" + tostring(getbyte(wd2,0), \"X2\") + \"-T\" + tostring(getbyte(wd3,3), \"X2\") + \"]\" );\r\nif ( getbyte(wd3,0) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd3,2), \"X2\") + \":\" + tostring(getbyte(wd3,1), \"X2\") + \"-T\" + tostring(getbyte(wd3,0), \"X2\") + \"]\" );\r\nif ( getbyte(wd4,1) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd4,3), \"X2\") + \":\" + tostring(getbyte(wd4,2), \"X2\") + \"-T\" + tostring(getbyte(wd4,1), \"X2\") + \"]\" );\r\nif ( getbyte(wd5,2) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd4,0), \"X2\") + \":\" + tostring(getbyte(wd5,3), \"X2\") + \"-T\" + tostring(getbyte(wd5,2), \"X2\") + \"]\" );\r\nif ( getbyte(wd6,3) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd5,1), \"X2\") + \":\" + tostring(getbyte(wd5,0), \"X2\") + \"-T\" + tostring(getbyte(wd6,3), \"X2\") + \"]\" );\r\nif ( getbyte(wd6,0) != 0, out := out +\r\n    \"[\" + tostring(getbyte(wd6,2), \"X2\") + \":\" + tostring(getbyte(wd6,1), \"X2\") + \"-T\" + tostring(getbyte(wd6,0), \"X2\") + \"]\" );\r\n\r\nreturn(out)\r\n"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Date/Time","NumericParameters":[{"FriendlyName":"Year","Abbreviation":"YY","IsFloat":false,"MinValue":22.0,"MaxValue":99.0},{"FriendlyName":"Month","Abbreviation":"MM","IsFloat":false,"MinValue":1.0,"MaxValue":12.0},{"FriendlyName":"Day","Abbreviation":"DD","IsFloat":false,"MinValue":1.0,"MaxValue":31.0},{"FriendlyName":"Hour","Abbreviation":"HH","IsFloat":false,"MinValue":1.0,"MaxValue":24.0},{"FriendlyName":"Minutes","Abbreviation":"MI","IsFloat":false,"MinValue":0.0,"MaxValue":59.0},{"FriendlyName":"Seconds","Abbreviation":"SS","IsFloat":false,"MinValue":0.0,"MaxValue":59.0}],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Day of Week","Abbreviation":"DW","Values":[{"Item1":1.0,"Item2":"Mo"},{"Item1":2.0,"Item2":"Tu"},{"Item1":3.0,"Item2":"We"},{"Item1":4.0,"Item2":"Th"},{"Item1":5.0,"Item2":"Fr"},{"Item1":6.0,"Item2":"Sa"},{"Item1":7.0,"Item2":"Su"}]}]},"Script":"var out1 := (tobcd(MI) &lt;&lt; 8) + tobcd(SS);\r\nvar out2 := (tobcd(DW) &lt;&lt; 8) + tobcd(HH);\r\nvar out3 := (tobcd(MM) &lt;&lt; 8) + tobcd(DD);\r\n\r\nmodbusw(H, 0x3c, LittleEndianUint16, out1, out2, out3, YY);"},{"ActionDefinition":{"Name":"${set_tarriffs}","NumericParameters":[{"FriendlyName":"Interval 1 - ${hour}","Abbreviation":"HH1","IsFloat":false,"MinValue":0.0,"MaxValue":23.0},{"FriendlyName":"Interval 1 - ${minutes}","Abbreviation":"MI1","IsFloat":false,"MinValue":0.0,"MaxValue":59.0},{"FriendlyName":"Interval 1 - ${tariff}","Abbreviation":"T1","IsFloat":false,"MinValue":0.0,"MaxValue":4.0},{"FriendlyName":"Interval 2 - Hour","Abbreviation":"HH2","IsFloat":false,"MinValue":0.0,"MaxValue":23.0},{"FriendlyName":"Interval 2 - Minutes","Abbreviation":"MI2","IsFloat":false,"MinValue":0.0,"MaxValue":59.0},{"FriendlyName":"Interval 2 - ${tariff}","Abbreviation":"T2","IsFloat":false,"MinValue":0.0,"MaxValue":4.0},{"FriendlyName":"Interval 3 - Hour","Abbreviation":"HH3","IsFloat":false,"MinValue":0.0,"MaxValue":23.0},{"FriendlyName":"Interval 3 - Minutes","Abbreviation":"MI3","IsFloat":false,"MinValue":0.0,"MaxValue":59.0},{"FriendlyName":"Interval 3 - ${tariff}","Abbreviation":"T3","IsFloat":false,"MinValue":0.0,"MaxValue":4.0},{"FriendlyName":"Interval 4 - Hour","Abbreviation":"HH4","IsFloat":false,"MinValue":0.0,"MaxValue":23.0},{"FriendlyName":"Interval 4 - Minutes","Abbreviation":"MI4","IsFloat":false,"MinValue":0.0,"MaxValue":59.0},{"FriendlyName":"Interval 4 - ${tariff}","Abbreviation":"T4","IsFloat":false,"MinValue":0.0,"MaxValue":4.0},{"FriendlyName":"Interval 5 - Hour","Abbreviation":"HH5","IsFloat":false,"MinValue":0.0,"MaxValue":23.0},{"FriendlyName":"Interval 5 - Minutes","Abbreviation":"MI5","IsFloat":false,"MinValue":0.0,"MaxValue":59.0},{"FriendlyName":"Interval 5 - ${tariff}","Abbreviation":"T5","IsFloat":false,"MinValue":0.0,"MaxValue":4.0},{"FriendlyName":"Interval 6 - Hour","Abbreviation":"HH6","IsFloat":false,"MinValue":0.0,"MaxValue":23.0},{"FriendlyName":"Interval 6 - Minutes","Abbreviation":"MI6","IsFloat":false,"MinValue":0.0,"MaxValue":59.0},{"FriendlyName":"Interval 6 - ${tariff}","Abbreviation":"T6","IsFloat":false,"MinValue":0.0,"MaxValue":4.0},{"FriendlyName":"Interval 7 - Hour","Abbreviation":"HH7","IsFloat":false,"MinValue":0.0,"MaxValue":23.0},{"FriendlyName":"Interval 7 - Minutes","Abbreviation":"MI7","IsFloat":false,"MinValue":0.0,"MaxValue":59.0},{"FriendlyName":"Interval 7 - ${tariff}","Abbreviation":"T7","IsFloat":false,"MinValue":0.0,"MaxValue":4.0},{"FriendlyName":"Interval 8 - Hour","Abbreviation":"HH8","IsFloat":false,"MinValue":0.0,"MaxValue":23.0},{"FriendlyName":"Interval 8 - Minutes","Abbreviation":"MI8","IsFloat":false,"MinValue":0.0,"MaxValue":59.0},{"FriendlyName":"Interval 8 - ${tariff}","Abbreviation":"T8","IsFloat":false,"MinValue":0.0,"MaxValue":4.0}],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Day","Abbreviation":"DoW","Values":[{"Item1":0.0,"Item2":"All"},{"Item1":1.0,"Item2":"Mo"},{"Item1":2.0,"Item2":"Tu"},{"Item1":3.0,"Item2":"We"},{"Item1":4.0,"Item2":"Th"},{"Item1":5.0,"Item2":"Fr"},{"Item1":6.0,"Item2":"Sa"},{"Item1":7.0,"Item2":"Su"}]}]},"Script":"var wd1 := (tobcd(HH1) &lt;&lt; 24) + (tobcd(MI1) &lt;&lt; 16) + (tobcd(T1) &lt;&lt; 8) + tobcd(HH2);\r\nvar wd2 := (tobcd(MI2) &lt;&lt; 24) + (tobcd(T2) &lt;&lt; 16) + (tobcd(HH3) &lt;&lt; 8) + tobcd(MI3);\r\nvar wd3 := (tobcd(T3) &lt;&lt; 24) + (tobcd(HH4) &lt;&lt; 16) + (tobcd(MI4) &lt;&lt; 8) + tobcd(T4);\r\nvar wd4 := (tobcd(HH5) &lt;&lt; 24) + (tobcd(MI5) &lt;&lt; 16) + (tobcd(T5) &lt;&lt; 8) + tobcd(HH6);\r\nvar wd5 := (tobcd(MI6) &lt;&lt; 24) + (tobcd(T6) &lt;&lt; 16) + (tobcd(HH7) &lt;&lt; 8) + tobcd(MI7);\r\nvar wd6 := (tobcd(T7) &lt;&lt; 24) + (tobcd(HH8) &lt;&lt; 16) + (tobcd(MI8) &lt;&lt; 8) + tobcd(T8);\r\n\r\nif DoW = 0 or DoW = 1\r\n    modbusw(H, 0x300, Uint32, wd1, wd2, wd3, wd4, wd5, wd6);\r\nend\r\nif DoW = 0 or DoW = 2\r\n    modbusw(H, 0x30c, Uint32, wd1, wd2, wd3, wd4, wd5, wd6);\r\nend\r\nif DoW = 0 or DoW = 3\r\n    modbusw(H, 0x318, Uint32, wd1, wd2, wd3, wd4, wd5, wd6);\r\nend\r\nif DoW = 0 or DoW = 4\r\n    modbusw(H, 0x324, Uint32, wd1, wd2, wd3, wd4, wd5, wd6);\r\nend\r\nif DoW = 0 or DoW = 5\r\n    modbusw(H, 0x330, Uint32, wd1, wd2, wd3, wd4, wd5, wd6);\r\nend\r\nif DoW = 0 or DoW = 6\r\n    modbusw(H, 0x33c, Uint32, wd1, wd2, wd3, wd4, wd5, wd6);\r\nend\r\nif DoW = 0 or DoW = 7\r\n    modbusw(H, 0x348, Uint32, wd1, wd2, wd3, wd4, wd5, wd6);\r\nend\r\n"},{"ActionDefinition":{"Name":"Slave ID","NumericParameters":[{"FriendlyName":"Parameter1","Abbreviation":"ID","IsFloat":false,"MinValue":1.0,"MaxValue":255.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 0x02, Uint16, ID)"},{"ActionDefinition":{"Name":"LCD Cycle time","NumericParameters":[{"FriendlyName":"Time [s]","Abbreviation":"t","IsFloat":false,"MinValue":1.0,"MaxValue":120.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 0x0d, Uint16, t)"}]</ServiceActionsScripts>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>L1 ${electric_current}</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"88":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":88}\"}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"L1 ${electric_voltage} [V]","Section":null},"ReadFormula":"round(modbusr(H, 0x0e, Float)*10)/10"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables>[]</CustomDeviceVariables>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 22, Float)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>L2 ${electric_current}</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"88":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":88}\"}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"L2 ${electric_voltage} [V]","Section":null},"ReadFormula":"round(modbusr(H, 0x10, Float)*10)/10"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 24, Float)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>L3 ${electric_current}</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"88":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":88}\"}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"L3 ${electric_voltage} [V]","Section":null},"ReadFormula":"round(modbusr(H, 0x12, Float)*10)/10"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 26, Float)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${phase} L1</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${electric_voltage} [V]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x0e,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${electric_current} [A]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x16,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reactive_power} [kVAr]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x26,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${apparent_power} [kVA]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x2e,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${power_factor}","Section":null},"ReadFormula":"tostring(modbusr(H, 0x36,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${forward_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x10a,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x112,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${forward_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x122,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x12a,Float), \"F2\")"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(H, 0x102, Float)</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 0x1e, Float)</ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${phase} L2</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${electric_voltage} [V]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x10,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${electric_current} [A]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x18,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reactive_power} [kVAr]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x28,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${apparent_power} [kVA]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x30,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${power_factor}","Section":null},"ReadFormula":"tostring(modbusr(H, 0x38,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${forward_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x10c,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x114,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${forward_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x124,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x12c,Float), \"F2\")"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(H, 0x104, Float)</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 0x20, Float)</ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${phase} L3</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${electric_voltage} [V]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x12,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${electric_current} [A]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x1a,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reactive_power} [kVAr]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x2a,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${apparent_power} [kVA]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x32,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${power_factor}","Section":null},"ReadFormula":"tostring(modbusr(H, 0x3a,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${forward_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x10e,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x116,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${forward_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x126,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x12e,Float), \"F2\")"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(H, 0x106, Float)</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 0x22, Float)</ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${tariff} T1</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${forward_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x132,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x134,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${total_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x136,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${forward_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x138,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x13a,Float), \"F2\")"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(H, 0x130, Float)</ReadTotalConsumption>
+            <ReadDemand></ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${tariff} T2</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${forward_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x13e,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x140,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${total_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x142,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${forward_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x144,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x146,Float), \"F2\")"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(H, 0x13c, Float)</ReadTotalConsumption>
+            <ReadDemand></ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${tariff} T3</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${forward_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x14a,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x14c,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${total_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x14e,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${forward_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x150,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x152,Float), \"F2\")"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(H, 0x148, Float)</ReadTotalConsumption>
+            <ReadDemand></ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${tariff} T4</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-11</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${forward_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x156,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x158,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${total_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x15a,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${forward_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x15c,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x15e,Float), \"F2\")"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(H, 0x154, Float)</ReadTotalConsumption>
+            <ReadDemand></ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${total_energy}</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-12</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${grid_frequency} [Hz]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x14,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reactive_power} [kVAr]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x24,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${apparent_power} [kVA]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x2c,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${power_factor}","Section":null},"ReadFormula":"tostring(modbusr(H, 0x34,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${forward_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x108,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_active_energy} [kWh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x110,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${forward_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x120,Float), \"F2\")"},{"AttributeDefinition":{"Name":"${reverse_reactive_energy} [kVArh]","Section":null},"ReadFormula":"tostring(modbusr(H, 0x128,Float), \"F2\")"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(H, 0x100, Float)</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 0x1c, Float)</ReadDemand>
+            <Calibration>0</Calibration>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
