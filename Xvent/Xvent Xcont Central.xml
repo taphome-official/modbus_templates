@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="73" >
+  <Template revision="1.0" id="c1fe65cd-9a54-4780-a189-673fc6b724d5">
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>Even</Parity>
+      <Baudrate>19200</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>Xvent Xcont Central</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer></Producer>
+    <Model></Model>
+    <Description></Description>
+    <Module>
+      <Name>Xvent Xcont Central</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <ReadScript>IF(GETBIT(MODBUSR(A, 30003, Uint16),0)=1, ADDERROR("Chyba CO2 čidla"));
+IF(GETBIT(MODBUSR(A, 30003, Uint16),1)=1, ADDERROR("Chyba RH čidla"));</ReadScript>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Firmware Version"},"ReadFormula":"MODBUSR(A, 30000, Uint16)\r\n"},{"AttributeDefinition":{"Name":"Stav u\u017Eivatelsk\u00E9ho rozhran\u00ED "},"ReadFormula":"SWITCH(GETBITS( MODBUSR(A, 30001, Uint16),0,4 ), \r\n0, \u0022Vypnut\u00E1 jednotka\u0022,\r\n1, \u0022Vypnut\u00E9 za\u0159\u00EDzen\u00ED prob\u00EDh\u00E1 dochlazen\u00ED p\u0159edeh\u0159evu \u010Di doh\u0159evu\u0022,\r\n2, \u0022Chyba ventil\u00E1toru 1 \u0022,\r\n3, \u0022Chyba ventil\u00E1toru 2 \u0022,\r\n4, \u0022Chyba pokojov\u00E9ho \u010Didla\u0022,\r\n5, \u0022Chyba protimrazov\u00E9ho \u010Didla\u0022,\r\n6, \u0022Aktivn\u00ED z\u00E1mek dotykov\u00FDch tla\u010D\u00EDtek\u0022,\r\n7, \u0022Stav deaktivace z\u00E1mku dotykov\u00FDch tla\u010D\u00EDtek\u0022,\r\n8, \u0022Stav probuzen\u00E9ho ovlada\u010De, zobraz\u00ED aktu\u00E1ln\u00ED nastaven\u00ED\u0022,\r\n9, \u0022Re\u017Eim nastaven\u00ED \u0161k\u00E1ly ventil\u00E1tor\u016F\u0022,\r\n10, \u0022Re\u017Eim nastaven\u00ED \u0161k\u00E1ly teplot\u0022,\r\n11, \u0022B\u011B\u017En\u00FD power ON re\u017Eim\u0022,\r\n12, \u0022Re\u017Eim servisn\u00EDho menu\u0022,\r\n13, \u0022Re\u017Eim u\u017Eivatelsk\u00E9ho menu\u0022,\r\n\u0022Chyba\u0022\r\n)"},{"AttributeDefinition":{"Name":"Atrib\u00FAt"},"ReadFormula":"GETBITS(MODBUSR(H, 40000, Uint16), 10, 6)"}]</ServiceAttributesFormulas>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Aktuální napětí ventilátoru 1 </Name>
+          <Model>ModbusVariable</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"87":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:87}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Stav tacho vstupu"},"ReadFormula":"SWITCH (GETBIT(MODBUSR(A, 30019, Uint16), 0),\r\n1, \u0022OK\u0022,\r\n2, \u0022NG\u0022,\r\n\u0022Chyba pri komunikaci\u0022\r\n)"},{"AttributeDefinition":{"Name":"Flag  \u00FAsp\u011B\u0161n\u00E9ho startu motoru"},"ReadFormula":"SWITCH (GETBIT(MODBUSR(A, 30019, Uint16), 1),\r\n1, \u0022OK\u0022,\r\n2, \u0022NG\u0022,\r\n\u0022Chyba pri komunikaci\u0022\r\n)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 30018, Int16)/100</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Aktuální napětí ventilátoru 2</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"87":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:87}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Stav tacho vstupu"},"ReadFormula":"SWITCH (GETBIT(MODBUSR(A, 30021, Uint16), 0),\r\n1, \u0022OK\u0022,\r\n2, \u0022NG\u0022,\r\n\u0022Chyba pri komunikaci\u0022\r\n)"},{"AttributeDefinition":{"Name":"Flag \u00FAsp\u011B\u0161n\u00E9ho startu motoru"},"ReadFormula":"SWITCH (GETBIT(MODBUSR(A, 30021, Uint16), 1),\r\n1, \u0022OK\u0022,\r\n2, \u0022NG\u0022,\r\n\u0022Chyba pri komunikaci\u0022\r\n)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 30020, Int16)/100</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Boost Mode</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>115</OnStateIconId>
+            <OffStateIconId>116</OffStateIconId>
+            <OnStateName>Aktivní</OnStateName>
+            <OffStateName>Neaktivní</OffStateName>
+            <ReadSwitchState>GETBIT(MODBUSR(H, 40000, Uint16), 4)</ReadSwitchState>
+            <WriteSwitchState>var val := SETBIT(MODBUSR(H, 40000, Uint16), 4, St);
+MODBUSW(H, 40000, Uint16, val);
+</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Čidlo teploty protimrazové ochrany</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Status \u010Didla"},"ReadFormula":"SWITCH (GETBITS(MODBUSR(A, 30017, Uint16), 14, 2),\r\n0, \u0022OK\u0022,\r\n1, \u0022\u010Cidlo rozpojeno\u0022,\r\n2, \u0022\u010Cidlo skratov\u00E1no\u0022,\r\n\u0022Komunika\u010Dn\u00ED chyba\u0022\r\n)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>GETBITS(MODBUSR(A, 30015, Int16),0, 14 )/10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Hodnota CO2 při níž spínají ventilátory</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"54":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:54}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Nastaven\u00ED hodnoty","NumericParameters":[{"FriendlyName":"Value[600-1000]","Abbreviation":"val","IsFloat":false,"MinValue":600,"MaxValue":1000}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 40001, Uint16, val)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 40001, UInt16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Hodnota RH, při níž spínají ventilátory </Name>
+          <Model>ModbusVariable</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"3":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:3}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Nastaven\u00ED hodnoty","NumericParameters":[{"FriendlyName":"Value [50-75%]","Abbreviation":"val","IsFloat":false,"MinValue":50,"MaxValue":75}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 4002,BigendianInt16, val*10);"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 40002, UInt16)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Letní režim</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>66</OnStateIconId>
+            <OffStateIconId>67</OffStateIconId>
+            <OnStateName>Aktivní</OnStateName>
+            <OffStateName>Neaktivní</OffStateName>
+            <ReadSwitchState>GETBIT(MODBUSR(H, 40000, Uint16), 2)</ReadSwitchState>
+            <WriteSwitchState>var val := SETBIT(MODBUSR(H, 40000, Uint16), 2, St);
+MODBUSW(H, 40000, Uint16, val);
+</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Power</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>GETBIT(MODBUSR(H, 40000, Uint16), 0)</ReadSwitchState>
+            <WriteSwitchState>var val := SETBIT(MODBUSR(H, 40000, Uint16), 0, St);
+
+MODBUSW(H, 40000, Uint16, val);
+</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Požadovaná teplota</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"5":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:5}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 30012, Int16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Průtok</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-11</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"83":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:83}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 30015, Uint16)/10</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Režim ventilátorů</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-12</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>113</OnStateIconId>
+            <OffStateIconId>115</OffStateIconId>
+            <OnStateName>Automatický</OnStateName>
+            <OffStateName>Manuální</OffStateName>
+            <ReadSwitchState>GETBIT(MODBUSR(H, 40000, Uint16), 1)</ReadSwitchState>
+            <WriteSwitchState>var val := SETBIT(MODBUSR(H, 40000, Uint16), 1, St);
+
+MODBUSW(H, 40000, Uint16, val);
+</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Stav Ventilátoru</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-13</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Predchoz\u00ED stav ventil\u00E1tor\u016F"},"ReadFormula":"SWITCH(GETBITS( MODBUSR(A, 30001, Uint16),12,4 ), \r\n0, \u0022Vypnut\u00E1 jednotka\u0022,\r\n1, \u0022Jednotka je OFF, ventil\u00E1tory dochlazuj\u00ED p\u0159edeh\u0159ev \u010Di doh\u0159ev\u0022,\r\n2, \u0022Chyba ventil\u00E1toru 1 \u0022,\r\n3, \u0022Chyba ventil\u00E1toru 2 \u0022,\r\n4, \u0022Aktivn\u00ED ventil\u00E1tory v b\u011B\u017En\u00E9m re\u017Eimu\u0022,\r\n5, \u0022Aktivn\u00ED ventil\u00E1tory ventil\u00E1tor v antifreeze re\u017Eimu\u0022,\r\n6, \u0022Neaktivn\u00ED ventil\u00E1tory v b\u011B\u017En\u00E9m re\u017Eimu \u0022,\r\n7, \u0022Neaktivn\u00ED ventil\u00E1tory v antifreeze re\u017Eimu \u0022,\r\n8, \u0022Ventil\u00E1tory v letn\u00EDm re\u017Eimu\u0022,\r\n9, \u0022Ventil\u00E1tory v Boost re\u017Eimu \u0022,\r\n\u0022Chyba\u0022\r\n)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>7</Value7Index>
+            <Value8Index>8</Value8Index>
+            <Value9Index>9</Value9Index>
+            <Value0Name>Vypnutá jednotka</Value0Name>
+            <Value1Name>OFF - proces dochlazování</Value1Name>
+            <Value2Name>Chyba ventilátoru 1</Value2Name>
+            <Value3Name>Chyba ventilátoru 2</Value3Name>
+            <Value4Name>Běžný režim</Value4Name>
+            <Value5Name>Antifreeze Režim</Value5Name>
+            <Value6Name>Neaktivní ventilátory v běžném režimu</Value6Name>
+            <Value7Name>Neaktivní ventilátory v antifreeze režimu</Value7Name>
+            <Value8Name>Letní režim</Value8Name>
+            <Value9Name>Boost režim</Value9Name>
+            <Value0IconId>20</Value0IconId>
+            <Value1IconId>3</Value1IconId>
+            <Value2IconId>57</Value2IconId>
+            <Value3IconId>57</Value3IconId>
+            <Value4IconId>23</Value4IconId>
+            <Value5IconId>353</Value5IconId>
+            <Value6IconId>116</Value6IconId>
+            <Value7IconId>360</Value7IconId>
+            <Value8IconId>66</Value8IconId>
+            <Value9IconId>115</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>GETBITS(MODBUSR(A, 30001, Uint16),8,4 )</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Stupeň úrovně ventilátorů </Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-14</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>7</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>1</Value1Name>
+            <Value2Name>2</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>Boost</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>20</Value0IconId>
+            <Value1IconId>21</Value1IconId>
+            <Value2IconId>25</Value2IconId>
+            <Value3IconId>22</Value3IconId>
+            <Value4IconId>26</Value4IconId>
+            <Value5IconId>27</Value5IconId>
+            <Value6IconId>23</Value6IconId>
+            <Value7IconId>28</Value7IconId>
+            <Value8IconId>115</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>GETBITS(MODBUSR(H, 40000, Uint16), 6, 4)</ReadSwitchState>
+            <WriteSwitchState>var val := SETBITS(MODBUSR(H, 40000, Uint16), 6, 4,  Mu);
+MODBUSW(H, 40000, Uint16, val);
+</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${temperatureSensor}</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-15</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Status \u010Didla"},"ReadFormula":"SWITCH(GETBITS(MODBUSR(A, 30016, Int16), 14 , 2),\r\n0,\u0022Ok\u0022,\r\n1,\u0022\u010Cidlo rozpojeno\u0022,\r\n2,\u0022\u010Cidlo zkratov\u00E1no\u0022,\r\n\u0022Chyba komunikace\u0022\r\n)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>GETBITS(MODBUSR(A, 30016, Int16), 0 , 14) / 10</ReadTemperature>
+            <ReadHumidity>MODBUSR(A, 30014, Int16)/10</ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zámek dotykových tlačítek </Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-16</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>84</OnStateIconId>
+            <OffStateIconId>85</OffStateIconId>
+            <OnStateName>Zamčeno</OnStateName>
+            <OffStateName>Odomčeno</OffStateName>
+            <ReadSwitchState>GETBIT(MODBUSR(H, 40000, Uint16), 5)</ReadSwitchState>
+            <WriteSwitchState>var val := SETBIT(MODBUSR(H, 40000, Uint16), 5, St);
+MODBUSW(H, 40000, Uint16, val);
+</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
