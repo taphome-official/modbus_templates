@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="73">
+  <Template id="1cc857f0-5606-11ed-bdc3-0242ac120002" revision="1.0">
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <Baudrate>115200</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>IP-Plus</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>EPever</Producer>
+    <Model>IP-Plus</Model>
+    <Description></Description>
+    <Module>
+      <Name>IP-Plus</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <ReadScript>if(modbusr(D, 0x2000, bool), ADDWARNING("Device over temperature"));
+
+var stat := modbusr(A,0x3202,Uint16);
+
+if(!getbit(stat, 0), ADDWARNING("Standby"));
+if(getbit(stat, 1), ADDWARNING("Faults"));
+if(getbit(stat, 5), ADDWARNING("Output fail"));
+if(getbit(stat, 6), ADDWARNING("High voltage side short-circuit"));
+if(getbit(stat, 7), ADDWARNING("Input over-current"));
+if(getbit(stat, 8), ADDWARNING("Abnormal Output voltage"));
+if(getbit(stat, 9), ADDWARNING("Unable to stop discharging"));
+if(getbit(stat, 10), ADDWARNING("Unable to discharge"));
+if(getbit(stat, 11), ADDWARNING("Short-circuit"));
+
+if getbits(stat,12,2) = 0x01
+    ADDINFO("Medium load");
+elseif getbits(stat,12,2) = 0x02
+    ADDINFO("Nominal Load");
+elseif getbits(stat,12,2) = 0x03
+    ADDWARNING("Overload");
+end
+
+if getbits(stat,14,2) = 0x01
+    ADDWARNING("Low input voltage");
+elseif getbits(stat,14,2) = 0x02
+    ADDWARNING("High input voltage");
+elseif getbits(stat,14,2) = 0x03
+    ADDWARNING("No connect to the input power, etc.");
+end
+</ReadScript>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Load input voltage [V]"},"ReadFormula":"modbusr(A, 0x3108, Uint16) / 100"},{"AttributeDefinition":{"Name":"Device temperature [\u2103]"},"ReadFormula":"modbusr(A, 0x3111, Int16) / 100"},{"AttributeDefinition":{"Name":"Heat sink temperature [\u2103]"},"ReadFormula":"modbusr(A, 0x3112, Int16) / 100"},{"AttributeDefinition":{"Name":"Low input voltage [V]"},"ReadFormula":"modbusr(H, 0x902F, Uint16) / 100"},{"AttributeDefinition":{"Name":"Low input voltage (5s) [V]"},"ReadFormula":"modbusr(H, 0x9030, Uint16) / 100"},{"AttributeDefinition":{"Name":"Low input voltage recovery voltage [V]"},"ReadFormula":"modbusr(H, 0x9031, Uint16) / 100"},{"AttributeDefinition":{"Name":"High input voltage recovery voltage [V]"},"ReadFormula":"modbusr(H, 0x9032, Uint16) / 100"},{"AttributeDefinition":{"Name":"High input voltage (5s) [V]"},"ReadFormula":"modbusr(H, 0x9033, Uint16) / 100"},{"AttributeDefinition":{"Name":"High input voltage [V]"},"ReadFormula":"modbusr(H, 0x9034, Uint16) / 100"},{"AttributeDefinition":{"Name":"High input current [A]"},"ReadFormula":"modbusr(H, 0x9035, Uint16) / 100"},{"AttributeDefinition":{"Name":"High input current recovery [A]"},"ReadFormula":"modbusr(H, 0x9036, Uint16) / 100"},{"AttributeDefinition":{"Name":"Output AC voltage setting [A]"},"ReadFormula":"modbusr(H, 0x9022, Uint16) / 100"},{"AttributeDefinition":{"Name":"Output AC frequency setting [Hz]"},"ReadFormula":"modbusr(H, 0x9023, Uint16) / 100"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Set Low input voltage - 5s","NumericParameters":[{"FriendlyName":"Voltage","Abbreviation":"V","IsFloat":true,"MinValue":1,"MaxValue":100}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 0x9030, Uint16, round(V * 100))"},{"ActionDefinition":{"Name":"Set Low input voltage recovery voltage","NumericParameters":[{"FriendlyName":"Voltage","Abbreviation":"V","IsFloat":true,"MinValue":1,"MaxValue":100}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 0x9031, Uint16, round(V * 100))"},{"ActionDefinition":{"Name":"Set High input voltage recovery voltage","NumericParameters":[{"FriendlyName":"Voltage","Abbreviation":"V","IsFloat":true,"MinValue":1,"MaxValue":100}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 0x9032, Uint16, round(V * 100))"},{"ActionDefinition":{"Name":"Set High input voltage - 5s","NumericParameters":[{"FriendlyName":"Voltage","Abbreviation":"V","IsFloat":true,"MinValue":1,"MaxValue":100}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 0x9033, Uint16, round(V * 100))"},{"ActionDefinition":{"Name":"Set Output AC voltage","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Voltage","Abbreviation":"V","Values":[{"Item1":220,"Item2":"220"},{"Item1":230,"Item2":"230"}]}]},"Script":"modbusw(H, 0x9022, Uint16, round(V * 100))"},{"ActionDefinition":{"Name":"Set Output AC frequency","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Frequency","Abbreviation":"Hz","Values":[{"Item1":50,"Item2":"50"},{"Item1":60,"Item2":"60"}]}]},"Script":"modbusw(H, 0x9023, Uint16, round(Hz * 100))"},{"ActionDefinition":{"Name":"Clear the faults","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(D, 0x13, bool, 1)"}]</ServiceActionsScripts>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>AC Load</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>5000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Load output voltage [V]"},"ReadFormula":"modbusr(A, 0x310c, Uint16) / 100"},{"AttributeDefinition":{"Name":"Load output current [A]"},"ReadFormula":"modbusr(A, 0x310d, Uint16) / 100"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(A, 0x310e, LittleEndianUint32 ) / 100000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Inverter ON/OFF</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript>#enable Remote control
+modbusw(C, 0x11, bool, 1)</InitializeScript>
+            <ReadScript>if (!MODBUSR(C, 0x11, Bool), ADDWARNING("Remote control is disabled"))</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Enable Remote control","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(C, 0x11, Bool, 1)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(C, 0xf, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(C, 0xf, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
