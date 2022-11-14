@@ -1,15 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="54">
-  <Template id="2d2e3111-2f80-41b0-a429-a7eba6332036" revision="1.0">
-    <Name>Kostal_Plenticore</Name>
-    <CcuModel>ModbusTcpCCU</CcuModel>
-    <Producer>Kostal</Producer>
-    <Model>Plenticore</Model>
-    <Category>8</Category>
-    <Description></Description>
-    <RevisionHistory>
-      <Revision id="1.0">Initial version</Revision>
-    </RevisionHistory>
+<Templates format="2" protocolVersion="73">
+  <Template revision="1.1" id="2d2e3111-2f80-41b0-a429-a7eba6332036">
+    <SuggestedCCUParameters>
+      <TcpPort>1502</TcpPort>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>200</ReadWriteTimeout>
+    </SuggestedCCUParameters>
     <ImportParameters>
       <Parameter>
         <Name>${device_SlaveId}</Name>
@@ -22,253 +18,464 @@
         <Id>IpAddress</Id>
       </Parameter>
     </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+      <Revision id="1.1">Service attributes, fix float endianess</Revision>
+    </RevisionHistory>
+    <Name>Plenticore</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>Kostal</Producer>
+    <Model>Plenticore</Model>
+    <Description></Description>
     <Module>
       <Name>Kostal_Plenticore</Name>
       <Id>-1</Id>
       <Model>ModbusModule</Model>
       <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Productname"},"ReadFormula":"MODBUSR(H, 768, String, 32)"},{"AttributeDefinition":{"Name":"Inverter article number"},"ReadFormula":"MODBUSR(H,6, String,8)"},{"AttributeDefinition":{"Name":"Inverter serial number"},"ReadFormula":"MODBUSR(H,14,String,8)"},{"AttributeDefinition":{"Name":"Number of bidirectional converter"},"ReadFormula":"MODBUSR(H,30,Int16)"},{"AttributeDefinition":{"Name":"Number of AC phases"},"ReadFormula":"MODBUSR(H,32,Int16)"},{"AttributeDefinition":{"Name":"Number of PV strings"},"ReadFormula":"MODBUSR(H,34,Int16)"},{"AttributeDefinition":{"Name":"Inverter state"},"ReadFormula":"SWITCH(MODBUSR(H,56,UInt16),\r\n0, \u0022Off\u0022,\r\n1, \u0022Init\u0022,\r\n2, \u0022IsoMeas\u0022,\r\n3, \u0022GridCheck\u0022,\r\n4, \u0022StartUp\u0022,\r\n5, \u0022-\u0022,\r\n6, \u0022FeedIn\u0022,\r\n7, \u0022Throttled\u0022,\r\n8, \u0022ExtSwitchOff\u0022,\r\n9, \u0022Update\u0022,\r\n10, \u0022Standby\u0022,\r\n11, \u0022GridSync\u0022,\r\n12, \u0022GridPreCheck\u0022,\r\n13, \u0022GridSwitchOff\u0022,\r\n14, \u0022Overheating\u0022,\r\n15, \u0022Shutdown\u0022,\r\n16, \u0022ImproperDcVoltage\u0022,\r\n17, \u0022ESB\u0022,\r\n18, \u0022Unknown\u0022,\r\n\u0022Unkown value or Error\u0022);"},{"AttributeDefinition":{"Name":"State of energy manager "},"ReadFormula":"SWITCH(MODBUSR(H,104,UInt32),\r\n0x00, \u0022Idle\u0022,\r\n0x01, \u0022n/a\u0022,\r\n0x02, \u0022Emergency Battery Charge\u0022,\r\n0x04, \u0022n/a\u0022,\r\n0x08, \u0022Winter Mode Step 1\u0022,\r\n0x10, \u0022Winter Mode Step 2\u0022,\r\n\u0022Unknown\u0022)"},{"AttributeDefinition":{"Name":"Inverter network name"},"ReadFormula":"MODBUSR(H,384,String, 32)"},{"AttributeDefinition":{"Name":"IP Enabled"},"ReadFormula":"MODBUSR(H,416, UInt16)"},{"AttributeDefinition":{"Name":"Manual IP / Auto-IP"},"ReadFormula":"MODBUSR(H, 418, UInt16)"},{"AttributeDefinition":{"Name":"IP-address "},"ReadFormula":"MODBUSR(H, 420, String, 8)"},{"AttributeDefinition":{"Name":"IP-subnetmask "},"ReadFormula":"MODBUSR(H, 428, STRING, 8)"},{"AttributeDefinition":{"Name":"IP-gateway"},"ReadFormula":"MODBUSR(H, 436, STRING, 8)"},{"AttributeDefinition":{"Name":"Power class"},"ReadFormula":"MODBUSR(H, 800, String, 32)"},{"AttributeDefinition":{"Name":"Battery gross capacity"},"ReadFormula":"MODBUSR(H, 512, UInt32) \u002B \u0022Ah\u0022"},{"AttributeDefinition":{"Name":"Battery Manufacturer"},"ReadFormula":"MODBUSR(H,517,String,8)"}]</ServiceAttributesFormulas>
         <SlaveId>$[SlaveId]</SlaveId>
         <IpAddress>$[IpAddress]</IpAddress>
+        <MaxPrefetchGroupSize>10</MaxPrefetchGroupSize>
       </DeviceProperties>
       <Devices>
         <Device>
-          <Name>Current PV power</Name>
+          <Name>Battery actual SOC %</Name>
+          <Model>ModbusVariable</Model>
           <Id>-2</Id>
-          <Model>ModbusVariable</Model>
           <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
             <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>True</IsReadOnly>
-            <ReadState>MODBUSR(H, 100, LittleEndianFloat)</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Total consumption kWh</Name>
-          <Id>-3</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 118, LittleEndianFloat)/1000</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>State of energy manager</Name>
-          <Id>-4</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 104, LittleEndianFloat)</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Home own consumption from battery W</Name>
-          <Id>-5</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 106, LittleEndianFloat)</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Current consumption kWh</Name>
-          <Id>-6</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 108, LittleEndianFloat)</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Total consumption from battery kWh</Name>
-          <Id>-7</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 110, LittleEndianFloat) / 1000</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Total consumption grid connection kWh</Name>
-          <Id>-8</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 112, LittleEndianFloat) / 1000</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>PV Share kWh</Name>
-          <Id>-9</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 114, LittleEndianFloat) / 1000</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Current supply from the network</Name>
-          <Id>-10</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 116, LittleEndianFloat)</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Current state of charge</Name>
-          <Id>-11</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 210, LittleEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 514, UInt16)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>Battery state</Name>
-          <Id>-12</Id>
           <Model>ModbusVariable</Model>
+          <Id>-3</Id>
           <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
             <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 212, LittleEndianFloat)</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Current phase 1 (powermeter) A</Name>
-          <Id>-13</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 222, LittleEndianFloat)</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Consuption Phase 1 (W)</Name>
-          <Id>-14</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 224, LittleEndianFloat)</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Current phase 2 (powermeter) A</Name>
-          <Id>-15</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 232, LittleEndianFloat)</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Current phase 3 (powermeter) A</Name>
-          <Id>-16</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 242, LittleEndianFloat)</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Consuption Phase 2 (W)</Name>
-          <Id>-17</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 234, LittleEndianFloat)</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Consuption Phase 3 (W)</Name>
-          <Id>-18</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 244, LittleEndianFloat)</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Ownconsuption %</Name>
-          <Id>-19</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 124, LittleEndianFloat)</ReadState>
-            <WriteState></WriteState>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Number of battery cycles</Name>
-          <Id>-20</Id>
-          <Model>ModbusVariable</Model>
-          <DeviceProperties>
-            <InternalPollInterval>1500</InternalPollInterval>
-            <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 194, LittleEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 212, BigEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>Battery temperature</Name>
-          <Id>-21</Id>
           <Model>ModbusTemperatureSensor</Model>
+          <Id>-4</Id>
           <DeviceProperties>
+            <DeviceType>0</DeviceType>
             <InternalPollInterval>1500</InternalPollInterval>
-            <ReadTemperature>MODBUSR(H, 214, LittleendianFloat)</ReadTemperature>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(H, 214, BigEndianFloat)</ReadTemperature>
             <ReadHumidity></ReadHumidity>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Total active power (powermeter) W</Name>
-          <Id>-22</Id>
+          <Name>Consuption Phase 1 (W)</Name>
           <Model>ModbusVariable</Model>
+          <Id>-5</Id>
           <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
             <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 252, LittleendianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 224, BigEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Battery actual SOC %</Name>
-          <Id>-23</Id>
+          <Name>Consuption Phase 2 (W)</Name>
           <Model>ModbusVariable</Model>
+          <Id>-6</Id>
           <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
             <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 514, UInt16)</ReadState>
+            <ReadState>MODBUSR(H, 234, BigEndianFloat)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Consuption Phase 3 (W)</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 244, BigEndianFloat)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Current consumption kWh</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 108, BigEndianFloat)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Current phase 1 (powermeter) A</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 222, BigEndianFloat)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Current phase 2 (powermeter) A</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 232, BigEndianFloat)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Current phase 3 (powermeter) A</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-11</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 242, BigEndianFloat)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Current PV power</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-12</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 100, BigEndianFloat)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Current state of charge</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-13</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 210, BigEndianFloat)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Current supply from the network</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-14</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 116, BigEndianFloat)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Home own consumption from battery W</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-15</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 106, BigEndianFloat)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Number of battery cycles</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-16</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 194, BigEndianFloat)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Ownconsuption %</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-17</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 124, BigEndianFloat)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>PV Share kWh</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-18</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 114, BigEndianFloat) / 1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>State of energy manager</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-19</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 104, BigEndianFloat)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total active power (powermeter) W</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-20</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 252, bigendianFloat)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total consumption from battery kWh</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-21</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 110, bigEndianFloat) / 1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total consumption grid connection kWh</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-22</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 112, bigEndianFloat) / 1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total consumption kWh</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-23</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 118, bigEndianFloat)/1000</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
