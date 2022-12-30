@@ -110,7 +110,7 @@ IF(GETBIT(a2,15) = 1, ADDERROR("Abnormal PV module configuration", 2080));</Read
             <ServiceActionsScripts></ServiceActionsScripts>
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
-            <ReadLevel>MODBUSR(H, 37760, Uint16) / 100</ReadLevel>
+            <ReadLevel>MODBUSR(H, 37760, Uint16) / 1000</ReadLevel>
             <WriteLevel></WriteLevel>
             <IconId>3019</IconId>
           </DeviceProperties>
