@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="73" locationId="6e925d6a-2e56-4450-885f-4eb8b5a2b4ca">
-  <Template revision="1.0">
+<Templates format="2" protocolVersion="54">
+  <Template id="78a0b452-e3ff-46e8-bf7c-5e18785c094b" revision="1.0">
     <SuggestedCCUParameters>
       <UseAsciiCommunication>False</UseAsciiCommunication>
       <StopBits>One</StopBits>
@@ -25,13 +25,13 @@
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
     </RevisionHistory>
-    <Name>Autoservis Gree_AC</Name>
+    <Name>Gree_AC</Name>
     <CcuModel>ModbusRtuCCU</CcuModel>
     <Producer></Producer>
     <Model></Model>
     <Description></Description>
     <Module>
-      <Name>Autoservis Gree_AC</Name>
+      <Name>Gree_AC</Name>
       <Id>-1</Id>
       <Model>ModbusModule</Model>
       <DeviceProperties>
@@ -46,7 +46,7 @@
       </DeviceProperties>
       <Devices>
         <Device>
-          <Name>Autoservis Ambient temperature</Name>
+          <Name>Ambient temperature</Name>
           <Model>ModbusTemperatureSensor</Model>
           <Id>-2</Id>
           <DeviceProperties>
@@ -64,7 +64,7 @@
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Autoservis FAN Speed</Name>
+          <Name>FAN Speed</Name>
           <Model>ModbusMultiValueSwitch</Model>
           <Id>-3</Id>
           <DeviceProperties>
@@ -113,7 +113,7 @@
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Autoservis Mode</Name>
+          <Name>Mode</Name>
           <Model>ModbusMultiValueSwitch</Model>
           <Id>-4</Id>
           <DeviceProperties>
@@ -162,7 +162,7 @@
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Autoservis Outdoor Temperature</Name>
+          <Name>Outdoor Temperature</Name>
           <Model>ModbusTemperatureSensor</Model>
           <Id>-5</Id>
           <DeviceProperties>
@@ -180,7 +180,7 @@
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Autoservis Swtich On/Off</Name>
+          <Name>Swtich On/Off</Name>
           <Model>ModbusSwitch</Model>
           <Id>-6</Id>
           <DeviceProperties>
@@ -203,7 +203,7 @@
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Autoservis Thermostat</Name>
+          <Name>Thermostat</Name>
           <Model>ModbusThermostat</Model>
           <Id>-7</Id>
           <DeviceProperties>
