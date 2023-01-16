@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="73">
  <Template id="78a0b452-e3ff-46e8-bf7c-5e18785c094b" revision="1.0">
     <Name>Gree_AC</Name>
     <CcuModel>ModbusTcpCCU</CcuModel>
