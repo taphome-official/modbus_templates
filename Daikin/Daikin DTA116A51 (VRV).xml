@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="73">
+<Templates format="2" protocolVersion="73" >
   <Template revision="1.0" id="23d7e0ac-7e75-4d94-b25f-bd469b9744d1">
     <SuggestedCCUParameters>
       <UseAsciiCommunication>False</UseAsciiCommunication>
@@ -54,9 +54,9 @@ IF(GETBIT(MODBUSR(A, 6, Uint16),13) = 1, ADDERROR("Communication Error with devi
 IF(GETBIT(MODBUSR(A, 6, Uint16),14) = 1, ADDERROR("Communication Error with device 15"));
 IF(GETBIT(MODBUSR(A, 6, Uint16),15) = 1, ADDERROR("Communication Error with device 16"));</ReadScript>
         <PrefetchModeId>0</PrefetchModeId>
-        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Adaptor status"},"ReadFormula":"SWITCH(MODBUSR(A, 1, Bool), 1, \u0022Ready\u0022, 0, \u0022Not ready\u0022, \u0022Error\u0022)"},{"AttributeDefinition":{"Name":"Cooling Mode capability"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 998 \u002B (3*DeviceNumber), Uint16), 1), 0, \u0022Not exist\u0022, 1, \u0022Exist\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Fan mode capability"},"ReadFormula":"#SWITCH(GETBIT(MODBUSR(A, 998 \u002B (3*DeviceNumber), Uint16), 0), 0, \u0022Not exist\u0022, 1, \u0022Exist\u0022, \u0022Error\u0022);\r\nSWITCH(GETBIT(MODBUSR(A, 1001, Uint16), 0), 0, \u0022Not exist\u0022, 1, \u0022Exist\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (1)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),0), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (2)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),1), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (3)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),2), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (4)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),3), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (5)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),4), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (6)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),5), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (7)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),6), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (8)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),7), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (9)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),8), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (10)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),9), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (11)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),10), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (12)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),11), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (13)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),12), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (14)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),13), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (15)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),14), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (16)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 2, Uint16),15), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"}]</ServiceAttributesFormulas>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Adaptor status"},"ReadFormula":"SWITCH(MODBUSR(A, 0, Bool), 1, \u0022Ready\u0022, 0, \u0022Not ready\u0022, \u0022Error\u0022)"},{"AttributeDefinition":{"Name":"Cooling Mode capability"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 997 \u002B (3*DeviceNumber), Uint16), 1), 0, \u0022Not exist\u0022, 1, \u0022Exist\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Fan mode capability"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 997 \u002B (3*DeviceNumber), Uint16), 0), 0, \u0022Not exist\u0022, 1, \u0022Exist\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (1)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),0), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (2)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),1), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (3)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),2), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (4)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),3), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (5)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),4), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (6)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),5), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (7)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),6), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (8)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),7), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (9)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),8), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (10)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),9), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (11)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),10), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (12)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),11), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (13)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),12), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (14)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),13), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (15)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),14), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Indoor unit (16)"},"ReadFormula":"SWITCH(GETBIT(MODBUSR(A, 1, Uint16),15), 0, \u0022Unconnected\u0022, 1, \u0022Connected\u0022, \u0022Error\u0022);"}]</ServiceAttributesFormulas>
         <SlaveId>$[SlaveId]</SlaveId>
-        <ModuleVariables>[{"Name":"DeviceNumber","ValueTypeId":1,"NumericValue":1}]</ModuleVariables>
+        <ModuleVariables>[{"Name":"DeviceNumber","ValueTypeId":1,"NumericValue":2,"StringValue":"3"}]</ModuleVariables>
         <MaxPrefetchGroupSize>10</MaxPrefetchGroupSize>
         <IpAddress>$[IpAddress]</IpAddress>
       </DeviceProperties>
@@ -106,9 +106,12 @@ IF(GETBIT(MODBUSR(A, 6, Uint16),15) = 1, ADDERROR("Communication Error with devi
             <Value8IconId>13</Value8IconId>
             <Value9IconId>14</Value9IconId>
             <OffStateValue>0</OffStateValue>
-            <ReadSwitchState>GETBITS(MODBUSR(H, 1998 + (DeviceNumber*3), Int16), 4,4)</ReadSwitchState>
-            <WriteSwitchState>var reg := MODBUSR(H, 1998 + (DeviceNumber*3), UInt16);
-MODBUSW(H, 1998 + (DeviceNumber*3), UInt16, SETBITS(reg,4,4, Mu));</WriteSwitchState>
+            <ReadSwitchState>GETBITS(MODBUSR(H, 1997 + (DeviceNumber*3), UInt16), 8,3);</ReadSwitchState>
+            <WriteSwitchState>var reg := MODBUSR(H, 1997 + (DeviceNumber*3), UInt16);
+MODBUSW(H, 1997 + (DeviceNumber*3), UInt16, SETBITS(reg,4,4, 6));
+reg := MODBUSR(H, 1997 + (DeviceNumber*3), UInt16);
+MODBUSW(H, 1997 + (DeviceNumber*3), UInt16, SETBITS(reg,8,3, Mu));
+</WriteSwitchState>
           </DeviceProperties>
         </Device>
         <Device>
@@ -156,9 +159,12 @@ MODBUSW(H, 1998 + (DeviceNumber*3), UInt16, SETBITS(reg,4,4, Mu));</WriteSwitchS
             <Value8IconId>13</Value8IconId>
             <Value9IconId>14</Value9IconId>
             <OffStateValue>-1</OffStateValue>
-            <ReadSwitchState>GETBITS(MODBUSR(H, 1998 + (DeviceNumber*3), Int16), 12, 3);
+            <ReadSwitchState>GETBITS(MODBUSR(H, 1997 + (DeviceNumber*3), Int16), 12, 3);
 </ReadSwitchState>
-            <WriteSwitchState></WriteSwitchState>
+            <WriteSwitchState>var reg := MODBUSR(H, 1997 + (DeviceNumber*3), UInt16);
+MODBUSW(H, 1997 + (DeviceNumber*3), UInt16, SETBITS(reg,4,4, 6));
+reg := MODBUSR(H, 1997 + (DeviceNumber*3), UInt16);
+MODBUSW(H, 1997 + (DeviceNumber*3), UInt16, SETBITS(reg,12,3, Mu));</WriteSwitchState>
           </DeviceProperties>
         </Device>
         <Device>
@@ -206,9 +212,10 @@ MODBUSW(H, 1998 + (DeviceNumber*3), UInt16, SETBITS(reg,4,4, Mu));</WriteSwitchS
             <Value8IconId>13</Value8IconId>
             <Value9IconId>14</Value9IconId>
             <OffStateValue>0</OffStateValue>
-            <ReadSwitchState>GETBITS(MODBUSR(H, 1999+(DeviceNumber*3), Int16), 0, 4)</ReadSwitchState>
-            <WriteSwitchState>var reg :=MODBUSR(H, 1999+(DeviceNumber*3), Int16);
-MODBUSW(H, 1999+(DeviceNumber*3), Int16, SETBITS(reg, 0, 4, mu))</WriteSwitchState>
+            <ReadSwitchState>GETBITS(MODBUSR(H, 1998+(DeviceNumber*3), Int16), 0, 4)</ReadSwitchState>
+            <WriteSwitchState>var reg :=MODBUSR(H, 1998+(DeviceNumber*3), UInt16);
+MODBUSW(H, 1998+(DeviceNumber*3), UInt16, SETBITS(reg, 0, 4, mu));
+</WriteSwitchState>
           </DeviceProperties>
         </Device>
         <Device>
@@ -224,17 +231,15 @@ MODBUSW(H, 1999+(DeviceNumber*3), Int16, SETBITS(reg, 0, 4, mu))</WriteSwitchSta
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
             <CustomDeviceVariables></CustomDeviceVariables>
-            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <NegateState>False</NegateState>
             <OnStateIconId>60</OnStateIconId>
             <OffStateIconId>61</OffStateIconId>
             <OnStateName>${general_on}</OnStateName>
             <OffStateName>${general_off}</OffStateName>
-            <ReadSwitchState>GETBIT(MODBUSR(H, 1998 + (DeviceNumber*3), UInt16), 0);</ReadSwitchState>
-            <WriteSwitchState>var reg := MODBUSR(H, 1998 + (DeviceNumber*3), UInt16);
-MODBUSW(H, 1998 + (DeviceNumber*3), UInt16, SETBITS(reg,4, 4, 6));
-reg := MODBUSR(H, 1998 + (DeviceNumber*3), UInt16);
-MODBUSW(H, 1998 + (DeviceNumber*3), UInt16, SETBIT(reg,0,St));
+            <ReadSwitchState>GETBIT(MODBUSR(H, 1997 + (DeviceNumber*3), UInt16), 0);</ReadSwitchState>
+            <WriteSwitchState>var reg := MODBUSR(H, 1997 + (DeviceNumber*3), UInt16);
+MODBUSW(H, 1997 + (DeviceNumber*3), UInt16, SETBIT(reg,0,St));
 </WriteSwitchState>
           </DeviceProperties>
         </Device>
@@ -254,9 +259,9 @@ MODBUSW(H, 1998 + (DeviceNumber*3), UInt16, SETBIT(reg,0,St));
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <MinTemperature>16</MinTemperature>
             <MaxTemperature>30</MaxTemperature>
-            <ReadCurrentTemperature>MODBUSR(H, 1999 + (6*DeviceNumber), Int16) / 10</ReadCurrentTemperature>
-            <ReadDesiredTemperature>MODBUSR(H, 2000+(3*DeviceNumber), Int16)/10</ReadDesiredTemperature>
-            <WriteDesiredTemperature>MODBUSW(H, 2000 + (DeviceNumber*3), Int16, Se*10);</WriteDesiredTemperature>
+            <ReadCurrentTemperature>MODBUSR(A, 1998 + (6*DeviceNumber), Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 1999+(3*DeviceNumber), Int16)/10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 1999 + (DeviceNumber*3), Int16, Se*10);</WriteDesiredTemperature>
             <ReadHumidity></ReadHumidity>
           </DeviceProperties>
         </Device>
