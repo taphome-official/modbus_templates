@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="54">
-  <Template id="78a0b452-e3ff-46e8-bf7c-5e18785c094b" revision="1.0">
-    <SuggestedCCUParameters>
-      <UseAsciiCommunication>False</UseAsciiCommunication>
-      <StopBits>One</StopBits>
-      <DataBits>8</DataBits>
-      <Parity>None</Parity>
-      <Baudrate>9600</Baudrate>
-      <DelayBetweenRequests>-1</DelayBetweenRequests>
-      <ReadWriteTimeout>1000</ReadWriteTimeout>
-    </SuggestedCCUParameters>
+ <Template id="78a0b452-e3ff-46e8-bf7c-5e18785c094b" revision="1.0">
+    <Name>Gree_AC</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>Gree</Producer>
+    <Model>U-Match</Model>
+    <Category>3</Category>
+    <Description>U-Match</Description>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
     <ImportParameters>
       <Parameter>
-        <Id>SlaveId</Id>
         <Name>${device_SlaveId}</Name>
         <Value>1</Value>
+        <Id>SlaveId</Id>
       </Parameter>
       <Parameter>
-        <Id>IpAddress</Id>
         <Name>${ipAddress}</Name>
-        <Value>192.168.1.0</Value>
+        <Value>192.168.0.1</Value>
+        <Id>IpAddress</Id>
       </Parameter>
     </ImportParameters>
     <RevisionHistory>
