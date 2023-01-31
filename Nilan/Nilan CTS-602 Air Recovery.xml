@@ -19,7 +19,7 @@
     <ImportParameters>
       <Parameter>
         <Name>${device_SlaveId}</Name>
-        <Value>1</Value>
+        <Value>30</Value>
         <Id>SlaveId</Id>
       </Parameter>
       <Parameter>
