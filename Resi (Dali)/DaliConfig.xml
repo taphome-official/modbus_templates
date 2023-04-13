@@ -32,14 +32,14 @@
     <Description></Description>
     <Category>9</Category>
     <Module>
-      <Name>Resi Dali - Configuration</Name>
+      <Name>${resi_dali_configuration}</Name>
       <Id>-1</Id>
       <Model>ModbusModule</Model>
       <DeviceProperties>
         <DeviceType>7001</DeviceType>
         <InternalPollInterval>2500</InternalPollInterval>
         <PrefetchModeId>2</PrefetchModeId>
-        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Slave ID","Section":null},"ReadFormula":"modbusr(H,65221,uint16)"}
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${xml_slave_id}","Section":null},"ReadFormula":"modbusr(H,65221,uint16)"}
 ,{"AttributeDefinition":{"Name":"Gear 0","Section":null},"ReadFormula":"var ShortAddress := 0;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
 ,{"AttributeDefinition":{"Name":"Gear 1","Section":null},"ReadFormula":"var ShortAddress := 1;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
 ,{"AttributeDefinition":{"Name":"Gear 2","Section":null},"ReadFormula":"var ShortAddress := 2;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
@@ -105,7 +105,7 @@
 ,{"AttributeDefinition":{"Name":"Gear 62","Section":null},"ReadFormula":"var ShortAddress := 62;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
 ,{"AttributeDefinition":{"Name":"Gear 63","Section":null},"ReadFormula":"var ShortAddress := 63;\r\nmodbusw(SH, 511, uint16, (ShortAddress &lt;&lt; 8) + 0x99);\r\nsleep(5); var rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));\r\nvar x := modbusr(SH, 511, uint16);\r\nif (x != 0x8000, return(\"DT\" + x), return(\"--\"));"}
 ]</ServiceAttributesFormulas>
-        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Reset GW","NumericParameters":null,"BoolParameters":null,"EnumParameters":null},"Script":"modbusw(SH,6000,uint16,1)"},{"ActionDefinition":{"Name":"Set Slave ID","NumericParameters":[{"FriendlyName":"Slave ID","Abbreviation":"SID","IsFloat":true,"MinValue":1.0,"MaxValue":255.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 65221, uint16, SID);\r\n\r\nmodbusw(SH,6000, uint16, 1);"},{"ActionDefinition":{"Name":"Turn On - all lamps","NumericParameters":null,"BoolParameters":null,"EnumParameters":null},"Script":"modbusw(SH, 530, uint16, 0xFE)"},{"ActionDefinition":{"Name":"Turn Off - all lamps","NumericParameters":null,"BoolParameters":null,"EnumParameters":null},"Script":"modbusw(SH, 530, uint16, 0x00)"}]</ServiceActionsScripts>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"${xml_reset_gateway}","NumericParameters":null,"BoolParameters":null,"EnumParameters":null},"Script":"modbusw(SH,6000,uint16,1)"},{"ActionDefinition":{"Name":"${xml_set_slave_id}","NumericParameters":[{"FriendlyName":"${xml_slave_id}","Abbreviation":"SID","IsFloat":true,"MinValue":1.0,"MaxValue":255.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 65221, uint16, SID);\r\n\r\nmodbusw(SH,6000, uint16, 1);"},{"ActionDefinition":{"Name":"${xml_turn_on_all_lamps}","NumericParameters":null,"BoolParameters":null,"EnumParameters":null},"Script":"modbusw(SH, 530, uint16, 0xFE)"},{"ActionDefinition":{"Name":"${xml_turn_off_all_lamps}","NumericParameters":null,"BoolParameters":null,"EnumParameters":null},"Script":"modbusw(SH, 530, uint16, 0x00)"}]</ServiceActionsScripts>
         <SlaveId>$[SlaveId]</SlaveId>
         <ModuleVariables>[{"Name":"SEARCHADDRH","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"SEARCHADDRM","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"SEARCHADDRL","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"SHORTADDR","ValueTypeId":1,"NumericValue":64.0,"StringValue":null},{"Name":"iterator","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null}]</ModuleVariables>
         <MaxPrefetchGroupSize>10</MaxPrefetchGroupSize>
@@ -114,7 +114,7 @@
       </DeviceProperties>
       <Devices>
         <Device>
-          <Name>Search new devices</Name>
+          <Name>${xml_find_new_devices}</Name>
           <Model>ModbusMultiValueSwitch</Model>
           <Id>-2</Id>
           <DeviceProperties>
@@ -137,15 +137,15 @@
             <Value8Index>8</Value8Index>
             <Value9Index>9</Value9Index>
             <Value0Name>TERMINATE</Value0Name>
-            <Value1Name>Start</Value1Name>
-            <Value2Name>Scan short addresses</Value2Name>
+            <Value1Name>${xml_start}</Value1Name>
+            <Value2Name>${xml_scan_short_address}</Value2Name>
             <Value3Name>Set SEARCHADDR</Value3Name>
             <Value4Name>COMPARE</Value4Name>
             <Value5Name>PROGRAM SHORT ADDRESS</Value5Name>
             <Value6Name>Check</Value6Name>
-            <Value7Name>Reset all devices to default</Value7Name>
-            <Value8Name>Reset Short Addresses</Value8Name>
-            <Value9Name>Finish</Value9Name>
+            <Value7Name>${xml_reset_all_devices_to_default}</Value7Name>
+            <Value8Name>${xml_reset_short_addresses}</Value8Name>
+            <Value9Name>${xml_finish}</Value9Name>
             <Value0IconId>5</Value0IconId>
             <Value1IconId>6</Value1IconId>
             <Value2IconId>7</Value2IconId>
