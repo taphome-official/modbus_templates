@@ -5,8 +5,8 @@
       <UseAsciiCommunication>False</UseAsciiCommunication>
       <StopBits>One</StopBits>
       <DataBits>8</DataBits>
-      <Parity>None</Parity>
-      <Baudrate>9600</Baudrate>
+      <Parity>Even</Parity>
+      <Baudrate>19200</Baudrate>
       <DelayBetweenRequests>-1</DelayBetweenRequests>
       <ReadWriteTimeout>1500</ReadWriteTimeout>
     </SuggestedCCUParameters>
@@ -14,7 +14,7 @@
       <Parameter>
         <Id>SlaveId</Id>
         <Name>${device_SlaveId}</Name>
-        <Value>1</Value>
+        <Value>20</Value>
       </Parameter>
       <Parameter>
         <Id>IpAddress</Id>
@@ -24,6 +24,7 @@
     </ImportParameters>
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
+      <Revision id="1.1">Correct default parameters</Revision>
     </RevisionHistory>
     <Name>Flair 325</Name>
     <CcuModel>ModbusRtuCCU</CcuModel>
