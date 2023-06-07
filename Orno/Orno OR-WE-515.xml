@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Templates format="2" protocolVersion="73">
-  <Template id="488ec09c-39d1-4e96-b021-711a7fa02d7b" revision="1.0">
+  <Template id="488ec09c-39d1-4e96-b021-711a7fa02d7b" revision="2.0">
     <SuggestedCCUParameters>
       <UseAsciiCommunication>False</UseAsciiCommunication>
       <StopBits>One</StopBits>
@@ -62,7 +62,7 @@
             <CustomDeviceVariables>[]</CustomDeviceVariables>
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 0x139, UInt32)/100</ReadState>
+            <ReadState>MODBUSR(H, 0x139, UInt32)/1000</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -81,7 +81,7 @@
             <CustomDeviceVariables></CustomDeviceVariables>
             <ReadTotalConsumption>MODBUSR(H, 0xA000, UInt32)/100</ReadTotalConsumption>
             <ReadDemand>MODBUSR(H, 0x140, Int32)/1000</ReadDemand>
-            <Calibration>50000</Calibration>
+            <Calibration>0</Calibration>
           </DeviceProperties>
         </Device>
         <Device>
@@ -103,7 +103,7 @@
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Tariff T2</Name>
+          <Name>${tariff} T2</Name>
           <Model>ModbusElectricityMeter</Model>
           <Id>-4</Id>
           <DeviceProperties>
@@ -121,7 +121,7 @@
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Tariff T3</Name>
+          <Name>${tariff} T3</Name>
           <Model>ModbusElectricityMeter</Model>
           <Id>-5</Id>
           <DeviceProperties>
