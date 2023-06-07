@@ -81,7 +81,7 @@
             <CustomDeviceVariables></CustomDeviceVariables>
             <ReadTotalConsumption>MODBUSR(H, 0xA000, UInt32)/100</ReadTotalConsumption>
             <ReadDemand>MODBUSR(H, 0x140, Int32)/1000</ReadDemand>
-            <Calibration>50000</Calibration>
+            <Calibration>0</Calibration>
           </DeviceProperties>
         </Device>
         <Device>
