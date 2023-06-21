@@ -1,0 +1,456 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="73">
+  <Template revision="1.0" id="f1065009-1fe6-4874-8c5a-7624c97af9bd">
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>Even</Parity>
+      <Baudrate>9600</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>Slave Id</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>IP address</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>Sistema-Home 4..18(T) heatpump</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer></Producer>
+    <Model></Model>
+    <Description></Description>
+    <Module>
+      <Name>Sistema-Home 4..18(T) heatpump</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>2500</InternalPollInterval>
+        <ReadScript>#Enablement of writing the machine status remotely
+var mod := MODBUSR(H, 7201, UINT16);
+if(getbit(mod, 0) = 0, MODBUSW(H, 7201, Uint16, SETBIT(mod, 0, 1)));
+#Errors
+IF(GETBIT(MODBUSR(H, 950, Uint16),0)=1, ADDERROR("High pressure", "E001"));
+IF(GETBIT(MODBUSR(H, 950, Uint16),1)=1, ADDERROR("Low pressure", "E002"));
+IF(GETBIT(MODBUSR(H, 950, Uint16),2)=1, ADDERROR("Compressor thermal protection", "E003"));
+IF(GETBIT(MODBUSR(H, 950, Uint16),3)=1, ADDERROR("Fan thermal protection", "E004"));
+IF(GETBIT(MODBUSR(H, 950, Uint16),4)=1, ADDERROR("Frost", "E005"));
+IF(GETBIT(MODBUSR(H, 950, Uint16),5)=1, ADDERROR("Lack of flow", "E006"));
+IF(GETBIT(MODBUSR(H, 950, Uint16),6)=1, ADDERROR("DHW preparer low temperature", "E007"));
+IF(GETBIT(MODBUSR(H, 950, Uint16),7)=1, ADDERROR("Lack of lubrication", "E008"));
+IF(GETBIT(MODBUSR(H, 950, Uint16),8)=1, ADDERROR("High discharge temperature of Cp1", "E009"));
+IF(GETBIT(MODBUSR(H, 950, Uint16),9)=1, ADDERROR("Solar collector at high temperature", "E010"));
+IF(GETBIT(MODBUSR(H, 950, Uint16),12)=1, ADDERROR("Compressor 2 thermal protection", "E013"));
+IF(GETBIT(MODBUSR(H, 950, Uint16),13)=1, ADDERROR("Fan 2 thermal protection", "E014"));
+IF(GETBIT(MODBUSR(H, 950, Uint16),15)=1, ADDERROR("Pump thermal protection", "E016"));
+
+IF(GETBIT(MODBUSR(H, 951, Uint16),1)=1, ADDERROR("High temperature", "E018"));
+IF(GETBIT(MODBUSR(H, 951, Uint16),2)=1, ADDERROR("High discharge temperature of Cp2", "E019"));
+IF(GETBIT(MODBUSR(H, 951, Uint16),3)=1, ADDERROR("Inverted pressure transcuders", "E020"));
+IF(GETBIT(MODBUSR(H, 951, Uint16),6)=1, ADDERROR("Compressor 3 thermal protection", "E023"));
+IF(GETBIT(MODBUSR(H, 951, Uint16),7)=1, ADDERROR("Fan 3 thermal protection", "E024"));
+IF(GETBIT(MODBUSR(H, 951, Uint16),9)=1, ADDERROR("Pump 2 thermal protection", "E026"));
+IF(GETBIT(MODBUSR(H, 951, Uint16),11)=1, ADDERROR("Incongruent temperatures", "E041"));
+IF(GETBIT(MODBUSR(H, 951, Uint16),12)=1, ADDERROR("Poor heat exchange DHW", "E042"));
+IF(GETBIT(MODBUSR(H, 951, Uint16),13)=1, ADDERROR("DHW accumulation tank in high temperature", "E050"));
+IF(GETBIT(MODBUSR(H, 951, Uint16),14)=1, ADDERROR("I/O module 1 disconnected", "E101"));
+IF(GETBIT(MODBUSR(H, 951, Uint16),15)=1, ADDERROR("I/O module 2 disconnected", "E102"));
+
+IF(GETBIT(MODBUSR(H, 952, Uint16),0)=1, ADDERROR("Probe 1 error", "E611"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),1)=1, ADDERROR("Probe 2 error", "E621"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),2)=1, ADDERROR("Probe 3 error", "E631"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),3)=1, ADDERROR("Probe 4 error", "E641"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),4)=1, ADDERROR("Probe 5 error", "E651"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),5)=1, ADDERROR("Probe 6 error", "E661"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),6)=1, ADDERROR("Probe 7 error", "E671"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),7)=1, ADDERROR("Probe 8 error", "E681"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),8)=1, ADDERROR("Probe 9 error", "E691"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),9)=1, ADDERROR("Probe 10 error", "E701"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),10)=1, ADDERROR("Probe 11 error", "E711"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),11)=1, ADDERROR("Module 1 probe 1 error", "E612"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),12)=1, ADDERROR("Module 1 probe 2 error", "E622"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),13)=1, ADDERROR("Module 1 probe 3 error", "E632"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),14)=1, ADDERROR("Module 1 probe 4 error", "E642"));
+IF(GETBIT(MODBUSR(H, 952, Uint16),15)=1, ADDERROR("Module 1 probe 5 error", "E652"));
+
+IF(GETBIT(MODBUSR(H, 953, Uint16),0)=1, ADDERROR("Module 1 probe 6 error", "E662"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),1)=1, ADDERROR("Module 1 probe 7 error", "E672"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),2)=1, ADDERROR("Module 1 probe 8 error", "E682"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),3)=1, ADDERROR("Module 1 probe 9 error", "E692"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),4)=1, ADDERROR("Module 1 probe 10 error", "E702"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),5)=1, ADDERROR("Module 1 probe 11 error", "E712"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),6)=1, ADDERROR("Module 2 probe 1 error", "E613"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),7)=1, ADDERROR("Module 2 probe 2 error", "E623"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),8)=1, ADDERROR("Module 2 probe 3 error", "E633"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),9)=1, ADDERROR("Module 2 probe 4 error", "E643"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),10)=1, ADDERROR("Module 2 probe 5 error", "E653"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),11)=1, ADDERROR("Module 2 probe 6 error", "E663"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),12)=1, ADDERROR("Module 2 probe 7 error", "E673"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),13)=1, ADDERROR("Module 2 probe 8 error", "E683"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),14)=1, ADDERROR("Module 2 probe 9 error", "E693"));
+IF(GETBIT(MODBUSR(H, 953, Uint16),15)=1, ADDERROR("Module 2 probe 10 error", "E703"));
+
+IF(GETBIT(MODBUSR(H, 954, Uint16),0)=1, ADDERROR("Module 2 probe 11 error", "E713"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),1)=1, ADDERROR("Link inverter 1", "E801"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),2)=1, ADDERROR("Link inverter 2", "E802"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),3)=1, ADDERROR("Link inverter 3", "E803"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),4)=1, ADDERROR("Hardware fault inverter 1", "E851"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),5)=1, ADDERROR("Hardware fault inverter 2", "E852"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),6)=1, ADDERROR("Hardware fault inverter 3", "E853"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),7)=1, ADDERROR("Overcurrent inverter 1", "E861"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),8)=1, ADDERROR("Overcurrent inverter 2", "E862"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),9)=1, ADDERROR("Overcurrent inverter 3", "E863"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),10)=1, ADDERROR("High temperature inverter 1", "E871"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),11)=1, ADDERROR("High temperature inverter 2", "E872"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),12)=1, ADDERROR("High temperature inverter 3", "E873"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),13)=1, ADDERROR("Bad voltage inverter 1", "E881"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),14)=1, ADDERROR("Bad voltage inverter 2", "E882"));
+IF(GETBIT(MODBUSR(H, 954, Uint16),15)=1, ADDERROR("Bad voltage inverter 3", "E883"));
+
+IF(GETBIT(MODBUSR(H, 955, Uint16),0)=1, ADDERROR("Phase sequence inverter 1", "E891"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),1)=1, ADDERROR("Phase sequence inverter 2", "E892"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),2)=1, ADDERROR("Phase sequence inverter 3", "E893"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),3)=1, ADDERROR("Model error inverter 1", "E901"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),4)=1, ADDERROR("Model error inverter 2", "E902"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),5)=1, ADDERROR("Model error inverter 3", "E903"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),6)=1, ADDERROR("Overload error inverter 1", "E911"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),7)=1, ADDERROR("Overload error inverter 2", "E912"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),8)=1, ADDERROR("Overload error inverter 3", "E913"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),9)=1, ADDERROR("Overcurrent PFC inverter 1", "E921"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),10)=1, ADDERROR("Overcurrent PFC inverter 2", "E922"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),11)=1, ADDERROR("Overcurrent PFC inverter 3", "E923"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),12)=1, ADDERROR("Internal communication error inverter 1", "E931"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),13)=1, ADDERROR("Internal communication error inverter 2", "E932"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),14)=1, ADDERROR("Internal communication error inverter 3", "E933"));
+IF(GETBIT(MODBUSR(H, 955, Uint16),15)=1, ADDERROR("Fault PFC inverter 1", "E941"));
+
+IF(GETBIT(MODBUSR(H, 956, Uint16),0)=1, ADDERROR("Fault PFC inverter 2", "E942"));
+IF(GETBIT(MODBUSR(H, 956, Uint16),1)=1, ADDERROR("Fault PFC inverter 3", "E943"));
+IF(GETBIT(MODBUSR(H, 956, Uint16),2)=1, ADDERROR("Probe error inverter 1", "E951"));
+IF(GETBIT(MODBUSR(H, 956, Uint16),3)=1, ADDERROR("Probe error inverter 2", "E952"));
+IF(GETBIT(MODBUSR(H, 956, Uint16),4)=1, ADDERROR("Probe error inverter 3", "E953"));
+IF(GETBIT(MODBUSR(H, 956, Uint16),5)=1, ADDERROR("Abnormal condition inverter 1", "E961"));
+IF(GETBIT(MODBUSR(H, 956, Uint16),6)=1, ADDERROR("Abnormal condition inverter 2", "E962"));
+IF(GETBIT(MODBUSR(H, 956, Uint16),7)=1, ADDERROR("Abnormal condition inverter 3", "E963"));
+IF(GETBIT(MODBUSR(H, 956, Uint16),8)=1, ADDERROR("Inverter 1 EEPROM error", "E971"));
+IF(GETBIT(MODBUSR(H, 956, Uint16),9)=1, ADDERROR("Inverter 2 EEPROM error", "E972"));
+IF(GETBIT(MODBUSR(H, 956, Uint16),10)=1, ADDERROR("Inverter 3 EEPROM error", "E973"));
+IF(GETBIT(MODBUSR(H, 956, Uint16),11)=1, ADDERROR("High discharge temperature of Cp3", "E029"));
+IF(GETBIT(MODBUSR(H, 956, Uint16),12)=1, ADDWARNING("Anti-legionella performed correctly", "E060"));
+IF(GETBIT(MODBUSR(H, 956, Uint16),13)=1, ADDERROR("Anti-legionella failed or stopped", "E061"));</ReadScript>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Compressor 1 runtime"},"ReadFormula":"MODBUSR(H, 305, Uint16) \u002B \u0022h\u0022"},{"AttributeDefinition":{"Name":"Compressor 2 runtime"},"ReadFormula":"MODBUSR(H, 307, Uint16) \u002B \u0022h\u0022"},{"AttributeDefinition":{"Name":"Compressor 3 runtime"},"ReadFormula":"MODBUSR(H, 309, Uint16) \u002B \u0022h\u0022"},{"AttributeDefinition":{"Name":"Compressor 1 runtime (circuit 2)"},"ReadFormula":"MODBUSR(H, 313, Uint16) \u002B \u0022h\u0022"},{"AttributeDefinition":{"Name":"Compressor 2 runtime (circuit 2)"},"ReadFormula":"MODBUSR(H, 315, Uint16) \u002B \u0022h\u0022"},{"AttributeDefinition":{"Name":"Compressor 3 runtime (circuit 2)"},"ReadFormula":"MODBUSR(H, 317, Uint16) \u002B \u0022h\u0022"}]</ServiceAttributesFormulas>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <ModuleVariables>[]</ModuleVariables>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Active mode</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"DHW (sanitary) setpoint","NumericParameters":[{"FriendlyName":"Temp setpoint","Abbreviation":"ts","IsFloat":false,"MinValue":25,"MaxValue":55}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 7205, Uint16, ts*10);"}]</ServiceActionsScripts>
+            <CustomDeviceVariables>[]</CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Stand by</Value0Name>
+            <Value1Name>Cool</Value1Name>
+            <Value2Name>Heat</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>Sanitary</Value4Name>
+            <Value5Name>Cool+DHW</Value5Name>
+            <Value6Name>Heat+DHW</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>61</Value0IconId>
+            <Value1IconId>2</Value1IconId>
+            <Value2IconId>1</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>40</Value4IconId>
+            <Value5IconId>360</Value5IconId>
+            <Value6IconId>358</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 200, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 7200, int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Compressor inhalation</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Compressor discharge 1"},"ReadFormula":"var temp := MODBUSR(H, 433, Int16);\r\nif(temp = 32766, \u0022Not configured\u0022, temp/10 \u002B \u0022\u00B0C\u0022);"},{"AttributeDefinition":{"Name":"Compressor discharge 2"},"ReadFormula":"var temp := MODBUSR(H, 434, Int16);\r\nif(temp = 32766, \u0022Not configured\u0022, temp/10 \u002B \u0022\u00B0C\u0022);"},{"AttributeDefinition":{"Name":"Compressor discharge 3"},"ReadFormula":"var temp := MODBUSR(H, 435, Int16);\r\nif(temp = 32766, \u0022Not configured\u0022, temp/10 \u002B \u0022\u00B0C\u0022);"},{"AttributeDefinition":{"Name":"Compressor inhalation (circuit 2)"},"ReadFormula":"var temp := MODBUSR(H, 20422, Int16);\r\nif(temp = 32766, \u0022Not configured\u0022, temp/10 \u002B \u0022\u00B0C\u0022);"},{"AttributeDefinition":{"Name":"Compressor 1 discharge (circuit 2)"},"ReadFormula":"var temp := MODBUSR(H, 20433, Int16);\r\nif(temp = 32766, \u0022Not configured\u0022, temp/10 \u002B \u0022\u00B0C\u0022);"},{"AttributeDefinition":{"Name":"Compressor 2 discharge (circuit 2)"},"ReadFormula":"var temp := MODBUSR(H, 20434, Int16);\r\nif(temp = 32766, \u0022Not configured\u0022, temp/10 \u002B \u0022\u00B0C\u0022);"},{"AttributeDefinition":{"Name":"Compressor 3 discharge (circuit 2)"},"ReadFormula":"var temp := MODBUSR(H, 20435, Int16);\r\nif(temp = 32766, \u0022Not configured\u0022, temp/10 \u002B \u0022\u00B0C\u0022);"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTemperature>MODBUSR(H, 433, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Cool Setpoint</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>5</MinTemperature>
+            <MaxTemperature>18</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(H, 440, Int16)/10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 1001, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 1001, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>DHW temperature</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Status"},"ReadFormula":"SWITCH(MODBUSR(H, 405, Uint16), 32766, \u0022Not configured\u0022, 32767, \u0022Fault\u0022, \u0022Ok\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTemperature>MODBUSR(H, 405, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Fan speed</Name>
+          <Model>ModbusDimmer</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <ReadLevel>MODBUSR(H, 7000, Int16)/1000</ReadLevel>
+            <WriteLevel></WriteLevel>
+            <IconId>3007</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Heat Setpoint</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>35</MinTemperature>
+            <MaxTemperature>55</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(H, 440, Int16)/10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 1002, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 1002, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>High pressure</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"85":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:85}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"High Pressure Circuit 2"},"ReadFormula":"MODBUSR(H, 20406, Int16)/100 \u002B \u0022 bar\u0022"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 406, Int16)/100</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Low pressure</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"85":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:85}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Low Pressure Circuit 2"},"ReadFormula":"MODBUSR(H, 20414, Int16)/100 \u002B \u0022 bar\u0022"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 414, Int16)/100</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Outside temperature</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>30000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTemperature>MODBUSR(H, 428, int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Plant temp (mixing tank)</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-11</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTemperature>MODBUSR(H, 440, Int16)/10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Pump Speed</Name>
+          <Model>ModbusDimmer</Model>
+          <Id>-12</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <ReadLevel>MODBUSR(H, 7001, Int16)/1000</ReadLevel>
+            <WriteLevel></WriteLevel>
+            <IconId>3021</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Water flow rate</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-13</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Status"},"ReadFormula":"SWITCH(MODBUSR(H, 405, Uint16), 32766, \u0022Not configured\u0022, 32767, \u0022Fault\u0022, \u0022Ok\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 444, Int16);</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Water inlet Temperature</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-14</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTemperature>MODBUSR(H, 400, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Water outlet Temperature</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-15</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTemperature>MODBUSR(H, 401, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
