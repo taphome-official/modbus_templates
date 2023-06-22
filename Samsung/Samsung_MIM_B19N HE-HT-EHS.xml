@@ -13,17 +13,18 @@
     <ImportParameters>
       <Parameter>
         <Id>SlaveId</Id>
-        <Name>Slave Id</Name>
+        <Name>${device_SlaveId}</Name>
         <Value>1</Value>
       </Parameter>
       <Parameter>
         <Id>IpAddress</Id>
-        <Name>IP address</Name>
+        <Name>${ipAddress}</Name>
         <Value>192.168.1.0</Value>
       </Parameter>
     </ImportParameters>
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
+      <Revision id="2.0">Update with translation</Revision>
     </RevisionHistory>
     <Name>Samsung_MIM_B19N HE/HT/EHS</Name>
     <CcuModel>ModbusRtuCCU</CcuModel>
@@ -38,11 +39,11 @@
         <DeviceType>7001</DeviceType>
         <InternalPollInterval>30000</InternalPollInterval>
         <ReadScript>var err := MODBUSR(H, 0, Uint16);
-IF(GETBIT(err, 0) = 1, ADDERROR("adress_error"));
-IF(GETBIT(err, 1) = 1, ADDERROR("comm_error_R1/R2"));
-IF(GETBIT(err, 2) = 1, ADDERROR("tracking_error"));
+IF(GETBIT(err, 0) = 1, ADDERROR(${adress_error}));
+IF(GETBIT(err, 1) = 1, ADDERROR(${comm_error_R1/R2}));
+IF(GETBIT(err, 2) = 1, ADDERROR("${tracking_error}"));
 var reg := MODBUSR(H, 1, Uint16);
-IF(reg = 0, "", ADDERROR("integ_od_unit_err", reg));</ReadScript>
+IF(reg = 0, "", ADDERROR(${integ_od_unit_err}, reg));</ReadScript>
         <PrefetchModeId>0</PrefetchModeId>
         <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Communication Status"},"ReadFormula":"var com := MODBUSR(H, 50, Uint16);\r\nvar b0 := IF(getbit(com, 0) = 1, \u0022Exist \u0022, \u0022\u0022);\r\nvar b1 := IF(getbit(com, 1) = 1, \u0022- Type OK \u0022, \u0022\u0022);\r\nvar b2 := IF(getbit(com, 2) = 1, \u0022- Ready \u0022, \u0022\u0022);\r\nvar b3 := IF(getbit(com, 3) = 1, \u0022Communication error \u0022, \u0022\u0022);\r\nRETURN(b0 \u002B b1 \u002B b2 \u002B b3);"},{"AttributeDefinition":{"Name":"Unit Type"},"ReadFormula":"var type := GETBITS(MODBUSR(H, 51, Uint16),8, 8);\r\nvar lower := GETBITS(MODBUSR(H, 51, Uint16),0, 8);\r\n\r\n\r\nIF(type = 10, RETURN(\u0022FCU\u0022));\r\nIF(lower = 108, RETURN(\u0022ERV\u002B\u0022)); \r\nIF(lower = 110, RETURN(\u0022HE\u0022)); \r\nIF(lower = 120, RETURN(\u0022HT\u0022)); \r\nIF( 90 \u003C= lower AND lower \u003C=99 , RETURN(\u0022AHU\u0022));\r\nIF( 100 \u003C= lower AND lower \u003C= 102 , RETURN(\u0022ERV\u0022));\r\nIF( 115 \u003C= lower AND lower \u003C= 117 , RETURN(\u0022EHS\u0022));\r\nIF( 140 \u003C= lower AND lower \u003C= 149 , RETURN(\u0022Module Chiller\u0022));\r\nIF( 160 \u003C= lower AND lower \u003C= 169 , RETURN(\u0022FCU kit\u0022));\r\nRETURN(\u0022Indoor Unit\u0022);"},{"AttributeDefinition":{"Name":"Remote Control Restriction"},"ReadFormula":"var r := MODBUSR(H, 64, Uint16);\r\nIF(r = 0, \u0022No restriction\u0022, \u0022Restriction \u0022 \u002B r);"}]</ServiceAttributesFormulas>
         <ServiceActionsScripts>[{"ActionDefinition":{"Name":${buzzer},"NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Buzzer","Abbreviation":"buz","Values":[{"Item1":0.0,"Item2":"On"},{"Item1":1.0,"Item2":"Off"}]}]},"Script":"MODBUSW(H, 3, Int16, buz);"},{"ActionDefinition":{"Name":${remote_restrict},"NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Restriction","Abbreviation":"res","Values":[{"Item1":0.0,"Item2":"No Restriction"},{"Item1":25443.0,"Item2":"Restriction"}]}]},"Script":"MODBUSWNE(H, 64, Uint16, res);"}]</ServiceActionsScripts>
@@ -52,7 +53,7 @@ IF(reg = 0, "", ADDERROR("integ_od_unit_err", reg));</ReadScript>
       </DeviceProperties>
       <Devices>
         <Device>
-          <Name>Air Conditioning</Name>
+          <Name>${air_con}</Name>
           <Model>ModbusSwitch</Model>
           <Id>-2</Id>
           <DeviceProperties>
@@ -75,7 +76,7 @@ IF(reg = 0, "", ADDERROR("integ_od_unit_err", reg));</ReadScript>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Hot water mode</Name>
+          <Name>${hot_water_mode}</Name>
           <Model>ModbusMultiValueSwitch</Model>
           <Id>-3</Id>
           <DeviceProperties>
@@ -124,7 +125,7 @@ IF(reg = 0, "", ADDERROR("integ_od_unit_err", reg));</ReadScript>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Hot water operation</Name>
+          <Name>${hot_water_operation}</Name>
           <Model>ModbusSwitch</Model>
           <Id>-4</Id>
           <DeviceProperties>
@@ -147,7 +148,7 @@ IF(reg = 0, "", ADDERROR("integ_od_unit_err", reg));</ReadScript>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Hot Water Temperature</Name>
+          <Name>${hot_water_temperature}</Name>
           <Model>ModbusThermostat</Model>
           <Id>-5</Id>
           <DeviceProperties>
@@ -169,7 +170,7 @@ IF(reg = 0, "", ADDERROR("integ_od_unit_err", reg));</ReadScript>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Mode </Name>
+          <Name>${air_con_mode}</Name>
           <Model>ModbusMultiValueSwitch</Model>
           <Id>-6</Id>
           <DeviceProperties>
@@ -218,7 +219,7 @@ IF(reg = 0, "", ADDERROR("integ_od_unit_err", reg));</ReadScript>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Quiet Mode</Name>
+          <Name>${quiet_control}</Name>
           <Model>ModbusSwitch</Model>
           <Id>-7</Id>
           <DeviceProperties>
@@ -241,7 +242,7 @@ IF(reg = 0, "", ADDERROR("integ_od_unit_err", reg));</ReadScript>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Water-in Temperature</Name>
+          <Name>${water_in_tempt}</Name>
           <Model>ModbusTemperatureSensor</Model>
           <Id>-8</Id>
           <DeviceProperties>
@@ -259,7 +260,7 @@ IF(reg = 0, "", ADDERROR("integ_od_unit_err", reg));</ReadScript>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Water-out temperature</Name>
+          <Name>${water-out}</Name>
           <Model>ModbusThermostat</Model>
           <Id>-9</Id>
           <DeviceProperties>
