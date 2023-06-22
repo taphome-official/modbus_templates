@@ -258,7 +258,9 @@ IF(GETBIT(MODBUSR(H, 956, Uint16),13)=1, ADDERROR("Anti-legionella failed or sto
             <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Status"},"ReadFormula":"SWITCH(MODBUSR(H, 405, Uint16), 32766, \u0022Not configured\u0022, 32767, \u0022Fault\u0022, \u0022Ok\u0022)"}]</ServiceAttributesFormulas>
             <ServiceActionsScripts>[]</ServiceActionsScripts>
             <CustomDeviceVariables />
-            <ReadTemperature>MODBUSR(H, 405, Int16) / 10</ReadTemperature>
+            <ReadTemperature>var reg := MODBUSR(H, 405, Int16);
+SWITCH(reg, 32766, ADDWARNING("DHW temperature not configured"), 32767, ADDWARNING("DHW temperature at fault"), Return(reg/10));
+Return (nan);</ReadTemperature>
             <ReadHumidity></ReadHumidity>
           </DeviceProperties>
         </Device>
@@ -402,7 +404,7 @@ IF(GETBIT(MODBUSR(H, 956, Uint16),13)=1, ADDERROR("Anti-legionella failed or sto
           <Id>-13</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions />
+            <SerializedValueLogTypeConversions>{"83":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:83}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -412,7 +414,9 @@ IF(GETBIT(MODBUSR(H, 956, Uint16),13)=1, ADDERROR("Anti-legionella failed or sto
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>True</IsReadOnly>
-            <ReadState>MODBUSR(H, 444, Int16);</ReadState>
+            <ReadState>var reg := MODBUSR(H, 444, Int16);
+SWITCH(reg, 32766, ADDWARNING("Water flow not configured"), 32767, ADDWARNING("Water flow at fault"), Return(reg/10));
+Return (nan);</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
