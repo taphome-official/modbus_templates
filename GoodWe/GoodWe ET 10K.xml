@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="76">
+<Templates format="2" protocolVersion="76" >
   <Template revision="1.0" id="364f4715-c939-4a8c-9450-a4309c507a4d">
     <SuggestedCCUParameters>
       <UseAsciiCommunication>False</UseAsciiCommunication>
@@ -13,8 +13,8 @@
     <ImportParameters>
       <Parameter>
         <Id>SlaveId</Id>
-        <Name>${device_SlaveId}</Name>
-        <Value>1</Value>
+         <Name>${device_SlaveId}</Name>
+        <Value>247</Value>
       </Parameter>
       <Parameter>
         <Id>IpAddress</Id>
@@ -40,33 +40,34 @@
         <ReadScript>#error register
 var err:= MODBUSR(H, 35189, Uint32);
 #errors
-IF(GETBIT(err, 0) = 1, ADDERROR("GFCI Device Check Failure", "The GFCI detecting circuit is abnormal"));
-IF(GETBIT(err, 1) = 1, ADDERROR("AC HCT Check Failure", "The output current sensor is abnormal"));
-IF(GETBIT(err, 3) = 1, ADDERROR("DCI Consistency Failure ", "Different value between Master and Slave for output DC current"));
-IF(GETBIT(err, 4) = 1, ADDERROR("GFCI Consistency Failure", "Different value between Master and Slave for GFCI"));
-IF(GETBIT(err, 6) = 1, ADDERROR("GFCI Device Failure", "GFCI check failure 3 times"));
-IF(GETBIT(err, 7) = 1, ADDERROR("Relay Device Failure ", "Relay check failure 3 times"));
-IF(GETBIT(err, 8) = 1, ADDERROR("AC HCT Failure", "AC HCT check failure 3 times"));
-IF(GETBIT(err, 9) = 1, ADDERROR("Utility Loss", "Utility is unavailable"));
-IF(GETBIT(err, 10) = 1, ADDERROR("Ground I Failure ", "Ground current is too high"));
-IF(GETBIT(err, 11) = 1, ADDERROR("DC Bus High", "Dc bus is too high"));
-IF(GETBIT(err, 12) = 1, ADDERROR("InternalFan Failure", "The fan in case failure"));
-IF(GETBIT(err, 13) = 1, ADDERROR(" Over Temperature", "Temperature is too high"));
-IF(GETBIT(err, 14) = 1, ADDERROR("Utility Phase Failure ", "Utility Phase Failure"));
-IF(GETBIT(err, 15) = 1, ADDERROR("PV Over Voltage ", "Pv input voltage is over the tolerable maximum value"));
-IF(GETBIT(err, 16) = 1, ADDERROR("External Fan Failure", "The external fan failure"));
-IF(GETBIT(err, 17) = 1, ADDERROR("Vac Failure", "Grid voltage out of tolerable range"));
-IF(GETBIT(err, 18) = 1, ADDERROR(" Isolation Failure", "Isolation resistance of PV-plant out of tolerable range"));
-IF(GETBIT(err, 19) = 1, ADDERROR("DC Injection High", "The DC injection to grid is too high"));
+IF(GETBIT(err, 0) = 1, ADDERROR("GFCI Device Check Failure - The GFCI detecting circuit is abnormal"));
+IF(GETBIT(err, 1) = 1, ADDERROR("AC HCT Check Failure - The output current sensor is abnormal"));
+IF(GETBIT(err, 3) = 1, ADDERROR("DCI Consistency Failure  - Different value between Master and Slave for output DC current"));
+IF(GETBIT(err, 4) = 1, ADDERROR("GFCI Consistency Failure - Different value between Master and Slave for GFCI"));
+IF(GETBIT(err, 6) = 1, ADDERROR("GFCI Device Failure - GFCI check failure 3 times"));
+IF(GETBIT(err, 7) = 1, ADDERROR("Relay Device Failure - Relay check failure 3 times"));
+IF(GETBIT(err, 8) = 1, ADDERROR("AC HCT Failure - AC HCT check failure 3 times"));
+IF(GETBIT(err, 9) = 1, ADDERROR("Utility Loss - Utility is unavailable"));
+IF(GETBIT(err, 10) = 1, ADDERROR("Ground I Failure - Ground current is too high"));
+IF(GETBIT(err, 11) = 1, ADDERROR("DC Bus High - Dc bus is too high"));
+IF(GETBIT(err, 12) = 1, ADDERROR("InternalFan Failure - The fan in case failure"));
+IF(GETBIT(err, 13) = 1, ADDERROR(" Over Temperature - Temperature is too high"));
+IF(GETBIT(err, 14) = 1, ADDERROR("Utility Phase Failure - Utility Phase Failure"));
+IF(GETBIT(err, 15) = 1, ADDERROR("PV Over Voltage - Pv input voltage is over the tolerable maximum value"));
+IF(GETBIT(err, 16) = 1, ADDERROR("External Fan Failure - The external fan failure"));
+IF(GETBIT(err, 17) = 1, ADDERROR("Vac Failure - Grid voltage out of tolerable range"));
+IF(GETBIT(err, 18) = 1, ADDERROR(" Isolation Failure - Isolation resistance of PV-plant out of tolerable range"));
+IF(GETBIT(err, 19) = 1, ADDERROR("DC Injection High - The DC injection to grid is too high"));
 IF(GETBIT(err, 20) = 1, ADDERROR("Back-Up Over Load"));
-IF(GETBIT(err, 22) = 1, ADDERROR("Fac Consistency Failure", "Different value between Master and Slave for grid frequency"));
-IF(GETBIT(err, 23) = 1, ADDERROR("Vac Consistency Failure", "Different value between Master and Slave for grid voltage"));
-IF(GETBIT(err, 25) = 1, ADDERROR("Relay Check Failure", "Relay check is failure"));
-IF(GETBIT(err, 27) = 1, ADDERROR("PhaseAngleFailure ", "Phase angle out of range（110°~140°）"));
-IF(GETBIT(err, 28) = 1, ADDERROR(" DSP communication failure", "Communication between ARM and DSP is failure"));
-IF(GETBIT(err, 29) = 1, ADDERROR("Fac Failure", "The grid frequency is out of tolerable range"));
-IF(GETBIT(err, 30) = 1, ADDERROR("EEPROM R/W Failure", "EEPROM cannot be read or written"));
-IF(GETBIT(err, 31) = 1, ADDERROR(" Internal Communication Failure",  "Communication between microcontrollers is failure"));
+IF(GETBIT(err, 22) = 1, ADDERROR("Fac Consistency Failure - Different value between Master and Slave for grid frequency"));
+IF(GETBIT(err, 23) = 1, ADDERROR("Vac Consistency Failure - Different value between Master and Slave for grid voltage"));
+IF(GETBIT(err, 25) = 1, ADDERROR("Relay Check Failure - Relay check is failure"));
+IF(GETBIT(err, 27) = 1, ADDERROR("PhaseAngleFailure - Phase angle out of range（110°~140°）"));
+IF(GETBIT(err, 28) = 1, ADDERROR(" DSP communication failure - Communication between ARM and DSP is failure"));
+IF(GETBIT(err, 29) = 1, ADDERROR("Fac Failure - The grid frequency is out of tolerable range"));
+IF(GETBIT(err, 30) = 1, ADDERROR("EEPROM R/W Failure - EEPROM cannot be read or written"));
+IF(GETBIT(err, 31) = 1, ADDERROR(" Internal Communication Failure - Communication between microcontrollers is failure"));
+
 </ReadScript>
         <PrefetchModeId>0</PrefetchModeId>
         <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Device Type"},"ReadFormula":"MODBUSR(H, 35011, String, 5)"},{"AttributeDefinition":{"Name":"Serial Number"},"ReadFormula":"MODBUSR(H, 35003, String, 8)"},{"AttributeDefinition":{"Name":"Work mode"},"ReadFormula":"SWITCH( MODBUSR(H, 35187, Uint16), \r\n0, \u0022Wait\u0022, \r\n1, \u0022On-grid\u0022,\r\n2, \u0022Off-grid\u0022, \r\n3, \u0022Fault\u0022, \r\n4, \u0022Flash\u0022, \r\n5, \u0022Check\u0022, \r\n\u0022Communication error\u0022);"},{"AttributeDefinition":{"Name":"bMeter Status"},"ReadFormula":"SWITCH(MODBUSR(H, 36003, Uint16),\r\n 0, \u0022Not checked\u0022, \r\n 1, \u0022Connected correctly\u0022, \r\n 2, \u0022Connected reverse\u0022, \r\n 3, \u0022Connected incorrectly\u0022, \r\n \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Meter communication status"},"ReadFormula":"IF(MODBUSR(H, 36004, Uint16) = 1, \u0022OK\u0022, \u0022NG\u0022 );"},{"AttributeDefinition":{"Name":"AC output type"},"ReadFormula":"SWITCH(MODBUSR(H, 35002, Uint16), \r\n0, \u0022single phase\u0022, \r\n1, \u0022three phase, four wire system\u0022, \r\n2, \u0022three phase, three wire system\u0022, \r\n\u0022Unknown\u0022)"},{"AttributeDefinition":{"Name":"Grid Mode"},"ReadFormula":"SWITCH(MODBUSR(H, 35136, Uint16),\r\n 0, \u0022Loss\u0022, \r\n 1, \u0022OK\u0022, \r\n 2, \u0022Fault\u0022, \r\n \u0022Communication Error\u0022)"}]</ServiceAttributesFormulas>
