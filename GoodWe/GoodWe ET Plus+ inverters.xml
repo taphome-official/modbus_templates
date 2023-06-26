@@ -29,7 +29,7 @@
     <CcuModel>ModbusRtuCCU</CcuModel>
     <Producer>GoodWe</Producer>
     <Model>ET 10K</Model>
-    <Description></Description>
+    <Description>"Compatible with GW5K+-ET, GW6.5K-ET, GW8K-ET, GW10K-ET"</Description>
     <Module>
       <Name>GoodWe ET 10K</Name>
       <Id>-1</Id>
