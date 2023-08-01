@@ -1,0 +1,6 @@
+1. Select Daikin DTA template
+2. Find Slave ID
+3. Create module with the Slave ID number
+4. Open the module, go to service settings and find status of units (you can also find capabilities of this device)
+5. Set variable DeviceNumber on this module to device number you want
+6. Create new module for every device you want
