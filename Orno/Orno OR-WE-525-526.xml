@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Templates format="2" protocolVersion="73">
-  <Template id="7c775886-0161-4cf5-a45d-36334fad8006" revision="1.0">
+  <Template id="7c775886-0161-4cf5-a45d-36334fad8006" revision="1.1">
     <SuggestedCCUParameters>
       <UseAsciiCommunication>False</UseAsciiCommunication>
       <StopBits>One</StopBits>
@@ -24,6 +24,7 @@
     </ImportParameters>
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
+      <Revision id="1.1">Fixed from/to grid </Revision>
     </RevisionHistory>
     <Name>OR-WE-525/526</Name>
     <CcuModel>ModbusRtuCCU</CcuModel>
@@ -76,8 +77,10 @@
             <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${total_reactive_energy} [kVArh]"},"ReadFormula":"tostring(modbusr(H, 0x12c,Int32)/100, \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"${reactive_power} [VAr]"},"ReadFormula":"tostring(modbusr(H, 0x180,Int32) / 10, \u0022F2\u0022)"}]</ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
             <CustomDeviceVariables />
-            <ReadTotalConsumption>MODBUSR(H, 0x010e, Int32) / 100</ReadTotalConsumption>
-            <ReadDemand>(MODBUSR(H, 0x0176, Int32) / 10 ) / 1000</ReadDemand>
+            <ReadTotalConsumption>MODBUSR(H, 0x0118, Int32) / 100</ReadTotalConsumption>
+            <ReadDemand>var demand := MODBUSR(H, 0x104, Int32)/1000;
+if (demand &lt; 0, return(demand * -1), return(0));
+            </ReadDemand>
           </DeviceProperties>
         </Device>
         <Device>
@@ -113,8 +116,10 @@
             <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${total_reactive_energy} [kVArh]"},"ReadFormula":"tostring(modbusr(H, 0x136,Int32)/100, \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"${reactive_power} [VAr]"},"ReadFormula":"tostring(modbusr(H, 0x184,Int32) / 10, \u0022F2\u0022)"}]</ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
             <CustomDeviceVariables />
-            <ReadTotalConsumption>MODBUSR(H, 0x118, Int32) / 100</ReadTotalConsumption>
-            <ReadDemand>(MODBUSR(H, 0x17a, Int32) / 10) / 1000</ReadDemand>
+            <ReadTotalConsumption>MODBUSR(H, 0x10e, Int32) / 100</ReadTotalConsumption>
+            <ReadDemand>var demand := MODBUSR(H, 0x104, Int32)/1000;
+if (demand &gt; 0, return(demand), return(0));
+            </ReadDemand>
           </DeviceProperties>
         </Device>
       </Devices>

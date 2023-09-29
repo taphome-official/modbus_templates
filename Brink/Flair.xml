@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="73" >
+  <Template revision="1.0" id = "19cf1005-00f2-4e6c-b096-c4493e32f37c">
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>Even</Parity>
+      <Baudrate>19200</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>20</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+      <Parameter>
+        <Id>MaxAirFlow</Id>
+        <Name>Max Air Flow</Name>
+        <Value>400</Value>
+      </Parameter>      
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>Flair</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer></Producer>
+    <Model></Model>
+    <Description></Description>
+    <Module>
+      <Name>Flair</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <InitializeScript>MODBUSWNE(SH, 8000, Int16, 2);</InitializeScript>
+        <ReadScript>MODBUSWNE(SH, 8000, Int16, 2);
+
+var mode := modbusr(A, 4020, uint16);
+# 0, "Standby", 
+# 12, "Auto Modbus",
+if(! (mode = 12 or mode = 0), addwarning("Jednotka nie je v MODBUS rezime"));</ReadScript>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Lanuguage"},"ReadFormula":"switch(MODBUSR(SH, 6900, UInt16), 1, \u0022NL\u0022, \u0022EN\u0022)"},{"AttributeDefinition":{"Name":"Aktualny rezim"},"ReadFormula":"switch(modbusr(A, 4020, uint16), \r\n0, \u0022Standby\u0022, \r\n1, \u0022Bootloader\u0022,\r\n2, \u0022Non Blocking Error\u0022,\r\n3, \u0022Blocking Error\u0022, \r\n4, \u0022Manual\u0022,\r\n5, \u0022Holiday\u0022,\r\n6, \u0022Night Ventilation\u0022, \r\n7, \u0022Party\u0022, \r\n8, \u0022Bypass Boost\u0022,\r\n9, \u0022Normal Boost\u0022,\r\n10, \u0022Auto CO2\u0022, \r\n11, \u0022Auto eBus\u0022,\r\n12, \u0022Auto Modbus\u0022,\r\n13, \u0022Auto LAN/WLAN Portal\u0022,\r\n14, \u0022Auto LAN/WLAN Local\u0022, \u0022N/A\u0022)"},{"AttributeDefinition":{"Name":"Modbus Control"},"ReadFormula":"VAR Va:=MODBUSR(SH, 8000, Int16);\n\nIF Va = 0\n  RETURN (\u0022Switched OFF [Error]\u0022);\nELSEIF Va = 1\n  RETURN (\u0022Switch [Error]\u0022);\nELSEIF Va = 2\n  RETURN (\u0022Flow rate [Default]\u0022);\nELSE\n  RETURN (\u0022Error\u0022);\nEND"},{"AttributeDefinition":{"Name":"Modbus Interface Type"},"ReadFormula":"VAR Va:=MODBUSR(SH, 7990, UInt16);\nIF Va = 0\n  RETURN (\u0022Brink\u0022);\nELSEIF Va = 1\n  RETURN (\u0022Brink connect [Default]\u0022);\nELSEIF Va = 2\n  RETURN (\u0022External Customer\u0022);\nELSE\n  RETURN (\u0022Error!\u0022);\nEND"},{"AttributeDefinition":{"Name":"Stav predhrieva\u010Da"},"ReadFormula":"switch(modbusr(A,4060,int16), \r\n    0, \u0022Inicializ\u00E1cia\u0022, \r\n    1, \u0022Neakt\u00EDvny\u0022, \r\n    2, \u0022Akt\u00EDvny\u0022,\r\n    3, \u0022Testovac\u00ED re\u017Eim\u0022,\r\n    \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"V\u00FDkon predhrieva\u010Da [%]"},"ReadFormula":"modbusr(A,4061,int16);"},{"AttributeDefinition":{"Name":"Teplota NTC1 [C]"},"ReadFormula":"modbusr(A,4081,int16)/10"},{"AttributeDefinition":{"Name":"Stav filtra"},"ReadFormula":"var state := modbusr(A,4100,int16);\r\nreturn(switch(todouble(state), 0, \u0022ok\u0022, \u0022polluted\u0022))"},{"AttributeDefinition":{"Name":"Hodnota sn\u00EDma\u010Da CO2 1 [ppm]"},"ReadFormula":"modbusr(A,4201,int16)"},{"AttributeDefinition":{"Name":"Hodnota sn\u00EDma\u010Da CO2 2 [ppm]"},"ReadFormula":"modbusr(A,4203,int16)"},{"AttributeDefinition":{"Name":"Hodnota sn\u00EDma\u010Da CO2 3 [ppm]"},"ReadFormula":"modbusr(A,4205,int16)"},{"AttributeDefinition":{"Name":"Hodnota sn\u00EDma\u010Da CO2 4 [ppm]"},"ReadFormula":"modbusr(A,4207,int16)"},{"AttributeDefinition":{"Name":"Nerovnov\u00E1ha povolen\u00E1 [0-on;1-off]"},"ReadFormula":"modbusr(H,6033,uint16)"},{"AttributeDefinition":{"Name":"Posun nerovnov\u00E1hy pri pr\u00EDvode [%]"},"ReadFormula":"modbusr(H,6035, int16)"},{"AttributeDefinition":{"Name":"Re\u017Eim obtoku [0 - auto; 1 - zatvoreny; 2 - otvoreny]"},"ReadFormula":"modbusr(H,6100,int16)"},{"AttributeDefinition":{"Name":"Re\u017Eim sn\u00EDma\u010Da CO2 [0 - VYP, 1 - ZAP]"},"ReadFormula":"modbusr(H, 6150,uint16)"},{"AttributeDefinition":{"Name":"Adresa Slave Modbus"},"ReadFormula":"modbusr(H,7991,int16)"},{"AttributeDefinition":{"Name":"(namerana hodnota) aktu\u00E1lna hodnota prietoku v\u00FDfukov\u00E9ho vyduchu [m3/h]"},"ReadFormula":"MODBUSR(A, 4042, UInt16)"},{"AttributeDefinition":{"Name":"(namerana hodnota) aktu\u00E1lna hodnota priv\u00E1dzan\u00E9ho vzduchu [m3/h]"},"ReadFormula":"MODBUSR(A, 4032, UInt16)"},{"AttributeDefinition":{"Name":"(pozadovana hodnota) bod nastavenia prietoku v\u00FDfukov\u00FD vzduch [m3/h]"},"ReadFormula":"MODBUSR(A, 4041, UInt16)"},{"AttributeDefinition":{"Name":"(pozadovana hodnota) bod nastavenia priv\u00E1dzan\u00E9ho vzduchu [m3/h]"},"ReadFormula":"MODBUSR(A, 4031, UInt16)"},{"AttributeDefinition":{"Name":"aktu\u00E1lny tlak ods\u00E1vania [Pa]"},"ReadFormula":"MODBUSR(A, 4024, Int16)/10"},{"AttributeDefinition":{"Name":"sn\u00EDma\u010D teploty ventil\u00E1tora ods\u00E1vania [C]"},"ReadFormula":"MODBUSR(A, 4046, Int16) / 10"},{"AttributeDefinition":{"Name":"sn\u00EDma\u010D teploty ventil\u00E1tora pr\u00EDvodu [C]"},"ReadFormula":"MODBUSR(A, 4036, uInt16) / 10"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Set Interface Type to Brink Connect","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(SH, 7990, UInt16, 1)"},{"ActionDefinition":{"Name":"Aktivova\u0165 ovl\u00E1danie v\u00FDkonu cez Modbus","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(SH, 8000, Int16, 2)"},{"ActionDefinition":{"Name":"Appliance Reset","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(SH, 8011, UInt16, 1)"},{"ActionDefinition":{"Name":"Nastavenie posunu nerovnov\u00E1hy pri pr\u00EDvode ","NumericParameters":[{"FriendlyName":"Posun nerovnov\u00E1hy pri pr\u00EDvode [%]","Abbreviation":"per","IsFloat":false,"MinValue":-15,"MaxValue":15}],"BoolParameters":[],"EnumParameters":[]},"Script":"if modbusr(sH,6036,int16) = per\r\nelse \r\n modbusw(sH,6036,int16,per);\r\nend"},{"ActionDefinition":{"Name":"Nastavenie posunu nerovnov\u00E1hy pri ods\u00E1van\u00ED","NumericParameters":[{"FriendlyName":"Posun nerovnov\u00E1hy pri ods\u00E1van\u00ED [%]","Abbreviation":"per","IsFloat":false,"MinValue":-15,"MaxValue":15}],"BoolParameters":[],"EnumParameters":[]},"Script":"if modbusr(sH,6036,int16,per) = per\r\nelse\r\nmodbusw(sH,6036,int16,per);\r\nend"},{"ActionDefinition":{"Name":"Vynulovanie hl\u00E1senia filtra","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(sh, 8010, int16,0)"},{"ActionDefinition":{"Name":"Set Standby Mode","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(SH, 8003, UInt16, 1)"},{"ActionDefinition":{"Name":"End Standby Mode","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(SH, 8003, UInt16, 2)"}]</ServiceActionsScripts>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <ModuleVariables>[{"Name":"MaxAirFlow","ValueTypeId":1,"NumericValue":$[MaxAirFlow]}]</ModuleVariables>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Bypass</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Status"},"ReadFormula":"switch(modbusr(A, 4050, uint16),\r\n0, \u0022Initialize\u0022,\r\n1, \u0022open\u0022,\r\n2, \u0022close\u0022,\r\n3, \u0022open\u0022,\r\n4, \u0022closed\u0022, \u0022error\u0022\r\n)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Automaticky</Value0Name>
+            <Value1Name>Zavřeno</Value1Name>
+            <Value2Name>Otevřeno</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>113</Value0IconId>
+            <Value1IconId>112</Value1IconId>
+            <Value2IconId>111</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 6100, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 6100, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Filtr</Name>
+          <Model>ModbusReedContact</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript>MODBUSR(A, 4100, UInt16)</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Po\u010Det dnu od posledn\u00ED vymeny"},"ReadFormula":"modbusr(A, 4115, Uint16)"},{"AttributeDefinition":{"Name":"Objem vzduchu od posledn\u00ED vymeny [m3/h]"},"ReadFormula":"modbusr(A, 4116, Uint32)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Vynulovanie hl\u00E1senia filtra","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(sh, 8010, int16,1)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <OnStateIconId>57</OnStateIconId>
+            <OffStateIconId>39</OffStateIconId>
+            <OnStateName>Vyměnit filtr</OnStateName>
+            <OffStateName>OK</OffStateName>
+            <ReadState>if (MODBUSR(H, 6170, UInt16) = 1, addwarning("Upozorneni na vymenu filtru"));
+MODBUSR(A, 4100, UInt16)</ReadState>
+            <NegateState>False</NegateState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Nerovnováha povolená</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 6033, uint16);</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(sH, 6033, uint16, switch(St, 1,1,0));</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Průtok vstup</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"83":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:83}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 4032, UInt16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Průtok výstup</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"83":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:83}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 4042, UInt16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Regulace průtoku m3/h</Name>
+          <Model>ModbusDimmer</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <ReadLevel>VAR Value := MODBUSR(SH, 8002, Int16);
+VAR Standby := MODBUSR(SH, 8003, Int16); # 0 - Off / 1 - On
+
+IF Value = 0 or Standby = 1
+  RETURN (0);
+ELSE
+  RETURN (LINEAR(Value, 50, 1/(MaxAirFlow-50), MaxAirFlow, 1));
+END</ReadLevel>
+            <WriteLevel>IF Le=0
+  MODBUSW(SH, 8003, Int16, 1);
+ELSE
+  if (MODBUSR(SH, 8003, Int16) = 1, MODBUSW(SH, 8003, Int16, 2));
+  VAR Value := CEIL(LINEAR(Le,0,49,1,MaxAirFlow));
+  MODBUSW(SH, 8002, Int16, Value);
+END</WriteLevel>
+            <IconId>0</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Ventilator vstup</Name>
+          <Model>ModbusAnalogInput</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Status"},"ReadFormula":"switch(modbusr(A, 4030, uint16), \r\n0, \u0022Idle\u0022,\r\n1, \u0022Running\u0022,\r\n2, \u0022Not Found - No Communication\u0022,\r\n3, \u0022Blocked\u0022,\r\n4, \u0022Fan Error\u0022, \u0022N/A\u0022)"},{"AttributeDefinition":{"Name":"Setpoint supply air [m3/h]"},"ReadFormula":"modbusr(A, 4031, Uint16)"},{"AttributeDefinition":{"Name":"Current value of supply air [m3/h]"},"ReadFormula":"modbusr(A, 4032, Uint16)"},{"AttributeDefinition":{"Name":"MassFlow inlet, actual value [kg/h]"},"ReadFormula":"modbusr(A, 4033, Uint16)"},{"AttributeDefinition":{"Name":"Speed supply fan [RPM]"},"ReadFormula":"modbusr(A, 4034, Uint16)"},{"AttributeDefinition":{"Name":"Speed inlet anemometer [RPM]"},"ReadFormula":"modbusr(A, 4035, Uint16)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables>[{"Name":"maxRPM","ValueTypeId":1,"NumericValue":3500}]</CustomDeviceVariables>
+            <ReadInputLevel>#switch(modbusr(A, 4030, uint16), 
+#0, addinfo("Idle"),
+#1, addinfo("Running"),
+#2, adderror("Not Found - No Communication"),
+#3, adderror("Blocked"),
+#4, adderror("Fan Error"), "N/A");
+
+LINEAR(MODBUSR(A, 4034, UInt16), 0, 0, maxRPM, 1)</ReadInputLevel>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Ventilator vstup</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTemperature>MODBUSR(A, 4036, Int16) / 10</ReadTemperature>
+            <ReadHumidity>MODBUSR(A, 4037, UInt16) / 10 / 100</ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Ventilator vystup</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTemperature>MODBUSR(A, 4046, Int16) / 10</ReadTemperature>
+            <ReadHumidity>MODBUSR(A, 4047, Int16) / 10 / 100</ReadHumidity>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
