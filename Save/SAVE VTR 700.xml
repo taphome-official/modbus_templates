@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="81" >
+  <Template revision="1.0" id="4e0cd21b-9e50-414a-9c3c-382231611b5b">
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <Baudrate>115200</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>SAVE VTR 700</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>Save</Producer>
+    <Model>VTR 700</Model>
+    <Description>AC</Description>
+    <Module>
+      <Name>SAVE VTR 700</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <InitializeScript>MODBUSWNE(H, 1273, Uint16, 0);
+MODBUSWNE(H, 1352, Uint16, 1);</InitializeScript>
+        <ReadScript>#alarms
+IF(MODBUSR(H, 15001, Uint16) = 1, ADDERROR("SAF_CTRL_ALARM"));
+IF(MODBUSR(H, 15008, Uint16) = 1, ADDERROR("EAF_CTRL_ALARM"));
+IF(MODBUSR(H, 15015, Uint16) = 1, ADDERROR("FROST_PROT_ALARM"));
+IF(MODBUSR(H, 15022, Uint16) = 1, ADDERROR("DEFROSTING_ALARM"));
+IF(MODBUSR(H, 15029, Uint16) = 1, ADDERROR("SAF_RPM_ALARM"));
+IF(MODBUSR(H, 15036, Uint16) = 1, ADDERROR("EAF_RPM_ALARM"));
+IF(MODBUSR(H, 15057, Uint16) = 1, ADDERROR("FTP_ALARM"));
+IF(MODBUSR(H, 15064, Uint16) = 1, ADDERROR("OAT_ALARM"));
+IF(MODBUSR(H, 15071, Uint16) = 1, ADDERROR("SAT_ALARM"));
+IF(MODBUSR(H, 15078, Uint16) = 1, ADDERROR("RAT_ALARM"));
+IF(MODBUSR(H, 15085, Uint16) = 1, ADDERROR("EAT_ALARM"));
+IF(MODBUSR(H, 15092, Uint16) = 1, ADDERROR("ECT_ALARM"));
+IF(MODBUSR(H, 15099, Uint16) = 1, ADDERROR("EFT_ALARM"));
+IF(MODBUSR(H, 15106, Uint16) = 1, ADDERROR("OHT_ALARM"));
+IF(MODBUSR(H, 15113, Uint16) = 1, ADDERROR("EMT_ALARM"));
+IF(MODBUSR(H, 15120, Uint16) = 1, ADDERROR("RGS_ALARM"));
+IF(MODBUSR(H, 15127, Uint16) = 1, ADDERROR("BYS_ALARM"));
+IF(MODBUSR(H, 15134, Uint16) = 1, ADDERROR("SECONDARY_AIR_ALARM"));
+IF(MODBUSR(H, 15141, Uint16) = 1, ADDERROR("FILTER_ALARM"));
+IF(MODBUSR(H, 15148, Uint16) = 1, ADDERROR("EXTRA_CONTROLLER_ALARM"));
+IF(MODBUSR(H, 15155, Uint16) = 1, ADDERROR("EXTERNAL_STOP_ALARM"));
+IF(MODBUSR(H, 15162, Uint16) = 1, ADDERROR("RH_ALARM"));
+IF(MODBUSR(H, 15169, Uint16) = 1, ADDERROR("CO2_ALARM"));
+IF(MODBUSR(H, 15176, Uint16) = 1, ADDERROR("LOW_SAT_ALARM"));
+IF(MODBUSR(H, 15501, Uint16) = 1, ADDERROR("MANUAL_OVERRIDE_OUTPUTS_ALARM"));
+IF(MODBUSR(H, 15508, Uint16) = 1, ADDERROR("PDM_RHS_ALARM"));
+IF(MODBUSR(H, 15515, Uint16) = 1, ADDERROR("PDM_EAT_ALARM"));
+IF(MODBUSR(H, 15522, Uint16) = 1, ADDERROR("MANUAL_FAN_STOP_ALARM"));
+IF(MODBUSR(H, 15529, Uint16) = 1, ADDERROR("OVERHEAT_TEMPERATURE_ALARM"));
+IF(MODBUSR(H, 15536, Uint16) = 1, ADDERROR("FIRE_ALARM"));
+</ReadScript>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"System Time"},"ReadFormula":"var year := MODBUSR(H, 6000, Uint16);\r\nvar month := MODBUSR(H, 6001, Uint16);\r\nvar day := MODBUSR(H, 6002, Uint16);\r\nvar hour := MODBUSR(H, 6003, Uint16);\r\nvar minute := MODBUSR(H, 6004, Uint16);\r\nvar second := MODBUSR(H, 6005, Uint16);\r\nRETURN(hour \u002B \u0022:\u0022 \u002B minute \u002B \u0022  \u0022 \r\n\u002B day \u002B \u0022. \u0022 \u002B month \u002B \u0022. \u0022 \u002B year);"},{"AttributeDefinition":{"Name":"Actual season"},"ReadFormula":"SWITCH(MODBUSR(H, 1038, uint16), 0, \u0022Summer\u0022, 1, \u0022Winter\u0022, \u0022Error\u0022)"},{"AttributeDefinition":{"Name":"Indoors IAQ level"},"ReadFormula":"SWITCH(MODBUSR(A, 1122, Uint16), 0, \u0022Economic\u0022, 1, \u0022Good\u0022, 2, \u0022Improving\u0022, \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Type of fan speed regulation"},"ReadFormula":"SWITCH(MODBUSR(H, 1273, Uint16),\r\n 0, \u0022Manual %\u0022,\r\n 1, \u0022Manual RPM\u0022,\r\n 2, \u0022Constant Pressure\u0022, \r\n 3, \u0022Constant Flow\u0022,\r\n 4, \u0022External\u0022,\r\n \u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Demand Control"},"ReadFormula":"SWITCH(MODBUSR(A, 1003, Uint16), 0, \u0022CO\u2082\u0022, 1, \u0022RH\u0022, \u0022Error\u0022)"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Set Date","NumericParameters":[{"FriendlyName":"Year","Abbreviation":"y","IsFloat":false,"MinValue":2020,"MaxValue":2999},{"FriendlyName":"Month","Abbreviation":"mo","IsFloat":false,"MinValue":1,"MaxValue":12},{"FriendlyName":"Day","Abbreviation":"da","IsFloat":false,"MinValue":1,"MaxValue":31}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 6000, Uint16, y);\r\nMODBUSW(H, 6001, Uint16, mo);\r\nMODBUSW(H, 6002, Uint16, da);"},{"ActionDefinition":{"Name":"Set Time","NumericParameters":[{"FriendlyName":"Hour","Abbreviation":"ho","IsFloat":false,"MinValue":0,"MaxValue":23},{"FriendlyName":"Minute","Abbreviation":"mi","IsFloat":false,"MinValue":0,"MaxValue":59},{"FriendlyName":"Second","Abbreviation":"se","IsFloat":false,"MinValue":0,"MaxValue":59}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 6003, Uint16, ho);\r\nMODBUSW(H, 6004, Uint16, mi);\r\nMODBUSW(H, 6005, Uint16, se);"},{"ActionDefinition":{"Name":"Set Fan Speed Regulation Type","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Regulation_unit","Abbreviation":"ru","Values":[{"Item1":0,"Item2":"Manual %"},{"Item1":1,"Item2":"Manual RPM"},{"Item1":2,"Item2":"Pressure"},{"Item1":3,"Item2":"Flow"},{"Item1":4,"Item2":"External"}]}]},"Script":"MODBUSW(H, 1273, Uint16, ru);"},{"ActionDefinition":{"Name":"Clear all alarms","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 15002, Uint16, 1);\r\nMODBUSW(H, 15009, Uint16, 1);\r\nMODBUSW(H, 15016, Uint16, 1);\r\nMODBUSW(H, 15023, Uint16, 1);\r\nMODBUSW(H, 15030, Uint16, 1);\r\nMODBUSW(H, 15037, Uint16, 1);\r\nMODBUSW(H, 15058, Uint16, 1);\r\nMODBUSW(H, 15065, Uint16, 1);\r\nMODBUSW(H, 15072, Uint16, 1);\r\nMODBUSW(H, 15079, Uint16, 1);\r\nMODBUSW(H, 15086, Uint16, 1);\r\nMODBUSW(H, 15093, Uint16, 1);\r\nMODBUSW(H, 15100, Uint16, 1);\r\nMODBUSW(H, 15107, Uint16, 1);\r\nMODBUSW(H, 15114, Uint16, 1);\r\nMODBUSW(H, 15121, Uint16, 1);\r\nMODBUSW(H, 15128, Uint16, 1);\r\nMODBUSW(H, 15135, Uint16, 1);\r\nMODBUSW(H, 15142, Uint16, 1);\r\nMODBUSW(H, 15149, Uint16, 1);\r\nMODBUSW(H, 15156, Uint16, 1);\r\nMODBUSW(H, 15163, Uint16, 1);\r\nMODBUSW(H, 15170, Uint16, 1);\r\nMODBUSW(H, 15177, Uint16, 1);\r\nMODBUSW(H, 15184, Uint16, 1);\r\nMODBUSW(H, 15502, Uint16, 1);\r\nMODBUSW(H, 15509, Uint16, 1);\r\nMODBUSW(H, 15510, Uint16, 1);\r\nMODBUSW(H, 15516, Uint16, 1);\r\nMODBUSW(H, 15523, Uint16, 1);\r\nMODBUSW(H, 15530, Uint16, 1);\r\nMODBUSW(H, 15537, Uint16, 1);\r\nMODBUSW(H, 15544, Uint16, 1);"}]</ServiceActionsScripts>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Active User Mode</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Crowded Supply Speed"},"ReadFormula":"MODBUSR(A, 1204, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Crowded Extract Speed"},"ReadFormula":"MODBUSR(A, 1205, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Refresh Supply Speed"},"ReadFormula":"MODBUSR(A, 1206, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Refresh Extract Speed"},"ReadFormula":"MODBUSR(A, 1207, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Fireplace Supply Speed"},"ReadFormula":"MODBUSR(A, 1208, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Fireplace Extract Speed"},"ReadFormula":"MODBUSR(A, 1209, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Away Supply Speed"},"ReadFormula":"MODBUSR(A, 1210, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Away Extract Speed"},"ReadFormula":"MODBUSR(A, 1211, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Holiday Supply Speed"},"ReadFormula":"MODBUSR(A, 1212, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Holiday Extract Speed"},"ReadFormula":"MODBUSR(A, 1213, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Cooker Supply Speed"},"ReadFormula":"MODBUSR(A, 1215, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Cooker Extract Speed"},"ReadFormula":"MODBUSR(A, 1216, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Vacuum Supply Speed"},"ReadFormula":"MODBUSR(A, 1217, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Vacuum Extract Speed"},"ReadFormula":"MODBUSR(A, 1218, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Supply Active User Mode"},"ReadFormula":"MODBUSR(A, 1230, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Extract Active User Mode"},"ReadFormula":"MODBUSR(A, 1231, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Manual Supply Speed"},"ReadFormula":"MODBUSR(A, 1200, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Manual Extract Speed"},"ReadFormula":"MODBUSR(A, 1201, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Auto Supply Speed"},"ReadFormula":"MODBUSR(A, 1202, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Auto Extract Speed"},"ReadFormula":"MODBUSR(A, 1203, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Low Fan Supply Speed"},"ReadFormula":"MODBUSR(A, 1218, Uint16) \u002B \u0022 %\u0022;"},{"AttributeDefinition":{"Name":"Low Fan Extract Speed"},"ReadFormula":"MODBUSR(A, 1219, Uint16) \u002B \u0022 %\u0022;"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Auto</Value0Name>
+            <Value1Name>Manual</Value1Name>
+            <Value2Name>Crowded</Value2Name>
+            <Value3Name>Refresh</Value3Name>
+            <Value4Name>Fireplace</Value4Name>
+            <Value5Name>Away</Value5Name>
+            <Value6Name>Holiday</Value6Name>
+            <Value7Name>Cooker Hood</Value7Name>
+            <Value8Name>Vacuum Cleaner</Value8Name>
+            <Value9Name>Pressure Guard</Value9Name>
+            <Value0IconId>113</Value0IconId>
+            <Value1IconId>116</Value1IconId>
+            <Value2IconId>37</Value2IconId>
+            <Value3IconId>16</Value3IconId>
+            <Value4IconId>95</Value4IconId>
+            <Value5IconId>101</Value5IconId>
+            <Value6IconId>35</Value6IconId>
+            <Value7IconId>278</Value7IconId>
+            <Value8IconId>181</Value8IconId>
+            <Value9IconId>72</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>var mod := MODBUSR(A, 1160, uInt16);
+if(mod = 12, 9, mod);</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 1161 ,Uint16, Mu+1)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>ECO mode</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Heating offset during ECO mode"},"ReadFormula":"MODBUSR(H, 2503, Uint16)/10 \u002B \u0022 \u00B0C\u0022;"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Set temperature offset [\u00B0C]","NumericParameters":[{"FriendlyName":"Offset","Abbreviation":"off","IsFloat":false,"MinValue":1,"MaxValue":10}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 2503, Uint16, off*10);"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>16</OnStateIconId>
+            <OffStateIconId>17</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 2504, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 2504, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Extract Fan Speed</Name>
+          <Model>ModbusAnalogInput</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Extract Fan r/min"},"ReadFormula":"MODBUSR(A, 12401, Uint16) \u002B \u0022 rpm\u0022;"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadInputLevel>MODBUSR(H, 14001, uint16)/100</ReadInputLevel>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Fan Speed</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>6011</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>${level_0Of3}</Value0Name>
+            <Value1Name>${level_1Of3}</Value1Name>
+            <Value2Name>Normal</Value2Name>
+            <Value3Name>${level_3Of3}</Value3Name>
+            <Value4Name></Value4Name>
+            <Value5Name></Value5Name>
+            <Value6Name></Value6Name>
+            <Value7Name></Value7Name>
+            <Value8Name></Value8Name>
+            <Value9Name></Value9Name>
+            <Value0IconId>20</Value0IconId>
+            <Value1IconId>21</Value1IconId>
+            <Value2IconId>22</Value2IconId>
+            <Value3IconId>23</Value3IconId>
+            <Value4IconId>0</Value4IconId>
+            <Value5IconId>0</Value5IconId>
+            <Value6IconId>0</Value6IconId>
+            <Value7IconId>0</Value7IconId>
+            <Value8IconId>0</Value8IconId>
+            <Value9IconId>0</Value9IconId>
+            <OffStateValue>-1</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 1130, Uint16)-1</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 1130, Uint16, Mu+1)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Free Cooling Enable</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Free Cooling Active"},"ReadFormula":"IF(MODBUSR(A, 4110, Uint16) = 1, \u0022Yes\u0022, \u0022No\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>350</OnStateIconId>
+            <OffStateIconId>18</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 4100, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 4100, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Highest CO₂</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"24":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:24}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Sensor 1"},"ReadFormula":"MODBUSR(A, 12150, Uint16) \u002B \u0022 ppm\u0022;"},{"AttributeDefinition":{"Name":"Sensor 2"},"ReadFormula":"MODBUSR(A, 12151, Uint16) \u002B \u0022 ppm\u0022;"},{"AttributeDefinition":{"Name":"Sensor 3"},"ReadFormula":"MODBUSR(A, 12152, Uint16) \u002B \u0022 ppm\u0022;"},{"AttributeDefinition":{"Name":"Sensor 4"},"ReadFormula":"MODBUSR(A, 12153, Uint16) \u002B \u0022 ppm\u0022;"},{"AttributeDefinition":{"Name":"Sensor 5"},"ReadFormula":"MODBUSR(A, 12154, Uint16) \u002B \u0022 ppm\u0022;"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 1001, Uint16)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Highest humidity</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"3":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:3}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 1000, UInt16)/100
+
+</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Outdoor Air Temperature</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Room Air Temperature sensor"},"ReadFormula":"MODBUSR(A, 12103, Uint16)/10 \u002B \u0022\u00B0C\u0022;"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTemperature>MODBUSR(H, 12101, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Supply Air Temperature</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Extract Air Temperature sensor"},"ReadFormula":"MODBUSR(A, 12104, Uint16)/10 \u002B \u0022\u00B0C\u0022;"},{"AttributeDefinition":{"Name":"Frost Protection Temperature Sensor"},"ReadFormula":"MODBUSR(A, 12100, Uint16)/10 \u002B \u0022\u00B0C\u0022;"},{"AttributeDefinition":{"Name":"Overheat Temperature sensor"},"ReadFormula":"MODBUSR(A, 12107, Uint16)/10 \u002B \u0022\u00B0C\u0022;"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTemperature>MODBUSR(H, 12102, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Supply Fan Speed </Name>
+          <Model>ModbusAnalogInput</Model>
+          <Id>-11</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Supply fan r/min"},"ReadFormula":"MODBUSR(A, 12400, Uint16) \u002B \u0022 rpm\u0022"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadInputLevel>MODBUSR(H, 14000, Uint16)/100</ReadInputLevel>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
