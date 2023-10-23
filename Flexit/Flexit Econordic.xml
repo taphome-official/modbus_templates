@@ -38,24 +38,23 @@
         <DeviceType>7001</DeviceType>
         <InternalPollInterval>30000</InternalPollInterval>
         <ReadScript>IF MODBUSR(A,3001, Uint16) = 2
-ADDERROR("Alarm A: " + 
+ADDERROR(MODBUSR(A, 1021, float), "Alarm A: " + 
 SWITCH(MODBUSR(A,3002, Uint16),
 1, "Acknowledged, unlocked ",
 2, "Unacknowledged",
 3, "Locked",
-"Unknown" ), 
-MODBUSR(A, 1021, Float, 2));
-END 
+"Unknown" ));
+END
 
 IF MODBUSR(A,3003, Uint16) = 2
-ADDERROR("Alarm B: " + 
+ADDERROR(MODBUSR(A, 1023, float), "Alarm B: " + 
 SWITCH(MODBUSR(A,3004, Uint16),
 1, "Acknowledged, unlocked ",
 2, "Unacknowledged",
 3, "Locked",
-"Unknown" ), 
-MODBUSR(A, 1023, Float, 2));
-END </ReadScript>
+"Unknown" ));
+END
+ </ReadScript>
         <PrefetchModeId>0</PrefetchModeId>
         <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Heat Pump Status"},"ReadFormula":"SWITCH(MODBUSR(A, 3028, Uint16), \r\n1, \u0022Standby\u0022, \r\n2, \u0022Air Purge process\u0022,\r\n3, \u0022Startup process\u0022,\r\n4, \u0022Normal operation\u0022,\r\n5, \u0022Stop process\u0022, \r\n6, \u0022Defrost operation\u0022,\r\n7, \u0022Standby when error\u0022,\r\n8, \u0022Manual operation\u0022,\r\n9, \u0022Forced fan operation\u0022,\r\n10, \u0022Forced pump operation\u0022,\r\n11, \u0022State 10\u0022,\r\n12, \u0022State 11\u0022,\r\n13, \u0022State 12\u0022,\r\n14, \u0022State 13\u0022,\r\n15, \u0022State 14\u0022,\r\n16, \u0022State 15\u0022,\r\n\u0022Unknown\u0022\r\n)"},{"AttributeDefinition":{"Name":"Domestic hot water state"},"ReadFormula":"SWITCH(MODBUSR(A, 3005, Uint16),\r\n1, \u0022Comfort\u0022,\r\n2, \u0022Economy\u0022, \r\n3, \u0022Not in Use\u0022,\r\n4, \u0022Temporary Boost\u0022,\r\n5, \u0022Forced Charge\u0022,\r\n6, \u0022Economy delay\u0022,\r\n7, \u0022Legionella prevention\u0022,\r\n\u0022Unknown\u0022\r\n);"},{"AttributeDefinition":{"Name":"Heat recovery ventilation state"},"ReadFormula":"SWITCH(MODBUSR(A, 3034, Uint16),\r\n1, \u0022Off\u0022, \r\n2 , \u0022Away\u0022 , \r\n3 , \u0022Home\u0022 , \r\n4 , \u0022High\u0022, \r\n5 , \u0022Fume hood\u0022, \r\n 6 , \u0022Fireplace\u0022, \r\n 7 , \u0022Temporary high\u0022,\r\n \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"Plant operating mode for heat pump"},"ReadFormula":"SWITCH(MODBUSR(H, 2061, Uint16), \r\n1 , \u0022Off\u0022 , \r\n2 , \u0022Vent.heating from tank\u0022 , \r\n3 , \u0022Load tank\u0022 ,\r\n4 , \u0022Load tank \u0026 vent.heating\u0022 ,\r\n5 , \u0022Space heating from tank\u0022 , \r\n6 , \u0022Space heat.\u0026 vent.heat.from tank\u0022,\r\n7 , \u0022Load tank \u0026 space heat\u0022 , \r\n8 , \u0022Load tank \u0026 space heat.\u0026 vent\u0022 , \r\n9 , \u0022HP not available\u0022 , \r\n10 , \u0022Swi-off delay flow through heat\u0022,\r\n11 , \u0022Legionella prev.vent.heat\u0022 , \r\n12 , \u0022Legionella prev.space heat\u0022 , \r\n13 , \u0022Space heat.with HP\u0022 ,\r\n14 , \u0022Space heat.\u0026 vent.with HP\u0022 , \r\n15 , \u0022Load tank \u0026 space heat.with HP\u0022 , \r\n16 , \u0022Load tank \u0026 vent.\u0026 space with HP\u0022, \r\n17 , \u0022Legionella prev.tank\u0022,\r\n\u0022Unknown\u0022)"},{"AttributeDefinition":{"Name":"Heat Pump Reheating Coil"},"ReadFormula":"Switch (MODBUSR(A, 3029, Uint16), 1, \u0022Active\u0022, 0, \u0022Inactive\u0022, \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"Heat Pump Frost Protection"},"ReadFormula":"Switch (MODBUSR(A, 3031, Uint16), 1, \u0022Active\u0022, 0, \u0022Inactive\u0022, \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"Drain Pan Heater State"},"ReadFormula":"Switch (MODBUSR(A, 3036, Uint16), 1, \u0022Active\u0022, 0, \u0022Inactive\u0022, \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"Heat pump warning limescale"},"ReadFormula":"Switch (MODBUSR(A, 3037, Uint16), 1, \u0022Active\u0022, 0, \u0022Inactive\u0022, \u0022Unknown\u0022);"},{"AttributeDefinition":{"Name":"Heat Pump Connection Dumper position"},"ReadFormula":"MODBUSR(H, 29, Float, 2) \u002B \u0022 %\u0022"}]</ServiceAttributesFormulas>
         <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Remove All Inactive Alarms","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 3004, Uint16, 3);"},{"ActionDefinition":{"Name":"Acknowledge Alarm A","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 3002, Uint16, 2)"},{"ActionDefinition":{"Name":"Acknowledge Alarm B","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 3003, Uint16, 2)"}]</ServiceActionsScripts>
