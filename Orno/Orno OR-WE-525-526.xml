@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="73">
+  <Template id="7c775886-0161-4cf5-a45d-36334fad8006" revision="1.1">
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <Baudrate>9600</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+      <Revision id="1.1">Fixed from/to grid </Revision>
+    </RevisionHistory>
+    <Name>OR-WE-525/526</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>Orno</Producer>
+    <Model>OR-WE-525/526</Model>
+    <Description></Description>
+    <Module>
+      <Name>OR-WE-525/526</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${device_SlaveId}"},"ReadFormula":"modbusr(H, 0x1003, Int16)"},{"AttributeDefinition":{"Name":"${baud_rate} [bps]"},"ReadFormula":"switch(getbyte(modbusr(H, 0x100c, Int16),0),6,9600,7,19200,8,38400,9,115200,\u0022Invalid\u0022)"},{"AttributeDefinition":{"Name":"${xml_parity}"},"ReadFormula":"switch(getbyte(modbusr(H, 0x100d, Int16),0),0,\u0022None\u0022,1,\u0022Odd\u0022,2,\u0022Even\u0022,\u0022Invalid\u0022)"},{"AttributeDefinition":{"Name":"${xml_stop_bit}"},"ReadFormula":"modbusr(H, 0x100e, Int16)"},{"AttributeDefinition":{"Name":"${time}"},"ReadFormula":"var Y := 2000 \u002B frombcd(modbusr(H,0x1007,uint16));\r\nvar M := frombcd(getbyte( modbusr(H,0x1008,uint16),1));\r\nvar D := frombcd(getbyte( modbusr(H,0x1008,uint16),0));\r\nvar W := frombcd(getbyte( modbusr(H,0x1009,uint16),1));\r\nvar H := frombcd(getbyte( modbusr(H,0x1009,uint16),0));\r\nvar min := frombcd(getbyte( modbusr(H,0x100a,uint16),1));\r\nvar sec := frombcd(getbyte( modbusr(H,0x100a,uint16), 0));\r\n\r\ntostring(tostring(H,\u0022D2\u0022) \u002B \u0022:\u0022 \u002B tostring(min,\u0022D2\u0022) \u002B \u0022:\u0022 \u002B tostring(sec, \u0022D2\u0022) \u002B \u0022 \u0022 \u002B tostring(D,\u0022D2\u0022) \u002B \u0022.\u0022 \u002B tostring(M,\u0022D2\u0022) \u002B \u0022.\u0022 \u002B Y)\r\n\r\n\r\n"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Date/Time","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"var now := NOW();\r\n\r\nvar out1 := tobcd(now.YEAR - 2000);\r\nvar out2 := (tobcd(now.MONTH)\u003C\u003C8) \u002B tobcd(now.DAY);\r\nvar out3 := (tobcd(now.DAYOFWEEK)\u003C\u003C8) \u002B tobcd(now.HOUR);\r\nvar out4 := (tobcd(now.MINUTE)\u003C\u003C8) \u002B tobcd(now.SECOND);\r\n\r\nmodbusw(H, 0x1007, uint16, out1, out2, out3, out4);\r\n\r\n#var out1 := (tobcd(MI) \u003C\u003C 8) \u002B tobcd(SS);\r\n#var out2 := (tobcd(DW) \u003C\u003C 8) \u002B tobcd(HH);\r\n#var out3 := (tobcd(MM) \u003C\u003C 8) \u002B tobcd(DD);\r\n\r\n#modbusw(H, 0x3c, LittleEndianUint16, out1, out2, out3, YY);"},{"ActionDefinition":{"Name":"Slave ID","NumericParameters":[{"FriendlyName":"Slave ID","Abbreviation":"ID","IsFloat":false,"MinValue":1,"MaxValue":255}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 0x1003, Uint16, ID)"},{"ActionDefinition":{"Name":"LCD Cycle time","NumericParameters":[{"FriendlyName":"Time [s]","Abbreviation":"t","IsFloat":false,"MinValue":0,"MaxValue":99}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 0x100b, Uint16, t)"},{"ActionDefinition":{"Name":"${baud_rate}","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Baud rate","Abbreviation":"Br","Values":[{"Item1":6,"Item2":"9600"},{"Item1":7,"Item2":"19200"},{"Item1":8,"Item2":"38400"},{"Item1":9,"Item2":"115200"}]}]},"Script":"modbusw(H,0x100c,int16,Br)"}]</ServiceActionsScripts>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <ModuleVariables>[]</ModuleVariables>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>${total_energy}</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${xml_mode}"},"ReadFormula":"switch(modbusr(H, 0x100f, uint16), 1, \u0022To Grid\u0022, 2, \u0022From Grid\u0022, 3, \u0022To Grid \u002B From Grid\u0022, 4, \u0022To Grid - From Grid\u0022, \u0022Unknown\u0022)"},{"AttributeDefinition":{"Name":"${electric_voltage} [V]"},"ReadFormula":"tostring(modbusr(H, 0x100,Int32)/1000, \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"${electric_current} [A]"},"ReadFormula":"tostring(modbusr(H, 0x102,Int32)/1000, \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"${grid_frequency} [Hz]"},"ReadFormula":"tostring(modbusr(H, 0x10a,Int16)/10, \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"${power_factor}"},"ReadFormula":"tostring(modbusr(H, 0x10b,Int16)/1000, \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"${apparent_power} [VA]"},"ReadFormula":"tostring(modbusr(H, 0x106,Int32), \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"${reactive_power} [VAr]"},"ReadFormula":"tostring(modbusr(H, 0x108,Int32), \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"${total_reactive_energy} [kVArh]"},"ReadFormula":"tostring(modbusr(H, 0x140,Int32)/100, \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"${total_reactive_energy} (1. q) [kVArh]"},"ReadFormula":"tostring(modbusr(H, 0x14a,Int32)/100, \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"${total_reactive_energy} (2. q) [kVArh]"},"ReadFormula":"tostring(modbusr(H, 0x154,Int32)/100, \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"${total_reactive_energy} (3. q) [kVArh]"},"ReadFormula":"tostring(modbusr(H, 0x15e,Int32)/100, \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"${total_reactive_energy} (4. q) [kVArh]"},"ReadFormula":"tostring(modbusr(H, 0x168,Int32)/100, \u0022F2\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"${xml_mode}","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"${xml_mode}","Abbreviation":"mode","Values":[{"Item1":1,"Item2":"To Grid"},{"Item1":2,"Item2":"From Grid"},{"Item1":3,"Item2":"To Grid \u002B From Grid"},{"Item1":4,"Item2":"To Grid - From Grid"}]}]},"Script":"modbusw(H, 0x100f, uint16, mode)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 0x122, Int32) / 100</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 0x104, Int32)/1000</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${deviceType_PVToGrid}</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>9005</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${total_reactive_energy} [kVArh]"},"ReadFormula":"tostring(modbusr(H, 0x12c,Int32)/100, \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"${reactive_power} [VAr]"},"ReadFormula":"tostring(modbusr(H, 0x180,Int32) / 10, \u0022F2\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(H, 0x0118, Int32) / 100</ReadTotalConsumption>
+            <ReadDemand>var demand := MODBUSR(H, 0x104, Int32)/1000;
+if (demand &lt; 0, return(demand * -1), return(0));
+            </ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Electric current</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"88":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:88}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Voltage [V]"},"ReadFormula":"round(modbusr(H, 0x131, uint16)*0.01)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables>[]</CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 0x102, Int32)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${deviceType_PVFromGrid}</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>9004</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"${total_reactive_energy} [kVArh]"},"ReadFormula":"tostring(modbusr(H, 0x136,Int32)/100, \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"${reactive_power} [VAr]"},"ReadFormula":"tostring(modbusr(H, 0x184,Int32) / 10, \u0022F2\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(H, 0x10e, Int32) / 100</ReadTotalConsumption>
+            <ReadDemand>var demand := MODBUSR(H, 0x104, Int32)/1000;
+if (demand &gt; 0, return(demand), return(0));
+            </ReadDemand>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
