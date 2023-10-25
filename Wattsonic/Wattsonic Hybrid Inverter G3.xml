@@ -1,0 +1,651 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="81" >
+  <Template revision="1.0" id="a3afe44e-ab3f-4116-9323-e6f0499b28be">
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <Baudrate>9600</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>Wattsonic Hybrid inverter G3</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>Wattsonic</Producer>
+    <Model>G3</Model>
+    <Description>Inverter RTU</Description>
+    <Module>
+      <Name>Wattsonic Hybrid inverter G3</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <ReadScript>#GEN3-Wattsonic Hybrid Inverter MODBUS RTU Protocol- page 17/27, table 3.3 Fault Registers Map
+var flag1 := MODBUSR(H, 10112, Uint32);
+IF(GETBIT(flag1, 0) = 1, ADDERROR("Mains Lost", 1));
+IF(GETBIT(flag1, 1) = 1, ADDERROR("Grid Voltage Fault", 2));
+IF(GETBIT(flag1, 2) = 1, ADDERROR("Grid Frequency Fault", 3));
+IF(GETBIT(flag1, 3) = 1, ADDERROR("DCI Fault", 4));
+IF(GETBIT(flag1, 4) = 1, ADDERROR("ISO Over Limitation", 5));
+IF(GETBIT(flag1, 5) = 1, ADDERROR("GFCI Fault", 6));
+IF(GETBIT(flag1, 6) = 1, ADDERROR("PV Over Voltage", 7));
+IF(GETBIT(flag1, 7) = 1, ADDERROR("Bus Voltage Fault", 8));
+IF(GETBIT(flag1, 8) = 1, ADDERROR("Inverter Over Temperature", 9));
+var flag2 := MODBUSR(H, 10114, Uint32);
+IF(GETBIT(flag2, 1) = 1, ADDERROR("SPI Fault", 34));
+IF(GETBIT(flag2, 2) = 1, ADDERROR("E2 Fault", 35));
+IF(GETBIT(flag2, 3) = 1, ADDERROR("GFCI Device Fault",36 ));
+IF(GETBIT(flag2, 4) = 1, ADDERROR("AC Transducer Fault", 37));
+IF(GETBIT(flag2, 5) = 1, ADDERROR("Relay Check Fail", 38));
+IF(GETBIT(flag2, 6) = 1, ADDERROR("Internal Fan Fault", 39));
+IF(GETBIT(flag2, 7) = 1, ADDERROR("External Fan Fault", 40));</ReadScript>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Inverter SN"},"ReadFormula":"modbusr(h,10000,string,8)"},{"AttributeDefinition":{"Name":"Equipment info"},"ReadFormula":"modbusr(h,10008,uint16)"},{"AttributeDefinition":{"Name":"Firmware version"},"ReadFormula":"modbusr(h,10011,uint32)"},{"AttributeDefinition":{"Name":"Grid regulation"},"ReadFormula":"modbusr(H,10104,uint16)"},{"AttributeDefinition":{"Name":"Fault FLAG1"},"ReadFormula":"modbusr(H,10112,uint32)"},{"AttributeDefinition":{"Name":"Fault FLAG2"},"ReadFormula":"modbusr(h,10114,uint32)"},{"AttributeDefinition":{"Name":"Fault FLAG3"},"ReadFormula":"modbusr(h, 10120,uint32)"},{"AttributeDefinition":{"Name":"Grid Lines A/B Voltage [V]"},"ReadFormula":"modbusr(h,11006,uint16) /10"},{"AttributeDefinition":{"Name":"Grid Lines B/C Voltage [V]"},"ReadFormula":"modbusr(h,11007,uint16) /10"},{"AttributeDefinition":{"Name":"Grid Lines C/A Voltage [V]"},"ReadFormula":"modbusr(h,11008,uint16)/10"},{"AttributeDefinition":{"Name":"Grid Phase A Voltage [V]"},"ReadFormula":"modbusr(h,11009,uint16)/10"},{"AttributeDefinition":{"Name":"Grid Phase A Current [A]"},"ReadFormula":"modbusr(h,11010,uint16)/10"},{"AttributeDefinition":{"Name":"Grid Phase B Voltage [V]"},"ReadFormula":"modbusr(h,11011,uint16)/10"},{"AttributeDefinition":{"Name":"Grid Phase B Current [A]"},"ReadFormula":"modbusr(h,11012,uint16)/10"},{"AttributeDefinition":{"Name":"Grid Phase C Voltage [V]"},"ReadFormula":"modbusr(h,11013,uint16)/10"},{"AttributeDefinition":{"Name":"Grid Phase C Current [A]"},"ReadFormula":"modbusr(h, 11014, uint16)/10"},{"AttributeDefinition":{"Name":"Grid Frequency [Hz]"},"ReadFormula":"modbusr(h,11015,uint16)/100"},{"AttributeDefinition":{"Name":"P_AC [kW]"},"ReadFormula":"modbusr(h,11016,int32)/1000"},{"AttributeDefinition":{"Name":"Temperature Sensor 1 [C]"},"ReadFormula":"modbusr(h,11032,int16)/10"},{"AttributeDefinition":{"Name":"Temperature Sensor 2 [C]"},"ReadFormula":"modbusr(h,11033,int16)/10"},{"AttributeDefinition":{"Name":"Temperature Sensor 3 [C]"},"ReadFormula":"modbusr(h,11034,int16)/10"},{"AttributeDefinition":{"Name":"Temperature Sensor 4 [C]"},"ReadFormula":"modbusr(h,11035,int16)/10"},{"AttributeDefinition":{"Name":"ARM Fault FLAG1"},"ReadFormula":"modbusr(h,18000,uint32)"},{"AttributeDefinition":{"Name":"Max. Grid Power Value Setting [kVA]"},"ReadFormula":"modbusr(h, 50009, uint16)/10"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Set Max. Grid Power Value Setting","NumericParameters":[{"FriendlyName":"Parameter1","Abbreviation":"Abr1","IsFloat":false,"MinValue":1,"MaxValue":1000000}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(h,50009,uint16,Abr1*10)"}]</ServiceActionsScripts>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Battery Mode</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Battery_V [V]"},"ReadFormula":"modbusr(h,30254,uint16)/10"},{"AttributeDefinition":{"Name":"Battery_I [I]"},"ReadFormula":"modbusr(h,30255,int16)/10"},{"AttributeDefinition":{"Name":"Battery_I [kW]"},"ReadFormula":"modbusr(h,30258,int32)/1000"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>66</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Discharge</Value0Name>
+            <Value1Name>Charge</Value1Name>
+            <Value2Name>2</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>228</Value0IconId>
+            <Value1IconId>230</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 30256, uInt16)</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Energy Purchased from Grid on that day</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 31008, uInt16) / 10</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>EPS/UPS function Switch</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(h, 50001, uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(h, 50001, uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Grid Injection Energy on that day[Meter]</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 31000, uInt16) / 10</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Grid Injection Power Limit Setting</Name>
+          <Model>ModbusDimmer</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <ReadLevel>MODBUSR(H, 25103, uInt16) / 1000</ReadLevel>
+            <WriteLevel>MODBUSW(H, 25103, uInt16, Le * 1000)</WriteLevel>
+            <IconId>0</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Grid Injection Power Limit Switch</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(h, 25100, uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(h, 25100, uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Grid Purchasing Energy on that day[Meter]</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 31001, uInt16) / 10</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Inverter AC Power Setting</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Total AC Power Setting [kW]"},"ReadFormula":"modbusr(h,50203,int16)/100"},{"AttributeDefinition":{"Name":"Phase A Power Setting [kW]"},"ReadFormula":"modbusr(h,50204,int16)/100"},{"AttributeDefinition":{"Name":"Phase B Power Setting [kW]"},"ReadFormula":"modbusr(h,50205,int16)/100"},{"AttributeDefinition":{"Name":"Power C Power Setting [kW]"},"ReadFormula":"modbusr(h,50206,int16)/100"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Set Total AC Power Setting","NumericParameters":[{"FriendlyName":"kW","Abbreviation":"x","IsFloat":false,"MinValue":1,"MaxValue":1000000}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(h,50203,int16,x*100)"},{"ActionDefinition":{"Name":"Set Phase A Power Setting ","NumericParameters":[{"FriendlyName":"kW","Abbreviation":"x","IsFloat":false,"MinValue":1,"MaxValue":1000000}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(h,50204,int16,x*100)"},{"ActionDefinition":{"Name":"Set Phase B Power Setting","NumericParameters":[{"FriendlyName":"kW","Abbreviation":"x","IsFloat":false,"MinValue":1,"MaxValue":10000000}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(h,50205,int16,x*100)"},{"ActionDefinition":{"Name":"Set Power C Power Setting","NumericParameters":[{"FriendlyName":"kW","Abbreviation":"x","IsFloat":false,"MinValue":1,"MaxValue":1000000}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(h,50206,int16,x*100)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Off</Value0Name>
+            <Value1Name>Total Power Setting</Value1Name>
+            <Value2Name>Power on each Phase Setting</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>61</Value0IconId>
+            <Value1IconId>329</Value1IconId>
+            <Value2IconId>330</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 50202, uInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 50202, uInt16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Inverter running status</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Wait</Value0Name>
+            <Value1Name>Self-check</Value1Name>
+            <Value2Name>On grid</Value2Name>
+            <Value3Name>Fault</Value3Name>
+            <Value4Name>Flash/Firmware update</Value4Name>
+            <Value5Name>Off grid</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>326</Value0IconId>
+            <Value1IconId>328</Value1IconId>
+            <Value2IconId>78</Value2IconId>
+            <Value3IconId>57</Value3IconId>
+            <Value4IconId>328</Value4IconId>
+            <Value5IconId>79</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 10105, uInt16)</ReadSwitchState>
+            <WriteSwitchState>#MODBUSW(H, -1, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Loading Energy on that day</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-11</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 31006, uInt16) / 10</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Off-grid asymmetric output function switch</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-12</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(h, 50006, uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(h, 50006, uint16,st)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Peak Load Shifting Switch</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-13</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(h, 50007, uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(h, 50007, uint16,st)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Phase A Power on Meter</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-14</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>#MODBUSR(H, -1, Int16) / 100</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 10994, Int32)/1000</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Phase B Power on Meter</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-15</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>#MODBUSR(H, -1, Int16) / 100</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 10996, Int32) / 1000</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Phase C Power on Meter</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-16</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>#MODBUSR(H, -1, Int16) / 100</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 10998, Int32) / 1000</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>PV Generation Energy on that day</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-17</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 31005, uInt16) / 10</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Energy injected to grid</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-18</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 31102, uInt32) / 10</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Energy Purchased from Grid at inverter side</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-19</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 31118, uInt32) / 10</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Energy Purchased from Grid from Meter</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-20</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 31104, uInt32) / 10</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Grid-Injection Energy on Meter</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-21</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 11002, uInt32) / 100</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Loading Energy consumed at grid side</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-22</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 31114, uInt32) / 10</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Output Energy on backup port</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-23</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 31106, uInt32) / 10</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Power on Meter</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-24</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>#MODBUSR(H, -1, Int16) / 100</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 11000, Int32) / 1000</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Purchasing Energy from Grid on Meter</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-25</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 11004, uInt32) / 100</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total PV Generation</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-26</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 31112, uInt32) / 10</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total PV Generation from Installation</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-27</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Total PV Generation Time from Installation [H]"},"ReadFormula":"modbusr(h,11022,uint32)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 11020, uInt32)</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total PV Generation on that day</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-28</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 11018, uInt32) / 10</ReadTotalConsumption>
+            <ReadDemand>#MODBUSR(H, -1, Int16) / 100</ReadDemand>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
