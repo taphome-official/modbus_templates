@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="81" >
+<Templates format="2" protocolVersion="76" >
   <Template revision="1.0" id="4e0cd21b-9e50-414a-9c3c-382231611b5b">
     <SuggestedCCUParameters>
       <UseAsciiCommunication>False</UseAsciiCommunication>
