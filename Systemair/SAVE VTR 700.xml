@@ -27,8 +27,8 @@
     </RevisionHistory>
     <Name>SAVE VTR 700</Name>
     <CcuModel>ModbusRtuCCU</CcuModel>
-    <Producer>Save</Producer>
-    <Model>VTR 700</Model>
+    <Producer>Systemair</Producer>
+    <Model>Save VTR 700</Model>
     <Description>AC</Description>
     <Module>
       <Name>SAVE VTR 700</Name>
