@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="81" >
+  <Template revision="1.0" id="73909dc9-b970-48ee-a040-8271a2a0c96e">
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <Baudrate>9600</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>SOLAX X3 Hybrid Gen 4</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>Solax</Producer>
+    <Model>X3/X1</Model>
+    <Description>inverter</Description>
+    <Module>
+      <Name>SOLAX Hybrid Gen 4</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <ReadScript>var reg := MODBUSR(A, 0x09, UInt16);
+IF(reg = 3, ADDERROR("Run Mode Fault"));
+IF(reg = 4, ADDERROR("Run Mode Permanent Fault"));
+#error table  2-3 for x3
+var x3 := MODBUSR(A, 0x0040, Uint32);
+IF(GETBIT(x3, 0) = 1, ADDERROR("TZ Protect Fault"));
+IF(GETBIT(x3, 1) = 1, ADDERROR("Grid Lost Fault"));
+IF(GETBIT(x3, 2) = 1, ADDERROR("Grid Volt Fault"));
+IF(GETBIT(x3, 3) = 1, ADDERROR("Grid Freq Fault"));
+IF(GETBIT(x3, 4) = 1, ADDERROR("PV Volt Fault"));
+IF(GETBIT(x3, 5) = 1, ADDERROR("Bus Volt Fault"));
+IF(GETBIT(x3, 6) = 1, ADDERROR("Bat Volt Fault"));
+IF(GETBIT(x3, 7) = 1, ADDERROR("AC10mins Volt Fault"));
+IF(GETBIT(x3, 8) = 1, ADDERROR("DCI OCP Fault"));
+IF(GETBIT(x3, 9) = 1, ADDERROR("DCV OCP Fault"));
+IF(GETBIT(x3, 10) = 1, ADDERROR("SW OCP Fault"));
+IF(GETBIT(x3, 11) = 1, ADDERROR("RC OCP Fault"));
+IF(GETBIT(x3, 12) = 1, ADDERROR("Isolation Fault"));
+IF(GETBIT(x3, 13) = 1, ADDERROR("Temp Over Fault"));
+IF(GETBIT(x3, 14) = 1, ADDERROR("BatConnDir Fault"));
+IF(GETBIT(x3, 15) = 1, ADDERROR("Off-grid Overload"));
+IF(GETBIT(x3, 16) = 1, ADDERROR("Overload"));
+IF(GETBIT(x3, 17) = 1, ADDERROR("Bat Power Low"));
+IF(GETBIT(x3, 18) = 1, ADDERROR("BMS Lost"));
+IF(GETBIT(x3, 19) = 1, ADDERROR("Fan Fault"));
+IF(GETBIT(x3, 20) = 1, ADDERROR("Low Temp Fault"));
+IF(GETBIT(x3, 23) = 1, ADDERROR("INV Volt Sample Fault"));
+IF(GETBIT(x3, 24) = 1, ADDERROR("Inner Comm Fault"));
+IF(GETBIT(x3, 25) = 1, ADDERROR("INV EEPROM Fault"));
+IF(GETBIT(x3, 26) = 1, ADDERROR("RCD Fault"));
+IF(GETBIT(x3, 27) = 1, ADDERROR("Grid Relay Fault"));
+IF(GETBIT(x3, 28) = 1, ADDERROR("Off-grid Relay Fault"));
+IF(GETBIT(x3, 29) = 1, ADDERROR("PV ConnDir Fault"));
+IF(GETBIT(x3, 30) = 1, ADDERROR("Charger Relay Fault"));
+IF(GETBIT(x3, 31) = 1, ADDERROR("Earth Relay Fault"));
+
+#error 2-5 Manager error code
+var err := MODBUSR(A, 0x0043, Uint16);
+IF(GETBIT(err, 0) = 1, ADDERROR("Power Type Fault"));
+IF(GETBIT(err, 1) = 1, ADDERROR("Port OC Warning"));
+IF(GETBIT(err, 2) = 1, ADDERROR("Mgr EEPROM Fault"));
+IF(GETBIT(err, 4) = 1, ADDERROR("NTC Sample Invalid"));
+IF(GETBIT(err, 5) = 1, ADDERROR("Battery Temperature Low"));
+IF(GETBIT(err, 6) = 1, ADDERROR("Battery Temperature High"));
+IF(GETBIT(err, 9) = 1, ADDERROR("Meter Fault"));
+IF(GETBIT(err, 10) = 1, ADDERROR("Bypass Relay Fault"));
+IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Run Mode"},"ReadFormula":"SWITCH(MODBUSR(A, 0x09, UInt16), \r\n0, \u0022Waiting\u0022,\r\n1, \u0022Checking\u0022,\r\n2, \u0022Normal\u0022,\r\n3, \u0022Fault\u0022,\r\n4, \u0022Permanent Fault\u0022,\r\n5, \u0022Update\u0022,\r\n6, \u0022Off-grid waiting\u0022,\r\n7, \u0022Off-grid\u0022,\r\n8, \u0022Self Testing \u0022,\r\n9, \u0022Idle\u0022,\r\n10, \u0022Standby\u0022,\r\n\u0022Other\u0022\r\n);"}]</ServiceAttributesFormulas>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Batéria (SOC) </Name>
+          <Model>ModbusAnalogInput</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>11001</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadInputLevel>MODBUSR(A, 0x1C, UInt16)/100</ReadInputLevel>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Battery Temperature</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>80000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTemperature>MODBUSR(A,0x0018, UInt16) </ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Daily/Actual Energy</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>9002</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(A, 0x50, UInt16) /10</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(A,0x02, Int16)/1000</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Charger Use Mode</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Self Use Mode</Value0Name>
+            <Value1Name>Feedin Priority</Value1Name>
+            <Value2Name>Backup Mode</Value2Name>
+            <Value3Name>Manual Mode</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>209</Value0IconId>
+            <Value1IconId>224</Value1IconId>
+            <Value2IconId>235</Value2IconId>
+            <Value3IconId>101</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 0x008B, Uint16)</ReadSwitchState>
+            <WriteSwitchState>#MODBUSW(H, 0x001F, uint16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Purchase/Feed to Grid</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>9005</DeviceType>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>50000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables>[]</CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 0x46,LittleEndianInt32)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>PV1</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>9002</DeviceType>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>60000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A,0x0a, UInt16)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>PV2</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>9002</DeviceType>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A,0x0b, UInt16)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>SelfUse Night Charge</Name>
+          <Model>ModbusDimmer</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript>#MODBUSWNE(H, 0x0062, Uint16, 1);</InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <ReadLevel>MODBUSR(H, 0x0094, Uint16) / 100</ReadLevel>
+            <WriteLevel>#MODBUSW(H, 0x0063, Uint16, Le * 100)</WriteLevel>
+            <IconId>3019</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Total Energy</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"59":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":59}\"}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>150000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 0x52,LittleEndianInt32) / 1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
