@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="73" >
+  <Template revision="1.0" id="d27c1656-cbd3-4858-9bb3-c72d3e040848">
+    <SuggestedCCUParameters>
+      <TcpPort>502</TcpPort>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>Alfen Socket</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>Alfen</Producer>
+    <Model></Model>
+    <Description>One for each socket</Description>
+    <Module>
+      <Name>Alfen Socket</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <ReadScript>#warning
+IF(GETBIT(MODBUSR(H, 300, Uint16), 2)=1, ADDWARNING("Meter in warning state"));
+#error
+IF(GETBIT(MODBUSR(H, 300, Uint16), 3)=1, ADDError("Meter in error"));
+IF(MODBUSR(H, 1201, String, 5)="F", ADDError("Charging error"));</ReadScript>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Meter Type"},"ReadFormula":"SWITCH(MODBUSR(H, 305, Uint16),\r\n 0, \u0022RTU\u0022,\r\n 1, \u0022TCP/IP\u0022,\r\n 2, \u0022UDP\u0022,\r\n 3, \u0022P1\u0022,\r\n \u0022Other\u0022);"},{"AttributeDefinition":{"Name":"State"},"ReadFormula":"var reg := MODBUSR(H, 300, Uint16);\r\nvar string := \r\nIF(GETBIT(reg, 0) = 1, \u0022Initialised \u0022, \u0022\u0022) \u002B\r\nIF(GETBIT(reg, 1) = 1, \u0022Updated \u0022, \u0022\u0022) \u002B\r\nIF(GETBIT(reg, 2) = 1, \u0022Warning \u0022, \u0022\u0022) \u002B\r\nIF(GETBIT(reg, 3) = 1, \u0022Error\u0022, \u0022\u0022);"},{"AttributeDefinition":{"Name":"Mode 3 State"},"ReadFormula":"MODBUSR(H, 1201, String, 5);"},{"AttributeDefinition":{"Name":"Max Current"},"ReadFormula":"MODBUSR(H, 1210, Float, 2) \u002B \u0022 A\u0022"},{"AttributeDefinition":{"Name":"Active Load Balancing Safe Current"},"ReadFormula":"MODBUSR(H, 1212, Float, 2) \u002B \u0022 A\u0022"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Max Current","NumericParameters":[{"FriendlyName":"Max Current [A]","Abbreviation":"cur","IsFloat":false,"MinValue":6,"MaxValue":16}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 1210, Float, cur, 2)"}]</ServiceActionsScripts>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Frequency</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"58":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:58}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 336, Float, 2)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Charge State</Name>
+          <Model>ModbusReedContact</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Number of charging phases"},"ReadFormula":"MODBUSR(H, 1215, Uint16);"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Charging phases","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Charging Phases","Abbreviation":"chrg","Values":[{"Item1":3,"Item2":"3 phase charging"},{"Item1":1,"Item2":"1 phase charging"}]}]},"Script":"MODBUSW(H, 1215, Uint16, chrg);"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <OnStateIconId>226</OnStateIconId>
+            <OffStateIconId>227</OffStateIconId>
+            <OnStateName>Charging</OnStateName>
+            <OffStateName>Standby</OffStateName>
+            <ReadState>SWITCH(MODBUSR(H, 1201, String, 5),
+"A", false,
+"B1", false,
+"B2", false,
+"C1", false,
+"C2", true,
+"D1", false,
+"D2", true,
+"E", false,
+"F", false,
+Nan)</ReadState>
+            <NegateState>False</NegateState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Real Energy Consumed</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>9002</DeviceType>
+            <SerializedValueLogTypeConversions>{"59":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:59}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 390, Float, 4)/1000;</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Real Energy Delivered</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>9002</DeviceType>
+            <SerializedValueLogTypeConversions>{"59":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:59}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 374, Float, 4)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Real Power Sum</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Phase L1"},"ReadFormula":"MODBUSR(H, 338, Float, 2)/1000 \u002B \u0022 kW\u0022;"},{"AttributeDefinition":{"Name":"Phase L2"},"ReadFormula":"MODBUSR(H, 340, Float, 2)/1000 \u002B \u0022 kW\u0022;"},{"AttributeDefinition":{"Name":"Phase L3"},"ReadFormula":"MODBUSR(H, 342, Float, 2)/1000 \u002B \u0022 kW\u0022;"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 344, Float, 2)/1000</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Vehicle Connection</Name>
+          <Model>ModbusReedContact</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>1102</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <OnStateIconId>222</OnStateIconId>
+            <OffStateIconId>223</OffStateIconId>
+            <OnStateName>Verbunden </OnStateName>
+            <OffStateName>${general_unplugged}</OffStateName>
+            <ReadState>SWITCH(MODBUSR(H, 1201, String, 5),
+"A", false,
+"B1", true,
+"B2", true,
+"C1", true,
+"C2", true,
+"D1", true,
+"D2", true,
+"E", false,
+"F", false,
+Nan)</ReadState>
+            <NegateState>False</NegateState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Voltage Phase (L1-N)</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"87":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:87}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 306, BigEndianFloat, 2)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Voltage Phase (L2-N)</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"87":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:87}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 308, BigEndianFloat, 2)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Voltage Phase (L3-N)</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"87":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:87}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 310, BigEndianFloat, 2)</ReadState>
+            <WriteState></WriteState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
