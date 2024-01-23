@@ -92,7 +92,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
       </DeviceProperties>
       <Devices>
         <Device>
-          <Name>Batéria (SOC) </Name>
+          <Name>${deviceType_BatterySOC}</Name>
           <Model>ModbusAnalogInput</Model>
           <Id>-2</Id>
           <DeviceProperties>
