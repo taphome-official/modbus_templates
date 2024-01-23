@@ -1,0 +1,1160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="73">
+  <Template id = "d1bb09bc-c8f6-49ec-a908-c551768cce23" revision="1.0">
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <Baudrate>9600</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>Sinclair inverter air to water heat pumps</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer></Producer>
+    <Model></Model>
+    <Description></Description>
+    <Module>
+      <Name>Sinclair inverter air to water heat pumps</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"T-HP max [\u00B0C]"},"ReadFormula":"modbusr(H, 16, uint16)"},{"AttributeDefinition":{"Name":"Cool run time [min]"},"ReadFormula":"modbusr(H, 33, uint16)"},{"AttributeDefinition":{"Name":"Heat run time [min]"},"ReadFormula":"modbusr(H, 34, uint16)"},{"AttributeDefinition":{"Name":"Water Pump State"},"ReadFormula":"if(modbusr(c, 175, bool), \u0022On\u0022, \u0022Off\u0022)"},{"AttributeDefinition":{"Name":"Other thermal"},"ReadFormula":"if(modbusr(c,27,bool), \u0022With\u0022, \u0022Without\u0022)"},{"AttributeDefinition":{"Name":"Other thermal logic"},"ReadFormula":"modbusr(h,35,uint16)"},{"AttributeDefinition":{"Name":"T-Other switch on [\u00B0C]"},"ReadFormula":"MODBUSR(H, 15, Int16)"},{"AttributeDefinition":{"Name":"Other Heat Source State"},"ReadFormula":"if(modbusr(c, 169, bool), \u0022On\u0022, \u0022Off\u0022)"},{"AttributeDefinition":{"Name":"Optional E-Heater logic"},"ReadFormula":"modbusr(h,37,uint16)"},{"AttributeDefinition":{"Name":"Current limit value [A]"},"ReadFormula":"modbusr(h,38,uint16)"},{"AttributeDefinition":{"Name":"Power limit [kW]"},"ReadFormula":"modbusr(h,43,uint16) * 10"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Set T-HP max","NumericParameters":[{"FriendlyName":"T-HP max","Abbreviation":"C","IsFloat":false,"MinValue":40,"MaxValue":55}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 16, uint16, C)"},{"ActionDefinition":{"Name":"Set Cool run time","NumericParameters":[{"FriendlyName":"Cool run time","Abbreviation":"min","IsFloat":false,"MinValue":1,"MaxValue":10}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 33, uint16, min)"},{"ActionDefinition":{"Name":"Set Heat run time","NumericParameters":[{"FriendlyName":"Heat run time","Abbreviation":"min","IsFloat":false,"MinValue":1,"MaxValue":10}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 34, uint16, min)"},{"ActionDefinition":{"Name":"Set Other thermal","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Other thermal","Abbreviation":"ot","Values":[{"Item1":0,"Item2":"Without"},{"Item1":1,"Item2":"With"}]}]},"Script":"modbusw(c, 27, bool, ot)"},{"ActionDefinition":{"Name":"Set Other thermal logic","NumericParameters":[{"FriendlyName":"Logic","Abbreviation":"lo","IsFloat":false,"MinValue":1,"MaxValue":3}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(h,35,uint16,lo)"},{"ActionDefinition":{"Name":"Set T-Other switch on","NumericParameters":[{"FriendlyName":"T-Other switch on","Abbreviation":"temperature","IsFloat":false,"MinValue":-20,"MaxValue":18}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(h,15,int16,temperature)"},{"ActionDefinition":{"Name":"Change Optional E-Heater logic","NumericParameters":[{"FriendlyName":"Logic","Abbreviation":"lo","IsFloat":false,"MinValue":1,"MaxValue":2}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(h,37,uint16,lo)"},{"ActionDefinition":{"Name":"Change Current limit value","NumericParameters":[{"FriendlyName":"limit","Abbreviation":"lo","IsFloat":false,"MinValue":1,"MaxValue":50}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(h,38,uint16,lo)"},{"ActionDefinition":{"Name":"Change Power limit","NumericParameters":[{"FriendlyName":"Value [0.1 * kW]","Abbreviation":"val","IsFloat":false,"MinValue":1,"MaxValue":100}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(h,43,uint16,val)"},{"ActionDefinition":{"Name":"Reset error","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Parameter1","Abbreviation":"Abr1","Values":[{"Item1":0,"Item2":"Does not clear fault"},{"Item1":1,"Item2":"Clear faul"}]}]},"Script":"modbusw(h,44,uint16,Abr1)"}]</ServiceActionsScripts>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <ModuleVariables>[{"Name":"water_tank","ValueTypeId":1,"NumericValue":0},{"Name":"on_off","ValueTypeId":1,"NumericValue":0}]</ModuleVariables>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>△T-Cool</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>2</MinTemperature>
+            <MaxTemperature>10</MaxTemperature>
+            <ReadCurrentTemperature></ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 29, uInt16)</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 29, uInt16, round(Se))</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>△T-Heat</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>2</MinTemperature>
+            <MaxTemperature>10</MaxTemperature>
+            <ReadCurrentTemperature></ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 30, uInt16)</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 30, uInt16, round(Se))</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>△T-Room temp</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>1</MinTemperature>
+            <MaxTemperature>5</MaxTemperature>
+            <ReadCurrentTemperature></ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 32, uInt16)</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 32, uInt16,round(Se))</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Air removal</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>Air</Value1Name>
+            <Value2Name>Water tank</Value2Name>
+            <Value3Name>Off</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>23</Value1IconId>
+            <Value2IconId>76</Value2IconId>
+            <Value3IconId>61</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>-1</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 41, uInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 41, uInt16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Clock Timer</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(C, 9, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(C, 9, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Control State</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript>if(modbusr(c, 160, bool), adderror("Remote Room Temp Sensor Error"));
+</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Remote sensor"},"ReadFormula":"if(modbusr(C, 33, bool), \u0022With\u0022, \u0022Without\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Set Remote sensor","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Remote sensor","Abbreviation":"rs","Values":[{"Item1":0,"Item2":"Without"},{"Item1":1,"Item2":"With"}]}]},"Script":"modbusw(C, 33, bool, rs)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>37</OnStateIconId>
+            <OffStateIconId>300</OffStateIconId>
+            <OnStateName>T-room</OnStateName>
+            <OffStateName>T-water out</OffStateName>
+            <ReadSwitchState>MODBUSR(C, 17, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(C, 17, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Dis. pressure</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(H, 124, Int16)/10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Disinfection</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Disinfection Temp [\u00B0C]"},"ReadFormula":"modbusr(H, 4, uint16)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Set Disinfection Temp ","NumericParameters":[{"FriendlyName":"Disinfection Temp","Abbreviation":"C","IsFloat":false,"MinValue":40,"MaxValue":70}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 4, uint16, C)"},{"ActionDefinition":{"Name":"Start Disinfection","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(C, 23, bool, 1)"},{"ActionDefinition":{"Name":"Stop Disinfection","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(C, 23, bool, 0)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Off</Value0Name>
+            <Value1Name>Running</Value1Name>
+            <Value2Name>Done</Value2Name>
+            <Value3Name>Failed</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>61</Value0IconId>
+            <Value1IconId>19</Value1IconId>
+            <Value2IconId>16</Value2IconId>
+            <Value3IconId>57</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 135, uInt16)</ReadSwitchState>
+            <WriteSwitchState>if (Mu = 1, modbusw(C, 23, bool, 1));
+if (Mu = 0 or Mu = 2, modbusw(C, 23, bool, 0));</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Emergency mode</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(C, 26, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(C, 26, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Fast Hot Water</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-11</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(C, 18, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(C, 18, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Floor Debug</Name>
+          <Model>ModbusReedContact</Model>
+          <Id>-12</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Floor Debug Segments"},"ReadFormula":"modbusr(H,5,uint16)"},{"AttributeDefinition":{"Name":"Floor Debug Period 1 temp [\u00B0C]"},"ReadFormula":"modbusr(H,6,uint16)"},{"AttributeDefinition":{"Name":"\u25B3T of segment [\u00B0C]"},"ReadFormula":"modbusr(h,7,uint16)"},{"AttributeDefinition":{"Name":"Segment time [hours]"},"ReadFormula":"modbusr(h,8,uint16)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Enable Floor Debug","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"On/Off","Abbreviation":"sw","Values":[{"Item1":0,"Item2":"Off"},{"Item1":1,"Item2":"On"}]}]},"Script":"if sw = 0\r\n    MODBUSW(C, 24, Bool, 0);\r\nelse\r\n    if on_off = 0\r\n        MODBUSW(C, 24, Bool, 1);\r\n    else\r\n        return(\u0022Please turn off the system first\u0022);\r\n    end\r\nend"},{"ActionDefinition":{"Name":"Start Floor Debug","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(C, 25, Bool, 1)"},{"ActionDefinition":{"Name":"Stop Floor Debug","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(C, 25, Bool, 0)"},{"ActionDefinition":{"Name":"Set Floor Debug Segments","NumericParameters":[{"FriendlyName":"Sections","Abbreviation":"se","IsFloat":false,"MinValue":1,"MaxValue":10}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H,5,uint16,se)"},{"ActionDefinition":{"Name":"Set Floor Debug Period 1 temp","NumericParameters":[{"FriendlyName":"Temperature","Abbreviation":"C","IsFloat":false,"MinValue":25,"MaxValue":35}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(h,6,uint16,C)"},{"ActionDefinition":{"Name":"Set \u25B3T of segment","NumericParameters":[{"FriendlyName":"Temperature","Abbreviation":"C","IsFloat":false,"MinValue":2,"MaxValue":10}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(h,7,uint16,C)"},{"ActionDefinition":{"Name":"Set Segment time","NumericParameters":[{"FriendlyName":"Time","Abbreviation":"h","IsFloat":false,"MinValue":12,"MaxValue":72}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(h,8,int16,h)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <OnStateIconId>19</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_open}</OnStateName>
+            <OffStateName>${general_closed}</OffStateName>
+            <ReadState>MODBUSR(C, 25, Bool)</ReadState>
+            <NegateState>False</NegateState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Force mode</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-13</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>Force-cool</Value1Name>
+            <Value2Name>Force-heat</Value2Name>
+            <Value3Name>Off</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>353</Value1IconId>
+            <Value2IconId>351</Value2IconId>
+            <Value3IconId>356</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>-1</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 40, uInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 40, uInt16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Holiday Mode</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-14</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript>if counter &gt; 0
+    addwarning("Please turn off the system first!");
+    counter := counter -1;
+end</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables>[{"Name":"counter","ValueTypeId":1,"NumericValue":0}]</CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(C, 34, Bool)</ReadSwitchState>
+            <WriteSwitchState>if on_off = 0
+    MODBUSW(C, 34, Bool, St);
+else
+    counter := 10;
+end</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Hot Water Tank</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-15</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript>water_tank := modbusr(C, 29, bool);
+
+if(!water_tank, adderror("No Water Tank Installed"));
+if(modbusr(c, 156 , bool), adderror("Water Tank Temp Sensor Error"));
+</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Water Tank Heater State"},"ReadFormula":"if(modbusr(c, 173, bool), \u0022On\u0022, \u0022Off\u0022)"},{"AttributeDefinition":{"Name":"Tank heater Logic"},"ReadFormula":"modbusr(H, 36, uint16)"},{"AttributeDefinition":{"Name":"Other thermal logic"},"ReadFormula":"modbusr(H, 35, uint16)"},{"AttributeDefinition":{"Name":"\u25B3T-hot water [\u00B0C]"},"ReadFormula":"modbusr(H, 31, uint16)"},{"AttributeDefinition":{"Name":"Cool\u002BHot Water Priority"},"ReadFormula":"if(modbusr(c, 19, bool), \u0022Hot water\u0022, \u0022Cool\u0022)"},{"AttributeDefinition":{"Name":"Heat\u002BHot Water Priority"},"ReadFormula":"if(modbusr(c, 20, bool), \u0022Hot water\u0022, \u0022Heat\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Set Tank heater Logic","NumericParameters":[{"FriendlyName":"Logic","Abbreviation":"L","IsFloat":false,"MinValue":1,"MaxValue":2}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 36, uint16, L)"},{"ActionDefinition":{"Name":"Set \u25B3T-hot water","NumericParameters":[{"FriendlyName":"\u25B3T","Abbreviation":"C","IsFloat":false,"MinValue":2,"MaxValue":8}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 31, uint16, C)"},{"ActionDefinition":{"Name":"Set Cool\u002BHot Water Priority","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Priority","Abbreviation":"P","Values":[{"Item1":0,"Item2":"Cool"},{"Item1":1,"Item2":"Hot water"}]}]},"Script":"modbusw(C, 19, bool, P)"},{"ActionDefinition":{"Name":"Set Heat\u002BHot Water Priority","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Priority","Abbreviation":"P","Values":[{"Item1":0,"Item2":"Heat"},{"Item1":1,"Item2":"Hot water"}]}]},"Script":"modbusw(C, 20, bool, P)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>40</MinTemperature>
+            <MaxTemperature>80</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(H, 128, Int16)/10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 13, uInt16)</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 13, uInt16, round(Se))</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Manual defrost</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-16</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables>[{"Name":"counter","ValueTypeId":1,"NumericValue":0}]</CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(C, 36, Bool)</ReadSwitchState>
+            <WriteSwitchState>if on_off = 0
+    MODBUSW(C, 36, Bool, St);
+else
+    counter := 10;
+end</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Mode</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-17</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>Heat</Value1Name>
+            <Value2Name>Hot water</Value2Name>
+            <Value3Name>Cool+Heat water</Value3Name>
+            <Value4Name>Heat +Hot water</Value4Name>
+            <Value5Name>Cool</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>1</Value1IconId>
+            <Value2IconId>351</Value2IconId>
+            <Value3IconId>3</Value3IconId>
+            <Value4IconId>351</Value4IconId>
+            <Value5IconId>2</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>-1</OffStateValue>
+            <ReadSwitchState>var ret := MODBUSR(H, 2, uInt16);
+
+if( !water_tank and (ret = 2 or ret = 3 or ret = 4), addwarning("Water tank is unavailable"));
+
+return(ret)</ReadSwitchState>
+            <WriteSwitchState>MODBUSw(H, 2, uInt16,Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>On/Off</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-18</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>var status := MODBUSR(H, 42, uint16);
+
+if status = 0xAA
+    on_off := 1;
+    return(1);
+else
+    on_off := 0;
+    return(0);
+end</ReadSwitchState>
+            <WriteSwitchState>if St = 0
+    MODBUSW(H, 42, uint16, 0x55);
+else
+    MODBUSW(H, 42, uint16, 0xAA);
+end</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Optional E-Heater</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-19</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>1 set</Value1Name>
+            <Value2Name>2 sets</Value2Name>
+            <Value3Name>Off</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>6</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>61</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>-1</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 3, uInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSw(H, 3, uInt16,Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Outdoor Unit</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-20</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript>if(modbusr(c, 88 , bool), adderror("Ambient Temp Sensor Error"));
+if(modbusr(c, 89 , bool), adderror("Defrost Temp Sensor Error"));
+if(modbusr(c, 90 , bool), adderror("Discharge Temp Sensor Error"));
+if(modbusr(c, 91 , bool), adderror("Suction Temp Sensor Error"));
+if(modbusr(c, 92 , bool), adderror("ODU Fan Error"));
+if(modbusr(c, 93 , bool), adderror("High-Pressure Sensor Error"));
+if(modbusr(c, 94 , bool), adderror("High Pressure Protection"));
+if(modbusr(c, 95 , bool), adderror("Low Pressure Protection"));
+if(modbusr(c, 96 , bool), adderror("High Discharge Protection"));
+if(modbusr(c, 97 , bool), adderror("Capacity DIP Setting Error"));
+if(modbusr(c, 98 , bool), adderror("Communication Error between IDU and ODU"));
+if(modbusr(c, 99 , bool), adderror("Economizer In Sensor Error"));
+if(modbusr(c, 100 , bool), adderror("Economizer Out Sensor Error"));
+if(modbusr(c, 102 , bool), adderror("System Recoverable Protection"));
+if(modbusr(c, 103 , bool), adderror("System Irrecoverable Protection"));
+if(modbusr(c, 108 , bool), adderror("Flow Switch Protection"));
+if(modbusr(c, 109 , bool), adderror("4-way valve error"));
+if(modbusr(c, 128 , bool), adderror("DC Bus Low-voltage or Voltage Drop"));
+if(modbusr(c, 129 , bool), adderror("DC Bus Over-voltage"));
+if(modbusr(c, 129 , bool), adderror("DC Bus Over-voltage"));
+if(modbusr(c, 130 , bool), adderror("AC Current Protection (Input Side)"));
+if(modbusr(c, 131 , bool), adderror("IPM Error"));
+if(modbusr(c, 132 , bool), adderror("PFC Error"));
+if(modbusr(c, 133 , bool), adderror("Startup Error"));
+if(modbusr(c, 134 , bool), adderror("Phase Loss"));
+if(modbusr(c, 135 , bool), adderror("Drive Module Resetting"));
+if(modbusr(c, 136 , bool), adderror("Compressor Overcurrent"));
+if(modbusr(c, 137 , bool), adderror("Over-speed"));
+if(modbusr(c, 138 , bool), adderror("Charging Circuit Error or Current Sensor Error"));
+if(modbusr(c, 139 , bool), adderror("Desynchronizing"));
+if(modbusr(c, 140 , bool), adderror("Compressor Stalling"));
+if(modbusr(c, 141 , bool), adderror("Drive Communication Error"));
+if(modbusr(c, 142 , bool), adderror("Radiator or IPM or PFC Over-temperature"));
+if(modbusr(c, 143 , bool), adderror("Defective Radiator or IPM or PFC"));
+if(modbusr(c, 146 , bool), adderror("Charging Circuit Error"));
+if(modbusr(c, 147 , bool), adderror("AC Input Voltage Error"));
+if(modbusr(c, 148 , bool), adderror("Drive Board Temp Sensor Error"));
+if(modbusr(c, 149 , bool), adderror("AC Contactor Protection or Input Cross-zero Error"));
+if(modbusr(c, 150 , bool), adderror("Temp Drift Protection"));
+if(modbusr(c, 151 , bool), adderror("Sensor Connection Protection (Connection to Phase U or V failed)"));
+</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Compressor State"},"ReadFormula":"if(modbusr(c, 80, bool), \u0022On\u0022, \u0022Off\u0022)"},{"AttributeDefinition":{"Name":"Fan State"},"ReadFormula":"if(modbusr(c, 81, bool), \u0022On\u0022, \u0022Off\u0022)"},{"AttributeDefinition":{"Name":"4-way Valve State"},"ReadFormula":"if(modbusr(c, 83, bool), \u0022On\u0022, \u0022Off\u0022)"},{"AttributeDefinition":{"Name":"Compressor Crankcase Heater State"},"ReadFormula":"if(modbusr(c, 84, bool), \u0022On\u0022, \u0022Off\u0022)"},{"AttributeDefinition":{"Name":"Underpan Heater State"},"ReadFormula":"if(modbusr(c, 85, bool), \u0022On\u0022, \u0022Off\u0022)"},{"AttributeDefinition":{"Name":"Defrosting State"},"ReadFormula":"if(modbusr(c, 86, bool), \u0022Defrosting\u0022, \u0022End\u0022)"},{"AttributeDefinition":{"Name":"Oil Return State"},"ReadFormula":"if(modbusr(c, 87, bool), \u0022In oil return\u0022, \u0022No oil return\u0022)"},{"AttributeDefinition":{"Name":"T-discharge [\u00B0C]"},"ReadFormula":"MODBUSR(H, 119, Int16)/10"},{"AttributeDefinition":{"Name":"T-defrost [\u00B0C]"},"ReadFormula":"MODBUSR(H, 120, Int16)/10"},{"AttributeDefinition":{"Name":"T-suction [\u00B0C]"},"ReadFormula":"MODBUSR(H, 121, Int16)/10"},{"AttributeDefinition":{"Name":"T-economizer in [\u00B0C]"},"ReadFormula":"MODBUSR(H, 122, Int16)/10"},{"AttributeDefinition":{"Name":"T-economizer out [\u00B0C]"},"ReadFormula":"MODBUSR(H, 123, Int16)/10"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>6</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>8</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>Cool</Value1Name>
+            <Value2Name>Heat</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>Hot water</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>Off</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>2</Value1IconId>
+            <Value2IconId>1</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>351</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>61</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>8</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 117, uInt16)</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Quiet mode</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-21</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(C, 21, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(C, 21, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>RT-Cool</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-22</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>18</MinTemperature>
+            <MaxTemperature>30</MaxTemperature>
+            <ReadCurrentTemperature></ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 11, uInt16)</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 11, uInt16, round(Se))</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>RT-Heat</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-23</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>18</MinTemperature>
+            <MaxTemperature>30</MaxTemperature>
+            <ReadCurrentTemperature></ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 12, uInt16)</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 12, uInt16, round(Se))</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Solar heater</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-24</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Solar setting"},"ReadFormula":"if(modbusr(C, 31, bool), \u0022With\u0022, \u0022Without\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Set Solar","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Solar","Abbreviation":"S","Values":[{"Item1":0,"Item2":"Without"},{"Item1":1,"Item2":"With"}]}]},"Script":"modbusw(C, 31, bool, S)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>var ret := MODBUSR(C, 16, Bool);
+
+if (ret, if ( !MODBUSR(C, 31, Bool), addwarning("Solar is not available")));
+
+return(ret);</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(C, 16, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>T-Eheater</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-25</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>-20</MinTemperature>
+            <MaxTemperature>18</MaxTemperature>
+            <ReadCurrentTemperature></ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 14, Int16)</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 14, Int16, round(Se))</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>T-gas pipe</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-26</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(H, 130, Int16)/10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>T-liquid pipe</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-27</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(H, 131, Int16)/10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>T-optional water sen.</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-28</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(H, 126, Int16)/10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>T-outdoor</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(H, 118, Int16)/10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>T-remote room</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript>if( !modbusr(C, 33, bool), addwarning("Remote sensor not available"))</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(H, 129, Int16)</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>T-water in PE</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-31</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(H, 127, Int16)/10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>T-water out PE</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-32</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <TemperatureCalibration>0</TemperatureCalibration>
+            <ReadTemperature>MODBUSR(H, 125, uInt16)/10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Temp Timer</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-33</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(C, 10, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(C, 10, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Thermostat</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-34</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Without</Value0Name>
+            <Value1Name>Air</Value1Name>
+            <Value2Name>Air + Hot water</Value2Name>
+            <Value3Name>3</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>29</Value0IconId>
+            <Value1IconId>1</Value1IconId>
+            <Value2IconId>351</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 39, uInt16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 39, uInt16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Thermostat</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-35</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>64</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>0</Value0Name>
+            <Value1Name>Cool</Value1Name>
+            <Value2Name>Heat</Value2Name>
+            <Value3Name>Off</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>353</Value1IconId>
+            <Value2IconId>351</Value2IconId>
+            <Value3IconId>61</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>-1</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 132, Int16)</ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Weather depend</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-36</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"AT-Heat"},"ReadFormula":"MODBUSR(H, 18, Int16) \u002B \u0022 / \u0022 \u002B MODBUSR(H, 17, uInt16)"},{"AttributeDefinition":{"Name":"AT-Cool"},"ReadFormula":"MODBUSR(H, 24, uInt16) \u002B \u0022 / \u0022 \u002B MODBUSR(H, 23, uInt16)"},{"AttributeDefinition":{"Name":"RT-Heat"},"ReadFormula":"MODBUSR(H, 20, uInt16) \u002B \u0022 / \u0022 \u002B MODBUSR(H, 19, uInt16)"},{"AttributeDefinition":{"Name":"RT-Cool"},"ReadFormula":"MODBUSR(H, 26, uInt16) \u002B \u0022 / \u0022 \u002B MODBUSR(H, 25, uInt16)"},{"AttributeDefinition":{"Name":"WT-Heat"},"ReadFormula":"MODBUSR(H, 22, uInt16) \u002B \u0022 / \u0022 \u002B MODBUSR(H, 21, uInt16)"},{"AttributeDefinition":{"Name":"WT-Cool"},"ReadFormula":"MODBUSR(H, 28, uInt16) \u002B \u0022 / \u0022 \u002B MODBUSR(H, 27, uInt16)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(C, 22, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(C, 22, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Weekly Timer</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-37</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(C, 8, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(C, 8, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>WOT-Cool</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-38</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>7</MinTemperature>
+            <MaxTemperature>25</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(H, 125, uInt16)/10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 9, uInt16)</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 9, uInt16, round(Se))</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>WOT-Heat</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-39</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>20</MinTemperature>
+            <MaxTemperature>55</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(H, 125, uInt16)/10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>MODBUSR(H, 10, uInt16)</ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 10, Int16, round(Se))</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
