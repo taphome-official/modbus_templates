@@ -25,13 +25,13 @@
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
     </RevisionHistory>
-    <Name>SUN2000 RTU</Name>
+    <Name>SUN2000</Name>
     <CcuModel>ModbusRtuCCU</CcuModel>
     <Producer>Huawei</Producer>
     <Model>SUN2000</Model>
     <Description>3-10KTL</Description>
     <Module>
-      <Name>SUN2000 RTU</Name>
+      <Name>SUN2000</Name>
       <Id>-1</Id>
       <Model>ModbusModule</Model>
       <DeviceProperties>
