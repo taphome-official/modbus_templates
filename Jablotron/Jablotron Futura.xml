@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="59">
+<Templates format="2" protocolVersion="76">
   <Template id="82c3d3fa-9ef2-4814-960d-bacfda2bf1a2" revision="1.0">
     <SuggestedCCUParameters>
       <TcpPort>502</TcpPort>
@@ -15,7 +15,7 @@
       <Parameter>
         <Id>IpAddress</Id>
         <Name>${ipAddress}</Name>
-        <Value>192.168.1.0</Value>
+         <Value>192.168.1.0</Value>
       </Parameter>
     </ImportParameters>
     <RevisionHistory>
@@ -26,7 +26,7 @@
     <Producer></Producer>
     <Model></Model>
     <Description></Description>
-    <Category>1</Category>
+    <Category>1</Category>                         
     <Module>
       <Name>Jablotron Futura 3.0</Name>
       <Id>-1</Id>
@@ -59,7 +59,7 @@ IF (GETBIT(Code,20), ADDINFO(20,"Stand-by"));
 IF (GETBIT(Code,21), ADDINFO(21,"Zónový boost"));
 IF (GETBIT(Code,22), ADDINFO(22,"Odměřování tlakové ztráty zón"));
 
-var Code := MODBUSR(A,18, UInt32);
+Code := MODBUSR(A,18, UInt32);
 IF (GETBIT(Code,0), ADDERROR(0,"Chyba senzoru ambient"));
 IF (GETBIT(Code,1), ADDERROR(1,"Chyba senzoru indoor"));
 IF (GETBIT(Code,2), ADDERROR(2,"Chyba senzoru fresh"));
@@ -74,7 +74,7 @@ IF (GETBIT(Code,10), ADDERROR(10,"Zablokovaný odtahový ventilátor"));
 IF (GETBIT(Code,11), ADDERROR(11,"Chyba komunikace s Coolbreeze"));
 IF (GETBIT(Code,12), ADDERROR(12,"Chyba venkovní jednotky Coolbreeze"));
 
-var Code := MODBUSR(A,20, UInt32);
+Code := MODBUSR(A,20, UInt32);
 IF (GETBIT(Code,0), ADDWARNING(0,"Neinicializovaný filtr"));
 IF (GETBIT(Code,1), ADDWARNING(1,"Filtr je příliš zanesený"));
 IF (GETBIT(Code,2), ADDWARNING(2,"Filtr se používá příliš dlouho"));
@@ -96,34 +96,40 @@ IF (GETBIT(Code,13), ADDWARNING(13,"Obecná chyba SuperBreeze"));</ReadScript>
       </DeviceProperties>
       <Devices>
         <Device>
-          <Name>Aktuální hodnota zpětně získávaného tepla [W]</Name>
+          <Name>Aktuální hodnota zpětně získávaného tepla</Name>
           <Model>ModbusVariable</Model>
           <Id>-2</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1000,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>2500</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A, 42, Uint16)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Aktuální příkon jednotky [W]</Name>
+          <Name>Aktuální příkon jednotky</Name>
           <Model>ModbusVariable</Model>
           <Id>-3</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1000,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>2500</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A, 41, Uint16)</ReadState>
             <WriteState></WriteState>
@@ -135,12 +141,15 @@ IF (GETBIT(Code,13), ADDWARNING(13,"Obecná chyba SuperBreeze"));</ReadScript>
           <Id>-4</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
             <InternalPollInterval>2500</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A, 44, Uint16)</ReadState>
             <WriteState></WriteState>
@@ -158,6 +167,8 @@ IF (GETBIT(Code,13), ADDWARNING(13,"Obecná chyba SuperBreeze"));</ReadScript>
             <PrefetchModeId>0</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <NegateState>False</NegateState>
             <OnStateIconId>35</OnStateIconId>
             <OffStateIconId>36</OffStateIconId>
@@ -179,7 +190,7 @@ IF (GETBIT(Code,13), ADDWARNING(13,"Obecná chyba SuperBreeze"));</ReadScript>
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
-            <TemperatureCalibration>0</TemperatureCalibration>
+            <CustomDeviceVariables />
             <ReadTemperature>MODBUSR(A, 31, Int16) / 10</ReadTemperature>
             <ReadHumidity>MODBUSR(A, 35, Int16) / 1000</ReadHumidity>
           </DeviceProperties>
@@ -196,7 +207,7 @@ IF (GETBIT(Code,13), ADDWARNING(13,"Obecná chyba SuperBreeze"));</ReadScript>
             <PrefetchModeId>0</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
-            <TemperatureCalibration>0</TemperatureCalibration>
+            <CustomDeviceVariables />
             <ReadTemperature>var x:= MODBUSR(A, 38, Int16) / 10;
 if (x = -99, NaN, x)</ReadTemperature>
             <ReadHumidity></ReadHumidity>
@@ -214,6 +225,8 @@ if (x = -99, NaN, x)</ReadTemperature>
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zbývající čas [s]","Section":null},"ReadFormula":"MODBUSR(H, 1, Uint16)"}]</ServiceAttributesFormulas>
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Funkce Boost","NumericParameters":[{"FriendlyName":"Čas","Abbreviation":"sec","IsFloat":false,"MinValue":1.0,"MaxValue":7200.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 1, Uint16, sec)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <Value0Index>0</Value0Index>
             <Value1Index>1</Value1Index>
             <Value2Index>2</Value2Index>
@@ -281,6 +294,8 @@ IF(Mu = 9, MODBUSW(H, 1, Uint16, 7200));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zbývající čas [s]","Section":null},"ReadFormula":"MODBUSR(H, 2, Uint16)"}]</ServiceAttributesFormulas>
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Funkce Cirkulace","NumericParameters":[{"FriendlyName":"Čas","Abbreviation":"sec","IsFloat":false,"MinValue":1.0,"MaxValue":7200.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 2, Uint16, sec)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <Value0Index>0</Value0Index>
             <Value1Index>1</Value1Index>
             <Value2Index>2</Value2Index>
@@ -348,6 +363,8 @@ IF(Mu = 9, MODBUSW(H, 2, Uint16, 7200));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zbývající čas [s]","Section":null},"ReadFormula":"MODBUSR(H, 4, Uint16)"}]</ServiceAttributesFormulas>
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Funkce Noc","NumericParameters":[{"FriendlyName":"Čas","Abbreviation":"sec","IsFloat":false,"MinValue":1.0,"MaxValue":7200.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 4, Uint16, sec)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <Value0Index>0</Value0Index>
             <Value1Index>1</Value1Index>
             <Value2Index>2</Value2Index>
@@ -415,6 +432,8 @@ IF(Mu = 9, MODBUSW(H, 4, Uint16, 7200));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zbývající čas [s]","Section":null},"ReadFormula":"MODBUSR(H, 5, Uint16)"}]</ServiceAttributesFormulas>
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Funkce Party","NumericParameters":[{"FriendlyName":"Čas","Abbreviation":"sec","IsFloat":false,"MinValue":1.0,"MaxValue":28800.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 5, Uint16, sec)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <Value0Index>0</Value0Index>
             <Value1Index>1</Value1Index>
             <Value2Index>2</Value2Index>
@@ -482,6 +501,8 @@ IF(Mu = 9, MODBUSW(H, 5, Uint16, 60 * 60 * 8));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Zbývající čas [s]","Section":null},"ReadFormula":"MODBUSR(H, 3, Uint16)"}]</ServiceAttributesFormulas>
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Funkce Přetlak","NumericParameters":[{"FriendlyName":"Čas","Abbreviation":"sec","IsFloat":false,"MinValue":1.0,"MaxValue":7200.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 3, Uint16, sec)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <Value0Index>0</Value0Index>
             <Value1Index>1</Value1Index>
             <Value2Index>2</Value2Index>
@@ -549,40 +570,48 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel>MODBUSR(A, 40, Uint16) / 100</ReadLevel>
             <WriteLevel></WriteLevel>
             <IconId>3024</IconId>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Napětí vstupu UIN1 [V]</Name>
+          <Name>Napětí vstupu UIN1</Name>
           <Model>ModbusVariable</Model>
           <Id>-14</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"87":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:87}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>2500</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
             <ReadState>MODBUSR(A, 49, Uint16) / 1000</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Napětí vstupu UIN2 [V]</Name>
+          <Name>Napětí vstupu UIN2</Name>
           <Model>ModbusVariable</Model>
           <Id>-15</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>2500</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A, 50, Uint16) / 1000</ReadState>
             <WriteState></WriteState>
@@ -600,7 +629,7 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
-            <TemperatureCalibration>0</TemperatureCalibration>
+            <CustomDeviceVariables />
             <ReadTemperature>MODBUSR(A, 33, Int16) / 10</ReadTemperature>
             <ReadHumidity>MODBUSR(A, 37, Int16) / 1000</ReadHumidity>
           </DeviceProperties>
@@ -617,6 +646,8 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <NegateState>False</NegateState>
             <OnStateIconId>39</OnStateIconId>
             <OffStateIconId>305</OffStateIconId>
@@ -638,6 +669,8 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <NegateState>False</NegateState>
             <OnStateIconId>2</OnStateIconId>
             <OffStateIconId>18</OffStateIconId>
@@ -659,6 +692,8 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <PrefetchModeId>0</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <NegateState>False</NegateState>
             <OnStateIconId>39</OnStateIconId>
             <OffStateIconId>305</OffStateIconId>
@@ -680,6 +715,8 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <NegateState>False</NegateState>
             <OnStateIconId>39</OnStateIconId>
             <OffStateIconId>305</OffStateIconId>
@@ -701,6 +738,8 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <PrefetchModeId>0</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <NegateState>False</NegateState>
             <OnStateIconId>1</OnStateIconId>
             <OffStateIconId>29</OffStateIconId>
@@ -722,6 +761,8 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <MinTemperature>10</MinTemperature>
             <MaxTemperature>30</MaxTemperature>
             <ReadCurrentTemperature></ReadCurrentTemperature>
@@ -742,6 +783,8 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel>MODBUSR(H, 11, Uint16) / 1000</ReadLevel>
             <WriteLevel>MODBUSW(H, 11, Uint16, Le * 1000)</WriteLevel>
             <IconId>3020</IconId>
@@ -759,23 +802,26 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
-            <TemperatureCalibration>0</TemperatureCalibration>
+            <CustomDeviceVariables />
             <ReadTemperature>MODBUSR(A, 30, Int16) / 10</ReadTemperature>
             <ReadHumidity>MODBUSR(A, 34, Int16) / 1000</ReadHumidity>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Výkon topení dohřevu [W]</Name>
+          <Name>Výkon topení dohřevu</Name>
           <Model>ModbusVariable</Model>
           <Id>-25</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1000,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>2500</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A, 43, Uint16)</ReadState>
             <WriteState></WriteState>
@@ -793,6 +839,8 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Otáčky ventilátoru [rpm]","Section":null},"ReadFormula":"MODBUSR(A, 48, Uint16)\r\n"}]</ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel>MODBUSR(A, 46, Uint16) / 100</ReadLevel>
             <WriteLevel></WriteLevel>
             <IconId>3007</IconId>
@@ -810,6 +858,8 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Otáčky ventilátoru [rpm]","Section":null},"ReadFormula":"MODBUSR(A, 47, Uint16)"}]</ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel>MODBUSR(A, 45, Uint16) / 100</ReadLevel>
             <WriteLevel></WriteLevel>
             <IconId>3007</IconId>
@@ -827,6 +877,8 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <PrefetchModeId>2</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <Value0Index>0</Value0Index>
             <Value1Index>1</Value1Index>
             <Value2Index>2</Value2Index>
@@ -860,6 +912,670 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <OffStateValue>0</OffStateValue>
             <ReadSwitchState>MODBUSR(H, 0, Uint16)</ReadSwitchState>
             <WriteSwitchState>MODBUSW(H, 0, Uint16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 1 - CO2</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"24":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:24}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 304, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 304, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 1 - Přítomnost externích čidel</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 300, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 300, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 1 - Teplota</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-31</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"5":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:5}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 302, Int16) / 10</ReadState>
+            <WriteState>MODBUSW(H, 302, Int16, round(Va * 10))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 1 - vlhkost</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-32</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"3":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:100,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:3}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 303, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 303, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 2 - CO2</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"24":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:24}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 314, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 314, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 2 - Přítomnost externích čidel</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 310, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 310, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 2 - Teplota</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-31</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"5":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:5}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 312, Int16) / 10</ReadState>
+            <WriteState>MODBUSW(H, 312, Int16, round(Va * 10))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 2 - vlhkost</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-32</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"3":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:100,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:3}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 313, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 313, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 3 - CO2</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"24":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:24}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 324, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 324, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 3 - Přítomnost externích čidel</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 320, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 320, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 3 - Teplota</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-31</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"5":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:5}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 322, Int16) / 10</ReadState>
+            <WriteState>MODBUSW(H, 322, Int16, round(Va * 10))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 3 - vlhkost</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-32</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"3":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:100,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:3}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 323, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 323, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 4 - CO2</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"24":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:24}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 334, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 334, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 4 - Přítomnost externích čidel</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 330, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 330, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 4 - Teplota</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-31</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"5":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:5}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 332, Int16) / 10</ReadState>
+            <WriteState>MODBUSW(H, 332, Int16, round(Va * 10))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 4 - vlhkost</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-32</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"3":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:100,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:3}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 333, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 333, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 5 - CO2</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"24":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:24}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 344, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 344, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 5 - Přítomnost externích čidel</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 340, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 340, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 5 - Teplota</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-31</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"5":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:5}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 342, Int16) / 10</ReadState>
+            <WriteState>MODBUSW(H, 342, Int16, round(Va * 10))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 5 - vlhkost</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-32</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"3":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:100,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:3}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 343, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 343, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 6 - CO2</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"24":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:24}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 354, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 354, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 6 - Přítomnost externích čidel</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 350, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 350, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 6 - Teplota</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-31</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"5":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:5}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 352, Int16) / 10</ReadState>
+            <WriteState>MODBUSW(H, 352, Int16, round(Va * 10))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 6 - vlhkost</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-32</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"3":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:100,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:3}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 353, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 353, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 7 - CO2</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"24":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:24}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 364, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 364, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 7 - Přítomnost externích čidel</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 360, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 360, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 7 - Teplota</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-31</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"5":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:5}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 362, Int16) / 10</ReadState>
+            <WriteState>MODBUSW(H, 362, Int16, round(Va * 10))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 7 - vlhkost</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-32</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"3":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:100,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:3}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 363, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 363, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 8 - CO2</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"24":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:24}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 374, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 374, Uint16, round(Va))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 8 - Přítomnost externích čidel</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 370, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 370, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 8 - Teplota</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-31</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"5":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:5}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 372, Int16) / 10</ReadState>
+            <WriteState>MODBUSW(H, 372, Int16, round(Va * 10))</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 8 - vlhkost</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-32</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"3":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:100,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:3}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 373, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 373, Uint16, round(Va))</WriteState>
           </DeviceProperties>
         </Device>
       </Devices>
