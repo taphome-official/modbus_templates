@@ -1578,6 +1578,711 @@ IF(Mu = 9, MODBUSW(H, 3, Uint16, 7200));
             <WriteState>MODBUSW(H, 373, Uint16, round(Va))</WriteState>
           </DeviceProperties>
         </Device>
+        <Device>
+          <Name>Zona 1 - Aktivace externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 403, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 403, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 1 - Časovač externího tlačítka [s]</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>3000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 402, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 402, Uint16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 1 - Přítomnost externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-33</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 400, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 400, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 1 - Režim externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-34</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>1004</OnStateIconId>
+            <OffStateIconId>123</OffStateIconId>
+            <OnStateName>Digestoř</OnStateName>
+            <OffStateName>Boost</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 401, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 401, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>                <Device>
+          <Name>Zona 2 - Aktivace externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 413, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 413, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 2 - Časovač externího tlačítka [s]</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>3000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 412, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 412, Uint16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 2 - Přítomnost externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-33</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 410, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 410, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 2 - Režim externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-34</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>1004</OnStateIconId>
+            <OffStateIconId>123</OffStateIconId>
+            <OnStateName>Digestoř</OnStateName>
+            <OffStateName>Boost</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 411, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 411, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>                <Device>
+          <Name>Zona 3 - Aktivace externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 423, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 423, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 3 - Časovač externího tlačítka [s]</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>3000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 422, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 422, Uint16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 3 - Přítomnost externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-33</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 420, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 420, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 3 - Režim externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-34</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>1004</OnStateIconId>
+            <OffStateIconId>123</OffStateIconId>
+            <OnStateName>Digestoř</OnStateName>
+            <OffStateName>Boost</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 421, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 421, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>                <Device>
+          <Name>Zona 4 - Aktivace externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 433, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 433, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 4 - Časovač externího tlačítka [s]</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>3000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 432, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 432, Uint16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 4 - Přítomnost externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-33</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 430, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 430, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 4 - Režim externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-34</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>1004</OnStateIconId>
+            <OffStateIconId>123</OffStateIconId>
+            <OnStateName>Digestoř</OnStateName>
+            <OffStateName>Boost</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 431, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 431, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>                <Device>
+          <Name>Zona 5 - Aktivace externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 443, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 443, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 5 - Časovač externího tlačítka [s]</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>3000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 442, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 442, Uint16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 5 - Přítomnost externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-33</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 440, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 440, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 5 - Režim externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-34</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>1004</OnStateIconId>
+            <OffStateIconId>123</OffStateIconId>
+            <OnStateName>Digestoř</OnStateName>
+            <OffStateName>Boost</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 441, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 441, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>                <Device>
+          <Name>Zona 6 - Aktivace externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 453, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 453, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 6 - Časovač externího tlačítka [s]</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>3000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 452, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 452, Uint16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 6 - Přítomnost externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-33</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 450, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 450, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 6 - Režim externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-34</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>1004</OnStateIconId>
+            <OffStateIconId>123</OffStateIconId>
+            <OnStateName>Digestoř</OnStateName>
+            <OffStateName>Boost</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 451, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 451, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>                <Device>
+          <Name>Zona 7 - Aktivace externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 463, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 463, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 7 - Časovač externího tlačítka [s]</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>3000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 462, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 462, Uint16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 7 - Přítomnost externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-33</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 460, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 460, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 7 - Režim externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-34</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>1004</OnStateIconId>
+            <OffStateIconId>123</OffStateIconId>
+            <OnStateName>Digestoř</OnStateName>
+            <OffStateName>Boost</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 461, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 461, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>                <Device>
+          <Name>Zona 8 - Aktivace externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-29</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 473, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 473, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 8 - Časovač externího tlačítka [s]</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>3000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>False</IsReadOnly>
+            <ReadState>MODBUSR(H, 472, Uint16)</ReadState>
+            <WriteState>MODBUSW(H, 472, Uint16, Va)</WriteState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 8 - Přítomnost externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-33</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>60</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 470, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 470, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zona 8 - Režim externího tlačítka</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-34</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>1004</OnStateIconId>
+            <OffStateIconId>123</OffStateIconId>
+            <OnStateName>Digestoř</OnStateName>
+            <OffStateName>Boost</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 471, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 471, Uint16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>                
       </Devices>
     </Module>
   </Template>
