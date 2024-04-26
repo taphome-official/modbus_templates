@@ -25,13 +25,13 @@
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
     </RevisionHistory>
-    <Name>Sinclair inverter air to water heat pumps</Name>
+    <Name>Sinclair Ontario</Name>
     <CcuModel>ModbusRtuCCU</CcuModel>
     <Producer></Producer>
     <Model></Model>
     <Description></Description>
     <Module>
-      <Name>Sinclair inverter air to water heat pumps</Name>
+      <Name>Sinclair Ontario</Name>
       <Id>-1</Id>
       <Model>ModbusModule</Model>
       <DeviceProperties>
