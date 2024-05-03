@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="73">
+  <Template revision="1.0" id="a856b6ad-a978-47be-8382-84accfee376f">
+    <SuggestedCCUParameters>
+      <TcpPort>502</TcpPort>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>${device_SlaveId}</Name>
+        <Value>240</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>${ipAddress}</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>Fronius Smart Meter</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer>Fronius</Producer>
+    <Model>Smart Meter</Model>
+    <Description></Description>
+    <Module>
+      <Name>Fronius Smart Meter</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Manufacturer"},"ReadFormula":"modbusr(H, 40004, String, 32)"},{"AttributeDefinition":{"Name":"Device model"},"ReadFormula":"modbusr(H, 40020, String, 32)"},{"AttributeDefinition":{"Name":"Options"},"ReadFormula":"modbusr(H, 40036, String, 16)"},{"AttributeDefinition":{"Name":"SW version of meter"},"ReadFormula":"modbusr(H, 40044, String, 16)"},{"AttributeDefinition":{"Name":"Serial number of the meter"},"ReadFormula":"modbusr(H, 40052, String, 32)"}]</ServiceAttributesFormulas>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>${deviceType_PVFromGrid}</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>9004</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(H, 40137, Float) / 1000</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 40097, Float) / 1000</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${deviceType_PVToGrid}</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>9005</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(H, 40129, Float) / 1000</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H, 40097, Float) / -1000</ReadDemand>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
