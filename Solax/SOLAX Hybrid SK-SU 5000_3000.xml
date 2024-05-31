@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="81" >
+<Templates format="2" protocolVersion="73" >
   <Template revision="1.0" id="b3e69ff6-a5b3-47ac-ae6b-98ddfebfdea0">
     <SuggestedCCUParameters>
       <TcpPort>502</TcpPort>
