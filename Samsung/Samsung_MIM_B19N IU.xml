@@ -25,30 +25,35 @@
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
     </RevisionHistory>
-    <Name>Samsung_MIM_B19N IU</Name>
+    <Name>Samsung Indoor Unit (IU) MIM B19N</Name>
     <CcuModel>ModbusRtuCCU</CcuModel>
     <Producer>Samsung</Producer>
     <Model>Indoor Unit</Model>
-    <Description>Template for Samsung_MIM_B19N with Indoor unit (IU) connected</Description>
+    <Description>Template for Samsung Indoor unit (IU) connected with MIM B19N Gateway</Description>
     <Module>
-      <Name>Samsung_MIM_B19N IU</Name>
+      <Name>Samsung Indoor Unit (IU) MIM B19N</Name>
       <Id>-1</Id>
       <Model>ModbusModule</Model>
       <DeviceProperties>
         <DeviceType>7001</DeviceType>
         <InternalPollInterval>30000</InternalPollInterval>
-        <ReadScript>var err := MODBUSR(H, 63, Uint16);
+        <ReadScript>var base := 50 + IU*50;
+
+if(MODBUSR(H, base +6, Uint16) = 1, ADDWARNING("Filter-cleaning reminder"));
+
+var err := MODBUSR(H, base +13, Uint16);
 IF(err!=0, ADDERROR("Integrated indoor unit error",err));</ReadScript>
         <PrefetchModeId>0</PrefetchModeId>
-        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Stav komunik\u00E1cie"},"ReadFormula":"var com := MODBUSR(H, 50, Uint16);\r\nvar b0 := IF(getbit(com, 0) = 1, \u0022Existuje \u0022, \u0022\u0022);\r\nvar b1 := IF(getbit(com, 1) = 1, \u0022- Typ OK \u0022, \u0022\u0022);\r\nvar b2 := IF(getbit(com, 2) = 1, \u0022- Pripraven\u00E9 \u0022, \u0022\u0022);\r\nvar b3 := IF(getbit(com, 3) = 1, \u0022Chyba komunik\u00E1cie \u0022, \u0022\u0022);\r\nRETURN(b0 \u002B b1 \u002B b2 \u002B b3);"},{"AttributeDefinition":{"Name":"Typ Jednotky"},"ReadFormula":"var type := GETBITS(MODBUSR(H, 51, Uint16),8, 8);\r\nvar lower := GETBITS(MODBUSR(H, 51, Uint16),0, 8);\r\n\r\n\r\nIF(type = 10, RETURN(\u0022FCU\u0022));\r\nIF(lower = 108, RETURN(\u0022ERV\u002B\u0022)); \r\nIF(lower = 110, RETURN(\u0022HE\u0022)); \r\nIF(lower = 120, RETURN(\u0022HT\u0022)); \r\nIF( 90 \u003C= lower AND lower \u003C=99 , RETURN(\u0022AHU\u0022));\r\nIF( 100 \u003C= lower AND lower \u003C= 102 , RETURN(\u0022ERV\u0022));\r\nIF( 115 \u003C= lower AND lower \u003C= 117 , RETURN(\u0022EHS\u0022));\r\nIF( 140 \u003C= lower AND lower \u003C= 149 , RETURN(\u0022Module Chiller\u0022));\r\nIF( 160 \u003C= lower AND lower \u003C= 169 , RETURN(\u0022FCU kit\u0022));\r\nRETURN(\u0022Indoor Unit\u0022);"},{"AttributeDefinition":{"Name":"Remote Control Restriction"},"ReadFormula":"var r := MODBUSR(H, 64, Uint16);\r\nIF(r = 0, \u0022No restriction\u0022, \u0022Restriction \u0022 \u002B r);"},{"AttributeDefinition":{"Name":"Wind-free function"},"ReadFormula":"SWITCH(MODBUSR(H, 80, Uint16), 0, \u0022None\u0022, 9, \u0022Windfree\u0022, \u0022Ignored\u0022);"}]</ServiceAttributesFormulas>
-        <ServiceActionsScripts>[{"ActionDefinition":{"Name":${buzzer},"NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Buzzer","Abbreviation":"buz","Values":[{"Item1":0.0,"Item2":"On"},{"Item1":1.0,"Item2":"Off"}]}]},"Script":"MODBUSW(H, 3, Int16, buz);"},{"ActionDefinition":{"Name":${remote_restrict},"NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Restriction","Abbreviation":"res","Values":[{"Item1":0.0,"Item2":"No Restriction"},{"Item1":25443.0,"Item2":"Restriction"}]}]},"Script":"MODBUSWNE(H, 64, Uint16, res);"}]</ServiceActionsScripts>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Stav komunik\u00E1cie"},"ReadFormula":"var base := 50 \u002B IU*50;\r\n\r\nvar com := MODBUSR(H, base \u002B 0, Uint16);\r\nvar b0 := IF(getbit(com, 0) = 1, \u0022Existuje \u0022, \u0022\u0022);\r\nvar b1 := IF(getbit(com, 1) = 1, \u0022- Typ OK \u0022, \u0022\u0022);\r\nvar b2 := IF(getbit(com, 2) = 1, \u0022- Pripraven\u00E9 \u0022, \u0022\u0022);\r\nvar b3 := IF(getbit(com, 3) = 1, \u0022Chyba komunik\u00E1cie \u0022, \u0022\u0022);\r\nRETURN(b0 \u002B b1 \u002B b2 \u002B b3);"},{"AttributeDefinition":{"Name":"Remote Control Restriction"},"ReadFormula":"var base := 50 \u002B IU*50;\r\n\r\nvar r := MODBUSR(H, base \u002B14, Uint16);\r\nIF(r = 0, \u0022No restriction\u0022, \u0022Restriction \u0022 \u002B r);"},{"AttributeDefinition":{"Name":"Wind-free function"},"ReadFormula":"var base := 50 \u002B IU*50;\r\n\r\nSWITCH(MODBUSR(H, base \u002B 30, Uint16), 0, \u0022None\u0022, 9, \u0022Windfree\u0022, \u0022Ignored\u0022);"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Clear Filter Alarm","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"var base := 50 \u002B IU*50;\r\n\r\nmodbusw(h, base \u002B 6, Uint16, 1);"}]</ServiceActionsScripts>
         <SlaveId>$[SlaveId]</SlaveId>
+        <ModuleVariables>[{"Name":"IU","ValueTypeId":1,"NumericValue":0}]</ModuleVariables>
         <MaxPrefetchGroupSize>12</MaxPrefetchGroupSize>
         <IpAddress>$[IpAddress]</IpAddress>
       </DeviceProperties>
       <Devices>
         <Device>
-          <Name>360 Air Flow Direction</Name>
+          <Name>360 Air Flow Direction - chodba </Name>
           <Model>ModbusMultiValueSwitch</Model>
           <Id>-2</Id>
           <DeviceProperties>
@@ -59,12 +64,12 @@ IF(err!=0, ADDERROR("Integrated indoor unit error",err));</ReadScript>
             <PrefetchModeId>0</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
-            <CustomDeviceVariables />
+            <CustomDeviceVariables></CustomDeviceVariables>
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <Value0Index>70</Value0Index>
-            <Value1Index>0</Value1Index>
-            <Value2Index>1</Value2Index>
-            <Value3Index>2</Value3Index>
+            <Value1Index>64</Value1Index>
+            <Value2Index>65</Value2Index>
+            <Value3Index>66</Value3Index>
             <Value4Index>3</Value4Index>
             <Value5Index>4</Value5Index>
             <Value6Index>69</Value6Index>
@@ -92,20 +97,24 @@ IF(err!=0, ADDERROR("Integrated indoor unit error",err));</ReadScript>
             <Value8IconId>13</Value8IconId>
             <Value9IconId>14</Value9IconId>
             <OffStateValue>-1</OffStateValue>
-            <ReadSwitchState>var reg := MODBUSR(H, 81, Int16);
+            <ReadSwitchState>var base := 50 + IU*50;
+
+var reg := MODBUSR(H, base + 31, Int16);
 SWITCH(reg, 106, 1, 85, 2, 64, 3, 15, 4, 5);</ReadSwitchState>
-            <WriteSwitchState>SWITCH(Mu,
-2,
-MODBUSW(H, 81, Uint16, 85),
-3,
-MODBUSW(H, 81, Uint16, 64),
-4,
-MODBUSW(H, 81, Uint16, 15),
-MODBUSW(H, 81, Uint16, 106));</WriteSwitchState>
+            <WriteSwitchState>var base := 50 + IU*50;
+
+SWITCH(Mu,
+4,MODBUSW(H, base +31, Uint16, 15),
+                           
+3,MODBUSW(H, base +31, Uint16, 64),
+                           
+2,MODBUSW(H, base +31, Uint16, 85),
+1,MODBUSW(H, base +31, Uint16, 106),
+MODBUSW(H, base +31, Uint16, 0));</WriteSwitchState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Fan Speed</Name>
+          <Name>Fan Speed - chodba </Name>
           <Model>ModbusMultiValueSwitch</Model>
           <Id>-3</Id>
           <DeviceProperties>
@@ -116,7 +125,7 @@ MODBUSW(H, 81, Uint16, 106));</WriteSwitchState>
             <PrefetchModeId>0</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
-            <CustomDeviceVariables />
+            <CustomDeviceVariables></CustomDeviceVariables>
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <Value0Index>0</Value0Index>
             <Value1Index>1</Value1Index>
@@ -148,9 +157,13 @@ MODBUSW(H, 81, Uint16, 106));</WriteSwitchState>
             <Value7IconId>12</Value7IconId>
             <Value8IconId>13</Value8IconId>
             <Value9IconId>14</Value9IconId>
-            <OffStateValue>0</OffStateValue>
-            <ReadSwitchState>MODBUSR(H, 54, Int16)</ReadSwitchState>
-            <WriteSwitchState>MODBUSW(H, 54, Int16, Mu)</WriteSwitchState>
+            <OffStateValue>-1</OffStateValue>
+            <ReadSwitchState>var base := 50 + IU*50;
+
+MODBUSR(H, base +4, Uint16)</ReadSwitchState>
+            <WriteSwitchState>var base := 50 + IU*50;
+
+MODBUSW(H, base +4, Uint16, Mu)</WriteSwitchState>
           </DeviceProperties>
         </Device>
         <Device>
@@ -198,12 +211,16 @@ MODBUSW(H, 81, Uint16, 106));</WriteSwitchState>
             <Value8IconId>13</Value8IconId>
             <Value9IconId>14</Value9IconId>
             <OffStateValue>0</OffStateValue>
-            <ReadSwitchState>MODBUSR(H, 53, Int16)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(H, 53, Int16, Mu)</WriteSwitchState>
+            <ReadSwitchState>var base := 50 + IU*50;
+
+MODBUSR(H, base +3, Uint16)</ReadSwitchState>
+            <WriteSwitchState>var base := 50 + IU*50;
+
+MODBUSWNE(H, base +3, Uint16, Mu)</WriteSwitchState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Power</Name>
+          <Name>Power - chodba </Name>
           <Model>ModbusSwitch</Model>
           <Id>-5</Id>
           <DeviceProperties>
@@ -221,12 +238,16 @@ MODBUSW(H, 81, Uint16, 106));</WriteSwitchState>
             <OffStateIconId>20</OffStateIconId>
             <OnStateName>On</OnStateName>
             <OffStateName>Off</OffStateName>
-            <ReadSwitchState>IF(MODBUSR(H, 52, Uint16) = 1, 1, 0);</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(H, 52, Bool, St)</WriteSwitchState>
+            <ReadSwitchState>var base := 50 + IU*50;
+
+MODBUSR(H, base +2, Uint16)</ReadSwitchState>
+            <WriteSwitchState>var base := 50 + IU*50;
+
+MODBUSWNE(H, base +2, Bool, St)</WriteSwitchState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Room Temperature</Name>
+          <Name>Room Temperature - chodba </Name>
           <Model>ModbusThermostat</Model>
           <Id>-6</Id>
           <DeviceProperties>
@@ -235,22 +256,55 @@ MODBUSW(H, 81, Uint16, 106));</WriteSwitchState>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
             <PrefetchModeId>0</PrefetchModeId>
-            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Discharge temperature"},"ReadFormula":"MODBUSR(H, 60, Uint16) / 10 \u002B \u0022\u00B0C\u0022"},{"AttributeDefinition":{"Name":"Cooling discharge temp"},"ReadFormula":"MODBUSR(H, 61, Uint16) / 10 \u002B \u0022\u00B0C\u0022"},{"AttributeDefinition":{"Name":"Heating Discharge Temperature"},"ReadFormula":"MODBUSR(H, 62, Uint16) /10 \u002B \u0022\u00B0C\u0022 "}]</ServiceAttributesFormulas>
+            <ServiceAttributesFormulas>[]</ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
-            <CustomDeviceVariables />
+            <CustomDeviceVariables></CustomDeviceVariables>
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <MinTemperature>-41</MinTemperature>
             <MaxTemperature>100</MaxTemperature>
-            <ReadCurrentTemperature>MODBUSR(H, 59, Int16) / 10</ReadCurrentTemperature>
-            <ReadDesiredTemperature>MODBUSR(H, 58, Int16) / 10</ReadDesiredTemperature>
-            <WriteDesiredTemperature>MODBUSW(H, 58, Int16, Se * 10)</WriteDesiredTemperature>
+            <ReadCurrentTemperature>var base := 50 + IU*50;
+
+MODBUSR(H, base +9, Int16) / 10</ReadCurrentTemperature>
+            <ReadDesiredTemperature>var base := 50 + IU*50;
+
+MODBUSR(H, base +8, Int16) / 10</ReadDesiredTemperature>
+            <WriteDesiredTemperature>var base := 50 + IU*50;
+
+MODBUSW(H, base +8, Int16, Se * 10)</WriteDesiredTemperature>
             <ReadHumidity></ReadHumidity>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Vertical Air Flow</Name>
+          <Name>Vertical Air Flow - chodba </Name>
           <Model>ModbusSwitch</Model>
           <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>138</OnStateIconId>
+            <OffStateIconId>182</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>var base := 50 + IU*50;
+
+MODBUSR(H, base +5, Bool)</ReadSwitchState>
+            <WriteSwitchState>var base := 50 + IU*50;
+
+MODBUSW(H, base +5, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Wind Free</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-8</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>2500</InternalPollInterval>
@@ -262,12 +316,16 @@ MODBUSW(H, 81, Uint16, 106));</WriteSwitchState>
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <NegateState>False</NegateState>
-            <OnStateIconId>138</OnStateIconId>
-            <OffStateIconId>182</OffStateIconId>
+            <OnStateIconId>123</OnStateIconId>
+            <OffStateIconId>124</OffStateIconId>
             <OnStateName>${general_on}</OnStateName>
             <OffStateName>${general_off}</OffStateName>
-            <ReadSwitchState>MODBUSR(H, 55, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSW(H, 55, Bool, St)</WriteSwitchState>
+            <ReadSwitchState>var base := 50 + IU*50;
+
+MODBUSR(H, base + 30, Uint16)</ReadSwitchState>
+            <WriteSwitchState>var base := 50 + IU*50;
+
+MODBUSW(H, base + 30, Uint16, St)</WriteSwitchState>
           </DeviceProperties>
         </Device>
       </Devices>
