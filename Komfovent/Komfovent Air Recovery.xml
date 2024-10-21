@@ -41,16 +41,16 @@
         <InitializeScript>MODBUSWNE(H, 27, Uint16, 0);</InitializeScript>
         <ReadScript>var alarm:= MODBUSR(H, 599, Uint16);
 If(alarm&gt;0, ADDERROR("There are " + alarm + " active alarms"));
-If(alarm&gt;0, ADDERROR("Alarm 1 active", MODBUSR(H, 600, Uint16)));
-If(alarm&gt;1, ADDERROR("Alarm 2 active", MODBUSR(H, 601, Uint16)));
-If(alarm&gt;2, ADDERROR("Alarm 3 active", MODBUSR(H, 602, Uint16)));
-If(alarm&gt;3, ADDERROR("Alarm 4 active", MODBUSR(H, 603, Uint16)));
-If(alarm&gt;4, ADDERROR("Alarm 5 active", MODBUSR(H, 604, Uint16)));
-If(alarm&gt;5, ADDERROR("Alarm 6 active", MODBUSR(H, 605, Uint16)));
-If(alarm&gt;6, ADDERROR("Alarm 7 active", MODBUSR(H, 606, Uint16)));
-If(alarm&gt;7, ADDERROR("Alarm 8 active", MODBUSR(H, 607, Uint16)));
-If(alarm&gt;8, ADDERROR("Alarm 9 active", MODBUSR(H, 608, Uint16)));
-If(alarm&gt;9, ADDERROR("Alarm 10 active", MODBUSR(H, 609, Uint16)));</ReadScript>
+If(alarm&gt;0, ADDERROR(MODBUSR(H, 600, Uint16), "Alarm 1 active"));
+If(alarm&gt;1, ADDERROR(MODBUSR(H, 601, Uint16), "Alarm 2 active"));
+If(alarm&gt;2, ADDERROR(MODBUSR(H, 602, Uint16), "Alarm 3 active"));
+If(alarm&gt;3, ADDERROR(MODBUSR(H, 603, Uint16), "Alarm 4 active"));
+If(alarm&gt;4, ADDERROR(MODBUSR(H, 604, Uint16), "Alarm 5 active"));
+If(alarm&gt;5, ADDERROR(MODBUSR(H, 605, Uint16), "Alarm 6 active"));
+If(alarm&gt;6, ADDERROR(MODBUSR(H, 606, Uint16), "Alarm 7 active"));
+If(alarm&gt;7, ADDERROR(MODBUSR(H, 607, Uint16), "Alarm 8 active"));
+If(alarm&gt;8, ADDERROR(MODBUSR(H, 608, Uint16), "Alarm 9 active"));
+If(alarm&gt;9, ADDERROR(MODBUSR(H, 609, Uint16), "Alarm 10 active"));</ReadScript>
         <PrefetchModeId>0</PrefetchModeId>
         <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"System Time"},"ReadFormula":"var time := MODBUSR(H, 28, Uint16);\r\nvar date := MODBUSR(H, 30, Uint16);\r\n\r\nGETBITS(time, 8,8) \u002B \u0022:\u0022 \u002B GETBITS(time, 0, 8) \u002B \u0022 \u0022 \u002B GETBITS(date, 0,8) \u002B \u0022.\u0022 \u002B GETBITS(date, 8,8) \u002B \u0022.\u0022 \u002B MODBUSR(H, 29, Uint16);\r\n"},{"AttributeDefinition":{"Name":"Weekday"},"ReadFormula":"SWITCH(MODBUSR(H, 31, Uint16), \r\n1,\u0022Monday\u0022,\r\n2,\u0022Tuesday\u0022,\r\n3,\u0022Wednesday\u0022,\r\n4,\u0022Thursday\u0022,\r\n5,\u0022Friday\u0022,\r\n6,\u0022Saturday\u0022,\r\n7,\u0022Sunday\u0022,\r\n\u0022Error\u0022\r\n)"},{"AttributeDefinition":{"Name":"DHCP"},"ReadFormula":"IF(MODBUSR(H, 34, Bool), \u0022On\u0022, \u0022Off\u0022); "},{"AttributeDefinition":{"Name":"IP adress"},"ReadFormula":"var reg := MODBUSR(H, 22, Uint32);\r\nvar first := GETBITS(reg, 0, 8);\r\nvar second := GETBITS(reg, 8, 8);\r\nvar third := GETBITS(reg, 16, 8);\r\nvar last := GETBITS(reg, 24, 8);\r\nRETURN (last \u002B \u0022.\u0022 \u002B third \u002B \u0022.\u0022 \u002B second \u002B \u0022.\u0022 \u002B first)"},{"AttributeDefinition":{"Name":"Mask"},"ReadFormula":"var reg := MODBUSR(H, 24, Uint32);\r\nvar first := GETBITS(reg, 0, 8);\r\nvar second := GETBITS(reg, 8, 8);\r\nvar third := GETBITS(reg, 16, 8);\r\nvar last := GETBITS(reg, 24, 8);\r\nRETURN (last \u002B \u0022.\u0022 \u002B third \u002B \u0022.\u0022 \u002B second \u002B \u0022.\u0022 \u002B first)"},{"AttributeDefinition":{"Name":"Gateway"},"ReadFormula":"var reg := MODBUSR(H, 26, Uint32);\r\nvar first := GETBITS(reg, 0, 8);\r\nvar second := GETBITS(reg, 8, 8);\r\nvar third := GETBITS(reg, 16, 8);\r\nvar last := GETBITS(reg, 24, 8);\r\nRETURN (last \u002B \u0022.\u0022 \u002B third \u002B \u0022.\u0022 \u002B second \u002B \u0022.\u0022 \u002B first)"},{"AttributeDefinition":{"Name":"Fire Alarm Restart"},"ReadFormula":"SWITCH(MODBUSR(H, 41, Uint16), \r\n1, \u0022Auto\u0022,\r\n0, \u0022Manual\u0022,\r\n\u0022Error\u0022);"},{"AttributeDefinition":{"Name":"Flow units"},"ReadFormula":"SWITCH(MODBUSR(H, 27, Uint16),\r\n 1, \u0022l/s\u0022,\r\n 0, \u0022m3/h\u0022,\r\n \u0022Error\u0022);"}]</ServiceAttributesFormulas>
         <ServiceActionsScripts>[{"ActionDefinition":{"Name":"DHCP","NumericParameters":[],"BoolParameters":[{"FriendlyName":"DHCP","Abbreviation":"dhcp","OffValueName":"Off","OnValueName":"On"}],"EnumParameters":[]},"Script":"MODBUSW(H, 34, Bool, dhcp);"},{"ActionDefinition":{"Name":"Fire Alarm Restart Setting","NumericParameters":[],"BoolParameters":[{"FriendlyName":"Restart setting","Abbreviation":"rs","OffValueName":"Manual","OnValueName":"Auto"}],"EnumParameters":[]},"Script":"MODBUSW(H, 41, Bool, rs);"}]</ServiceActionsScripts>
