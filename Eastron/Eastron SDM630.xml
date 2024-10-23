@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="84">
+  <Template revision="1.0" id="76268614-6a0e-451d-8c83-b42c372fe9b8">
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <Baudrate>9600</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>Slave Id</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>IP address</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+      <Revision id="2.0">Refactor</Revision>
+    </RevisionHistory>
+    <Name>Eastron SDM630</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer>Eastron</Producer>
+    <Model>SDM630</Model>
+    <Description></Description>
+    <Module>
+      <Name>Eastron SDM630</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <PrefetchModeId>0</PrefetchModeId>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>${total_energy}</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Average line to line [V]"},"ReadFormula":"TOSTRING(MODBUSR(A, 206, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Average line to neutral [V]"},"ReadFormula":"TOSTRING(MODBUSR(A, 42, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Average line current [A]"},"ReadFormula":"TOSTRING(MODBUSR(A, 46, BigEndianFloat), \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"Sum of line currents [A]"},"ReadFormula":"TOSTRING(MODBUSR(A, 48, BigEndianFloat), \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"Neutral current [A]"},"ReadFormula":"TOSTRING(MODBUSR(A, 224, BigEndianFloat), \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"Total system volt amps [VA]"},"ReadFormula":"TOSTRING(MODBUSR(A, 56, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Total system reactive power [VAr]"},"ReadFormula":"TOSTRING(MODBUSR(A, 60, BigEndianFloat), \u0022F1\u0022)\r\n"},{"AttributeDefinition":{"Name":"Total system power factor"},"ReadFormula":"TOSTRING(MODBUSR(A, 62, BigEndianFloat), \u0022F3\u0022)"},{"AttributeDefinition":{"Name":"Total system phase angle"},"ReadFormula":"TOSTRING(MODBUSR(A, 66, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Frequency of supply voltages [Hz]"},"ReadFormula":"TOSTRING(MODBUSR(A, 70, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Total VAh [kVAh]"},"ReadFormula":"TOSTRING(MODBUSR(A, 80, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Total VArh [kVArh]"},"ReadFormula":"TOSTRING(MODBUSR(A, 344, BigEndianFloat), \u0022F1\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(A, 342, BigEndianFloat)</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(A, 52, BigEndianFloat) / 1000</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${total_energy} L1</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Line to neutral voltage [V]"},"ReadFormula":"TOSTRING(MODBUSR(A, 0, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Current [A]"},"ReadFormula":"TOSTRING(MODBUSR(A, 6, BigEndianFloat), \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"Volt amps [VA]"},"ReadFormula":"TOSTRING(MODBUSR(A, 18, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Reactive power [VAr]"},"ReadFormula":"TOSTRING(MODBUSR(A, 24, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Power factor"},"ReadFormula":"TOSTRING(MODBUSR(A, 30, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Phase angle"},"ReadFormula":"TOSTRING(MODBUSR(A, 36, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Reactive Energy [kVArh]"},"ReadFormula":"TOSTRING(MODBUSR(A, 376, BigEndianFloat), \u0022F1\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(A, 358, BigEndianFloat)</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(A, 12, BigEndianFloat) / 1000</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${total_energy} L2</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Line to neutral voltage [V]"},"ReadFormula":"TOSTRING(MODBUSR(A, 2, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Current [A]"},"ReadFormula":"TOSTRING(MODBUSR(A, 8, BigEndianFloat), \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"Volt amps [VA]"},"ReadFormula":"TOSTRING(MODBUSR(A, 20, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Reactive power [VAr]"},"ReadFormula":"TOSTRING(MODBUSR(A, 26, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Power factor"},"ReadFormula":"TOSTRING(MODBUSR(A, 32, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Phase angle"},"ReadFormula":"TOSTRING(MODBUSR(A, 38, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Reactive Energy [kVArh]"},"ReadFormula":"TOSTRING(MODBUSR(A, 378, BigEndianFloat), \u0022F1\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(A, 360, BigEndianFloat)</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(A, 14, BigEndianFloat) / 1000</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${total_energy} L3</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Line to neutral voltage [V]"},"ReadFormula":"TOSTRING(MODBUSR(A, 4, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Current [A]"},"ReadFormula":"TOSTRING(MODBUSR(A, 10, BigEndianFloat), \u0022F2\u0022)"},{"AttributeDefinition":{"Name":"Volt amps [VA]"},"ReadFormula":"TOSTRING(MODBUSR(A, 22, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Reactive power [VAr]"},"ReadFormula":"TOSTRING(MODBUSR(A, 28, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Power factor"},"ReadFormula":"TOSTRING(MODBUSR(A, 34, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Phase angle"},"ReadFormula":"TOSTRING(MODBUSR(A, 40, BigEndianFloat), \u0022F1\u0022)"},{"AttributeDefinition":{"Name":"Reactive Energy [kVArh]"},"ReadFormula":"TOSTRING(MODBUSR(A, 380, BigEndianFloat), \u0022F1\u0022)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(A, 362, BigEndianFloat)</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(A, 16, BigEndianFloat) / 1000</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${deviceType_PVToGrid}</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>9005</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(A, 74, BigEndianFloat)</ReadTotalConsumption>
+            <ReadDemand>var demand := MODBUSR(A, 52, BigEndianFloat) / 1000;
+if (demand &lt; 0, return(demand * -1), return(0));</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${deviceType_PVToGrid} L1</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>9005</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(A, 352, BigEndianFloat)</ReadTotalConsumption>
+            <ReadDemand>var demand := MODBUSR(A, 12, BigEndianFloat) / 1000;
+if (demand &lt; 0, return(demand * -1), return(0));</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${deviceType_PVToGrid} L2</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>9005</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(A, 354, BigEndianFloat)</ReadTotalConsumption>
+            <ReadDemand>var demand := MODBUSR(A, 14, BigEndianFloat) / 1000;
+if (demand &lt; 0, return(demand * -1), return(0));</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${deviceType_PVToGrid} L3</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>9005</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(A, 356, BigEndianFloat)</ReadTotalConsumption>
+            <ReadDemand>var demand := MODBUSR(A, 12, BigEndianFloat) / 1000;
+if (demand &lt; 0, return(demand * -1), return(0));</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${deviceType_PVFromGrid}</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>9004</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(A, 72, BigEndianFloat)</ReadTotalConsumption>
+            <ReadDemand>var demand := MODBUSR(A, 52, BigEndianFloat) / 1000;
+if (demand &lt; 0, return(0), return(demand));
+            </ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${deviceType_PVFromGrid} L1</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-11</Id>
+          <DeviceProperties>
+            <DeviceType>9004</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(A, 346, BigEndianFloat)</ReadTotalConsumption>
+            <ReadDemand>var demand := MODBUSR(A, 12, BigEndianFloat) / 1000;
+if (demand &lt; 0, return(0), return(demand));
+            </ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${deviceType_PVFromGrid} L2</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-12</Id>
+          <DeviceProperties>
+            <DeviceType>9004</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(A, 348, BigEndianFloat)</ReadTotalConsumption>
+            <ReadDemand>var demand := MODBUSR(A, 14, BigEndianFloat) / 1000;
+if (demand &lt; 0, return(0), return(demand));
+            </ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>${deviceType_PVFromGrid} L3</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-13</Id>
+          <DeviceProperties>
+            <DeviceType>9004</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(A, 350, BigEndianFloat)</ReadTotalConsumption>
+            <ReadDemand>var demand := MODBUSR(A, 16, BigEndianFloat) / 1000;
+if (demand &lt; 0, return(0), return(demand));
+            </ReadDemand>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
