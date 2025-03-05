@@ -107,7 +107,7 @@
 ]</ServiceAttributesFormulas>
         <ServiceActionsScripts>[{"ActionDefinition":{"Name":"${xml_reset_gateway}","NumericParameters":null,"BoolParameters":null,"EnumParameters":null},"Script":"modbusw(SH,6000,uint16,1)"},{"ActionDefinition":{"Name":"${xml_set_slave_id}","NumericParameters":[{"FriendlyName":"${xml_slave_id}","Abbreviation":"SID","IsFloat":true,"MinValue":1.0,"MaxValue":255.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 65221, uint16, SID);\r\n\r\nmodbusw(SH,6000, uint16, 1);"},{"ActionDefinition":{"Name":"${xml_turn_on_all_lamps}","NumericParameters":null,"BoolParameters":null,"EnumParameters":null},"Script":"modbusw(SH, 530, uint16, 0xFE)"},{"ActionDefinition":{"Name":"${xml_turn_off_all_lamps}","NumericParameters":null,"BoolParameters":null,"EnumParameters":null},"Script":"modbusw(SH, 530, uint16, 0x00)"}]</ServiceActionsScripts>
         <SlaveId>$[SlaveId]</SlaveId>
-        <ModuleVariables>[{"Name":"SEARCHADDRH","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"SEARCHADDRM","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"SEARCHADDRL","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"SHORTADDR","ValueTypeId":1,"NumericValue":64.0,"StringValue":null},{"Name":"iterator","ValueTypeId":1,"NumericValue":0.0,"StringValue":null},{"Name":"status","ValueTypeId":1,"NumericValue":0.0,"StringValue":null}]</ModuleVariables>
+        <ModuleVariables>[{"Name":"SEARCHADDRH","ValueTypeId":1,"NumericValue":0},{"Name":"SEARCHADDRM","ValueTypeId":1,"NumericValue":0},{"Name":"SEARCHADDRL","ValueTypeId":1,"NumericValue":0},{"Name":"SHORTADDR","ValueTypeId":1,"NumericValue":64},{"Name":"iterator","ValueTypeId":1,"NumericValue":0},{"Name":"status","ValueTypeId":1,"NumericValue":0},{"Name":"exit","ValueTypeId":1,"NumericValue":0}]</ModuleVariables>
         <MaxPrefetchGroupSize>10</MaxPrefetchGroupSize>
         <IpAddress>$[IpAddress]</IpAddress>
         <Variables>[]</Variables>
@@ -126,6 +126,7 @@
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
             <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <Value0Index>0</Value0Index>
             <Value1Index>1</Value1Index>
             <Value2Index>2</Value2Index>
@@ -143,7 +144,7 @@
             <Value4Name>COMPARE</Value4Name>
             <Value5Name>PROGRAM SHORT ADDRESS</Value5Name>
             <Value6Name>Check</Value6Name>
-            <Value7Name>${xml_reset_all_devices_to_default}</Value7Name>
+            <Value7Name>Try again</Value7Name>
             <Value8Name>${xml_reset_short_addresses}</Value8Name>
             <Value9Name>${xml_finish}</Value9Name>
             <Value0IconId>5</Value0IconId>
@@ -160,21 +161,33 @@
             <ReadSwitchState>var x := 0x8000; var rx := 0;
 
 if Mu = 1
+	if exit &lt;= 0
+		status := 255;
+        return(9);
+    end
     # check SEARCHADDRH
     modbusw(SH, 541, uint16, 0xB500 + getbyte(SEARCHADDRH,0));
-    sleep(50);
+    sleep(500);
     modbusw(SH, 541, uint16, 0xB300 + getbyte(SEARCHADDRH,1));
-    sleep(50);
+    sleep(500);
     modbusw(SH, 541, uint16, 0xB100 + getbyte(SEARCHADDRH,2));
-    sleep(50);
+    sleep(500);
     modbusw(SH, 541, uint16, 0xA900);
-    sleep(5); rx := getbits(modbusr(SH, 550, uint16), 0, 2); if(rx, 0, sleep(50));
-    x := modbusr(SH, 541, uint16);
+    sleep(5); rx := getbits(modbusr(SH, 550, uint16), 0, 2);
+    if !rx
+        sleep(50);
+        rx := getbits(modbusr(SH, 550, uint16), 0, 2);
+    end
     if rx
-        return(2);
+        x := modbusr(SH, 541, uint16);
+        if getbyte(x, 0) = 0xFF
+            #match: lets check
+            return(2);
+        else
+            return(7);
+        end
     else
-        status := 255;
-        return(9);
+        return(7);
     end
 end
 if Mu = 2
@@ -244,7 +257,7 @@ if Mu = 6
             return(5);
         else
             #collision: 2 gear with same SEARCHADDR or something went wrong, start over
-            return(1);
+            return(7);
         end
     end
     # check SEARCHADDRH
@@ -267,15 +280,17 @@ if Mu = 6
             return(5);
         else
             #collision: 2 gear with same SEARCHADDR or something went wrong, start over
-            return(1);
+            return(7);
         end
     else
         #no response: something went wrong, finish with error
         status := 220;
-        return(9);
+        #return(9);
+        return(7);
     end
 end
 if Mu = 5
+	exit := 3;
     # PROGRAM SHORT ADDRESS
     SHORTADDR := SHORTADDR + 1;
     #program
@@ -289,7 +304,9 @@ if Mu = 5
         status := 0;
     else
         status := 230;
-        return(9);
+        #return(9);
+        SHORTADDR := SHORTADDR - 1;
+        return(7);
     end
     #blink
     modbusw(SH, 511, uint16, SHORTADDR + 0x06);
@@ -330,7 +347,42 @@ end
 
 #if(Mu = 1, status := "rx:" + getbits(y, 0, 2) + "|" + getbits(y, 4, 1) + "|" + getbits(y, 5, 1), 0);
 #if(Mu = 1, return(7),0);
-
+if Mu = 7
+	if SEARCHADDRH = SEARCHADDRL
+    	SEARCHADDRH := 0xFFFFFF;
+    	SEARCHADDRL := 0;
+    	exit := exit -1;
+        return(1);
+    end
+	SEARCHADDRH := SEARCHADDRH &gt;&gt; 1;
+	SEARCHADDRL := 0;
+	if(iterator &lt; 64, SHORTADDR := -1);
+	if(iterator &lt; 64, iterator := 0);    
+    # check SEARCHADDRH
+    modbusw(SH, 541, uint16, 0xB500 + getbyte(SEARCHADDRH,0));
+    sleep(500);
+    modbusw(SH, 541, uint16, 0xB300 + getbyte(SEARCHADDRH,1));
+    sleep(500);
+    modbusw(SH, 541, uint16, 0xB100 + getbyte(SEARCHADDRH,2));
+    sleep(500);
+    modbusw(SH, 541, uint16, 0xA900);
+    sleep(5); rx := getbits(modbusr(SH, 550, uint16), 0, 2);
+    if !rx
+        sleep(50);
+        rx := getbits(modbusr(SH, 550, uint16), 0, 2);
+    end
+    if rx
+        x := modbusr(SH, 541, uint16);
+        if getbyte(x, 0) = 0xFF
+            #match: lets check
+            return(2);
+        else
+            return(6);
+        end
+    else
+        return(6);
+    end
+end
 return(Mu);</ReadSwitchState>
             <WriteSwitchState># TERMINATE
 if(Mu = 0, modbusw(SH, 542, uint16, 0xA100), 0);
@@ -346,6 +398,7 @@ if(Mu = 1, SEARCHADDRH := 0xFFFFFF, 0);
 if(Mu = 1, SEARCHADDRL := 0, 0);
 if(Mu = 1, if(iterator &lt; 64, SHORTADDR := -1, 0), 0);
 if(Mu = 1, if(iterator &lt; 64, iterator := 0, 0), 0);
+if(Mu = 1, exit := 3, 0);
 # Reset Short Addresses 
 if(Mu = 8, modbusw(h, 541, uint16, 0xA3FF), 0);
 if(Mu = 8, sleep(100));
@@ -353,8 +406,10 @@ if(Mu = 8, modbusw(h, 532, uint16, 0x80), 0);
 if(Mu = 8, SHORTADDR := -1, 0);
 if(Mu = 8, iterator := 64, 0);
 # Reset All to Defaults 
-if(Mu = 7, modbusw(SH, 532, uint16, 0x20), 0);
-if(Mu = 7, sleep(100));
+#if(Mu = 7, modbusw(SH, 532, uint16, 0x20), 0);
+#if(Mu = 7, sleep(100));
+#collision: halve interval
+
 
 sleep(100);
 </WriteSwitchState>
