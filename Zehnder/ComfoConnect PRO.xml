@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="87" locationId="00bf5a63-6926-4563-84bc-171c8b4c1cba">
+  <Template revision="1.0">
+    <SuggestedCCUParameters>
+      <ReconnectDelay>0</ReconnectDelay>
+      <AfterConnectDelay>0</AfterConnectDelay>
+      <TcpNoDelay>False</TcpNoDelay>
+      <TcpPort>502</TcpPort>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>Slave Id</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>IP address</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>ComfoConnect PRO</Name>
+    <CcuModel>ModbusTcpCCU</CcuModel>
+    <Producer></Producer>
+    <Model></Model>
+    <Description></Description>
+    <Module>
+      <Name>ComfoConnect PRO</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>500</InternalPollInterval>
+        <!-- Sets the unit to manual mode, which is needed when controlled by MODBUS -->
+        <InitializeScript>MODBUSW(SC,5,Int16,0)</InitializeScript>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Akce","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]}}]</ServiceActionsScripts>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <IpAddress>$[IpAddress]</IpAddress>
+        <ModuleVariables>[]</ModuleVariables>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>Airflow</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"98":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:98}\u0022}"}</SerializedValueLogTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables>[]</CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 6, Int16)</ReadState>
+            <WriteState></WriteState>
+            <IconId>123</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Exhaust - Temperature and humidity</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>3001</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTemperature>MODBUSR(A, 9, Int16) / 10</ReadTemperature>
+            <ReadHumidity>MODBUSR(A, 14, Int16) / 100</ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Extract - Temperature and humidity</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>3001</DeviceType>
+            <InternalPollInterval>30000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTemperature>MODBUSR(A, 8, Int16) / 10</ReadTemperature>
+            <ReadHumidity>MODBUSR(A, 13, Int16) / 100</ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Filter dirty</Name>
+          <Model>ModbusReedContact</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>1106</DeviceType>
+            <InternalPollInterval>250000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <OnStateIconId>310</OnStateIconId>
+            <OffStateIconId>308</OffStateIconId>
+            <OnStateName>Dirty</OnStateName>
+            <OffStateName>Clean</OffStateName>
+            <ReadState>MODBUSR(D, 3, Bool)</ReadState>
+            <NegateState>False</NegateState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Outdoor - Temperature and humidity</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>3003</DeviceType>
+            <InternalPollInterval>60000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTemperature>MODBUSR(A, 10, Int16) / 10</ReadTemperature>
+            <ReadHumidity>MODBUSR(A,15,Int16)/100</ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Supply - Temperature and humidity</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>3001</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTemperature>MODBUSR(A, 11, Int16) / 10</ReadTemperature>
+            <ReadHumidity>MODBUSR(A, 16, Int16) / 100</ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Temperature profile</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>6106</DeviceType>
+            <InternalPollInterval>30000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>67</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Normal</Value0Name>
+            <Value1Name>Cold</Value1Name>
+            <Value2Name>Warm</Value2Name>
+            <Value3Name></Value3Name>
+            <Value4Name></Value4Name>
+            <Value5Name></Value5Name>
+            <Value6Name></Value6Name>
+            <Value7Name></Value7Name>
+            <Value8Name></Value8Name>
+            <Value9Name></Value9Name>
+            <Value0IconId>3</Value0IconId>
+            <Value1IconId>350</Value1IconId>
+            <Value2IconId>1</Value2IconId>
+            <Value3IconId>0</Value3IconId>
+            <Value4IconId>0</Value4IconId>
+            <Value5IconId>0</Value5IconId>
+            <Value6IconId>0</Value6IconId>
+            <Value7IconId>0</Value7IconId>
+            <Value8IconId>0</Value8IconId>
+            <Value9IconId>0</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(SH, 1, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(SH, 1, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Ventilation</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>6011</DeviceType>
+            <InternalPollInterval>4000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables>[]</CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Away</Value0Name>
+            <Value1Name>Low</Value1Name>
+            <Value2Name>Medium</Value2Name>
+            <Value3Name>High</Value3Name>
+            <Value4Name></Value4Name>
+            <Value5Name></Value5Name>
+            <Value6Name></Value6Name>
+            <Value7Name></Value7Name>
+            <Value8Name></Value8Name>
+            <Value9Name></Value9Name>
+            <Value0IconId>20</Value0IconId>
+            <Value1IconId>21</Value1IconId>
+            <Value2IconId>22</Value2IconId>
+            <Value3IconId>23</Value3IconId>
+            <Value4IconId>0</Value4IconId>
+            <Value5IconId>0</Value5IconId>
+            <Value6IconId>0</Value6IconId>
+            <Value7IconId>0</Value7IconId>
+            <Value8IconId>0</Value8IconId>
+            <Value9IconId>0</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(SH, 0, Int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(SH, 0, Int16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Ventilation - Filter days left</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>3600000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(A, 25, Int16)</ReadState>
+            <WriteState></WriteState>
+            <IconId>35</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Ventilation boost</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-11</Id>
+          <DeviceProperties>
+            <DeviceType>132</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript>MODBUSW(H,4,UInt16,7200)</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>28</OnStateIconId>
+            <OffStateIconId>24</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(SC,6,Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(SC,6, Bool,St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
