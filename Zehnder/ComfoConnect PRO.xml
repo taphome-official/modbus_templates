@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="87" locationId="00bf5a63-6926-4563-84bc-171c8b4c1cba">
-  <Template revision="1.0">
+<Templates format="2" protocolVersion="87">
+  <Template revision="1.0" id="5bb2cc54-4ccc-458a-a033-3b73482487d7">
     <SuggestedCCUParameters>
       <ReconnectDelay>0</ReconnectDelay>
       <AfterConnectDelay>0</AfterConnectDelay>
