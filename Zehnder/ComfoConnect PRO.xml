@@ -37,7 +37,7 @@
         <DeviceType>7001</DeviceType>
         <InternalPollInterval>500</InternalPollInterval>
         <!-- Sets the unit to manual mode, which is needed when controlled by MODBUS -->
-        <InitializeScript>MODBUSW(SC,5,Int16,0)</InitializeScript>
+        <InitializeScript>MODBUSW(SC,5,bool,0)</InitializeScript>
         <PrefetchModeId>0</PrefetchModeId>
         <ServiceAttributesFormulas>[]</ServiceAttributesFormulas>
         <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Akce","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]}}]</ServiceActionsScripts>
