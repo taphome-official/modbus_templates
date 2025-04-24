@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="87" >
-  <Template revision="1.0" id="228185ec-55f8-4f81-a14e-b9862c02186d">
+<Templates format="2" protocolVersion="88" >
+  <Template revision="2.0" id="228185ec-55f8-4f81-a14e-b9862c02186d">
     <SuggestedCCUParameters>
       <UseAsciiCommunication>False</UseAsciiCommunication>
       <StopBits>One</StopBits>
@@ -24,6 +24,7 @@
     </ImportParameters>
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
+      <Revision id="2.0">Added register input control</Revision>
     </RevisionHistory>
     <Name>Daikin EKMBPP1 </Name>
     <CcuModel>ModbusRtuCCU</CcuModel>
@@ -65,9 +66,59 @@ if (MODBUSR(A, 124, Uint16) = 1, ADDWARNING("Alarm filtru"));</ReadScript>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Otáčky ventilátoru</Name>
+          <Name>Globální Konfigurace</Name>
           <Model>ModbusMultiValueSwitch</Model>
           <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Aktualizace c\u00EDlov\u00E9 nastaven\u00E9 hodnoty"},"ReadFormula":"SWITCH(MODBUSR(H, 11, Uint16),\r\n0, \u0022LastTouch\u0022,\r\n1, \u0022Central\u0022,\r\n2, \u0022Local\u0022,\r\n3, \u0022OnChange\u0022,\r\n\u0022Chyba\u0022);"},{"AttributeDefinition":{"Name":"Aktualizace ot\u00E1\u010Dek ventil\u00E1toru "},"ReadFormula":"SWITCH(MODBUSR(H, 12, Uint16),\r\n0, \u0022LastTouch\u0022,\r\n1, \u0022Central\u0022,\r\n2, \u0022Local\u0022,\r\n3, \u0022OnChange\u0022,\r\n\u0022Chyba\u0022);"},{"AttributeDefinition":{"Name":"Aktualizace re\u017Eimu"},"ReadFormula":"SWITCH(MODBUSR(H, 13, Uint16),\r\n0, \u0022LastTouch\u0022,\r\n1, \u0022Central\u0022,\r\n2, \u0022Local\u0022,\r\n3, \u0022OnChange\u0022,\r\n\u0022Chyba\u0022);"},{"AttributeDefinition":{"Name":" Aktualizace sm\u011Bru proud\u011Bn\u00ED vzduchu"},"ReadFormula":"SWITCH(MODBUSR(H, 14, Uint16),\r\n0, \u0022LastTouch\u0022,\r\n1, \u0022Central\u0022,\r\n2, \u0022Local\u0022,\r\n3, \u0022OnChange\u0022,\r\n\u0022Chyba\u0022);"},{"AttributeDefinition":{"Name":"Aktualizace ZAPNUTO/VYPNUTO"},"ReadFormula":"SWITCH(MODBUSR(H, 15, Uint16),\r\n0, \u0022LastTouch\u0022,\r\n1, \u0022Central\u0022,\r\n2, \u0022Local\u0022,\r\n3, \u0022OnChange\u0022,\r\n\u0022Chyba\u0022);"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Global Update","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":" Re\u017Eim aktualizace","Abbreviation":"Ra","Values":[{"Item1":0,"Item2":"LastTouch"},{"Item1":1,"Item2":"Central"},{"Item1":2,"Item2":"Local"},{"Item1":3,"Item2":"OnChange"}]}]},"Script":"MODBUSW(H, 10, Uint16, Ra)"},{"ActionDefinition":{"Name":" Aktualizace c\u00EDlov\u00E9 nastaven\u00E9 hodnoty","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Re\u017Eim aktualizace","Abbreviation":"Ra","Values":[{"Item1":0,"Item2":"Last Touch"},{"Item1":1,"Item2":"Central"},{"Item1":2,"Item2":"Local"},{"Item1":3,"Item2":"On Change"}]}]},"Script":"MODBUSW(H, 11, Uint16, Ra)"},{"ActionDefinition":{"Name":" Aktualizace ot\u00E1\u010Dek ventil\u00E1toru","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Re\u017Eim aktualizace","Abbreviation":"Ra","Values":[{"Item1":0,"Item2":"Last Touch"},{"Item1":1,"Item2":"Central"},{"Item1":2,"Item2":"Local"},{"Item1":3,"Item2":"On Change"}]}]},"Script":"MODBUSW(H, 12, Uint16, Ra)"},{"ActionDefinition":{"Name":"Aktualizace re\u017Eimu","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Re\u017Eim aktualizace","Abbreviation":"Ra","Values":[{"Item1":0,"Item2":"Last Touch"},{"Item1":1,"Item2":"Central"},{"Item1":2,"Item2":"Local"},{"Item1":3,"Item2":"On Change"}]}]},"Script":"MODBUSW(H, 13, Uint16, Ra)"},{"ActionDefinition":{"Name":"Aktualizace sm\u011Bru proud\u011Bn\u00ED vzduchu","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Re\u017Eim aktualizace","Abbreviation":"Ra","Values":[{"Item1":0,"Item2":"Last Touch"},{"Item1":1,"Item2":"Central"},{"Item1":2,"Item2":"Local"},{"Item1":3,"Item2":"On Change"}]}]},"Script":"MODBUSW(H, 14, Uint16, Ra)"},{"ActionDefinition":{"Name":"Aktualizace ZAPNUTO/VYPNUTO","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Re\u017Eim aktualizace","Abbreviation":"Ra","Values":[{"Item1":0,"Item2":"Last Touch"},{"Item1":1,"Item2":"Central"},{"Item1":2,"Item2":"Local"},{"Item1":3,"Item2":"On Change"}]}]},"Script":"MODBUSW(H, 15, Uint16, Ra)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Last Touch</Value0Name>
+            <Value1Name>Central</Value1Name>
+            <Value2Name>Local</Value2Name>
+            <Value3Name>On Change</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>5</Value0IconId>
+            <Value1IconId>6</Value1IconId>
+            <Value2IconId>7</Value2IconId>
+            <Value3IconId>8</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 10, Uint16)</ReadSwitchState>
+            <WriteSwitchState>#Pro nastaveni aktualizaci je potreba pozit servisni akce nebo zmazat # pred nasledujicim kodem
+#MODBUSW(H, 10, Uint16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Otáčky ventilátoru</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-4</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>2500</InternalPollInterval>
@@ -116,7 +167,7 @@ if (MODBUSR(A, 124, Uint16) = 1, ADDWARNING("Alarm filtru"));</ReadScript>
         <Device>
           <Name>Provoz</Name>
           <Model>ModbusSwitch</Model>
-          <Id>-4</Id>
+          <Id>-5</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>2500</InternalPollInterval>
@@ -139,7 +190,7 @@ if (MODBUSR(A, 124, Uint16) = 1, ADDWARNING("Alarm filtru"));</ReadScript>
         <Device>
           <Name>Provozní režim</Name>
           <Model>ModbusMultiValueSwitch</Model>
-          <Id>-5</Id>
+          <Id>-6</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>2500</InternalPollInterval>
@@ -186,9 +237,58 @@ if (MODBUSR(A, 124, Uint16) = 1, ADDWARNING("Alarm filtru"));</ReadScript>
           </DeviceProperties>
         </Device>
         <Device>
+          <Name>Smart Grid</Name>
+          <Model>ModbusMultiValueSwitch</Model>
+          <Id>-7</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>68</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Volný provoz</Value0Name>
+            <Value1Name>Nucené vypnutí</Value1Name>
+            <Value2Name>Doporučeno zapnutí</Value2Name>
+            <Value3Name>Nucené zapnutí</Value3Name>
+            <Value4Name>4</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>113</Value0IconId>
+            <Value1IconId>61</Value1IconId>
+            <Value2IconId>85</Value2IconId>
+            <Value3IconId>84</Value3IconId>
+            <Value4IconId>9</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
+            <OffStateValue>0</OffStateValue>
+            <ReadSwitchState>MODBUSR(H, 55, Uint16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 55, Uint16, Mu)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
           <Name>Směr proudění vzduchu</Name>
           <Model>ModbusMultiValueSwitch</Model>
-          <Id>-6</Id>
+          <Id>-8</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>2500</InternalPollInterval>
@@ -237,7 +337,7 @@ if (MODBUSR(A, 124, Uint16) = 1, ADDWARNING("Alarm filtru"));</ReadScript>
         <Device>
           <Name>Teplota vratného vzduchu</Name>
           <Model>ModbusTemperatureSensor</Model>
-          <Id>-7</Id>
+          <Id>-9</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>15000</InternalPollInterval>
@@ -254,7 +354,7 @@ if (MODBUSR(A, 124, Uint16) = 1, ADDWARNING("Alarm filtru"));</ReadScript>
         <Device>
           <Name>Teplota vstupu coil</Name>
           <Model>ModbusTemperatureSensor</Model>
-          <Id>-8</Id>
+          <Id>-10</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>15000</InternalPollInterval>
@@ -272,7 +372,7 @@ MODBUSR(A, 131, Int16) / 100</ReadTemperature>
         <Device>
           <Name>Teplota výstupu coil</Name>
           <Model>ModbusTemperatureSensor</Model>
-          <Id>-9</Id>
+          <Id>-11</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>15000</InternalPollInterval>
