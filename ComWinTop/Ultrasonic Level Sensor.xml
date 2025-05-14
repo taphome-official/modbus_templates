@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Templates format="2" protocolVersion="83">
-  <Template revision="1.0" id="a88ae89a-0fce-45a7-b4d1-4c3c68060306">
+  <Template revision="2.0" id="a88ae89a-0fce-45a7-b4d1-4c3c68060306">
     <SuggestedCCUParameters>
       <UseAsciiCommunication>False</UseAsciiCommunication>
       <StopBits>One</StopBits>
@@ -24,6 +24,7 @@
     </ImportParameters>
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
+      <Revision id="2.0">new HW/FW</Revision>      
     </RevisionHistory>
     <Name>ComWinTop - Ultrasonic Level Sensor</Name>
     <CcuModel>ModbusRtuCCU</CcuModel>
@@ -38,15 +39,99 @@
         <DeviceType>7001</DeviceType>
         <InternalPollInterval>30000</InternalPollInterval>
         <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Slave ID"},"ReadFormula":"modbusr(H, 20, float)"},{"AttributeDefinition":{"Name":"Baud rate"},"ReadFormula":"modbusr(H, 22, float)"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Slave ID","NumericParameters":[{"FriendlyName":"ID","Abbreviation":"ID","IsFloat":false,"MinValue":1,"MaxValue":254}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 20, float, ID)"},{"ActionDefinition":{"Name":"Baud rate","NumericParameters":[{"FriendlyName":"baud","Abbreviation":"baud","IsFloat":false,"MinValue":1,"MaxValue":500000}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 22, float, baud)"}]</ServiceActionsScripts>
         <SlaveId>$[SlaveId]</SlaveId>
         <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
         <IpAddress>$[IpAddress]</IpAddress>
       </DeviceProperties>
       <Devices>
         <Device>
+          <Name>Relé 1</Name>
+          <Model>ModbusReedContact</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript>D := modbusr(H, 28, float);
+H := modbusr(H, 30, float);
+X := modbusr(H, 0, float);</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Rel\u00E9 ON [m]"},"ReadFormula":"D"},{"AttributeDefinition":{"Name":"Rel\u00E9 OFF [m]"},"ReadFormula":"H"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Rel\u00E9 ON","NumericParameters":[{"FriendlyName":"Vzdialenost","Abbreviation":"m","IsFloat":true,"MinValue":0,"MaxValue":10}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 28, float, m)"},{"ActionDefinition":{"Name":"Rel\u00E9 OFF","NumericParameters":[{"FriendlyName":"Vzdialenost","Abbreviation":"m","IsFloat":true,"MinValue":0,"MaxValue":10}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 30, float, m)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables>[{"Name":"D","ValueTypeId":1,"NumericValue":0},{"Name":"H","ValueTypeId":1,"NumericValue":0},{"Name":"X","ValueTypeId":1,"NumericValue":0}]</CustomDeviceVariables>
+            <OnStateIconId>87</OnStateIconId>
+            <OffStateIconId>88</OffStateIconId>
+            <OnStateName>${general_open}</OnStateName>
+            <OffStateName>${general_closed}</OffStateName>
+            <ReadState>if D &lt; H
+	if X &lt; D
+		return(1);
+	elseif X &gt; H
+		return(0);
+	else
+		return(Rc);
+	end
+elseif D &gt; H
+	if X &gt; D
+		return(1);
+	elseif X &lt; H
+		return(0);
+	else
+		return(Rc);
+	end
+else
+	return(0);
+end</ReadState>
+            <NegateState>True</NegateState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Relé 2</Name>
+          <Model>ModbusReedContact</Model>
+          <Id>-3</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript>D := modbusr(H, 32, float);
+H := modbusr(H, 34, float);
+X := modbusr(H, 0, float);</ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Rel\u00E9 ON [m]"},"ReadFormula":"D"},{"AttributeDefinition":{"Name":"Rel\u00E9 OFF [m]"},"ReadFormula":"H"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Rel\u00E9 ON","NumericParameters":[{"FriendlyName":"Vzdialenost","Abbreviation":"m","IsFloat":true,"MinValue":0,"MaxValue":10}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 32, float, m)"},{"ActionDefinition":{"Name":"Rel\u00E9 OFF","NumericParameters":[{"FriendlyName":"Vzdialenost","Abbreviation":"m","IsFloat":true,"MinValue":0,"MaxValue":10}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 34, float, m)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables>[{"Name":"D","ValueTypeId":1,"NumericValue":0},{"Name":"H","ValueTypeId":1,"NumericValue":0},{"Name":"X","ValueTypeId":1,"NumericValue":0}]</CustomDeviceVariables>
+            <OnStateIconId>87</OnStateIconId>
+            <OffStateIconId>88</OffStateIconId>
+            <OnStateName>${general_open}</OnStateName>
+            <OffStateName>${general_closed}</OffStateName>
+            <ReadState>if D &lt; H
+	if X &lt; D
+		return(1);
+	elseif X &gt; H
+		return(0);
+	else
+		return(Rc);
+	end
+elseif D &gt; H
+	if X &gt; D
+		return(1);
+	elseif X &lt; H
+		return(0);
+	else
+		return(Rc);
+	end
+else
+	return(0);
+end</ReadState>
+            <NegateState>True</NegateState>
+          </DeviceProperties>
+        </Device>
+        <Device>
           <Name>${temperatureSensor}</Name>
           <Model>ModbusTemperatureSensor</Model>
-          <Id>-2</Id>
+          <Id>-4</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>15000</InternalPollInterval>
@@ -55,28 +140,35 @@
             <PrefetchModeId>0</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
-            <CustomDeviceVariables />
-            <ReadTemperature>MODBUSR(H, 3, Int16) / 10</ReadTemperature>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ReadTemperature>MODBUSR(H, 2, float)</ReadTemperature>
             <ReadHumidity></ReadHumidity>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>${device_variable_waterlevel}</Name>
+          <Name>Výška hladiny</Name>
           <Model>ModbusVariable</Model>
-          <Id>-3</Id>
+          <Id>-5</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions>{"86":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1000,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:86}\u0022}"}</SerializedValueLogTypeConversions>
+            <SerializedValueLogTypeConversions>{"86":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:86}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
             <PrefetchModeId>0</PrefetchModeId>
-            <ServiceAttributesFormulas></ServiceAttributesFormulas>
-            <ServiceActionsScripts></ServiceActionsScripts>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Mont\u00E1\u017Ena v\u00FD\u0161ka [m]"},"ReadFormula":"MODBUSR(H, 10, float)"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Mont\u00E1\u017Ena v\u00FD\u0161ka","NumericParameters":[{"FriendlyName":"V\u00FD\u0161ka","Abbreviation":"m","IsFloat":true,"MinValue":0,"MaxValue":11}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 10, float, m)"}]</ServiceActionsScripts>
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>True</IsReadOnly>
-            <ReadState>MODBUSR(H, 2, Uint16) - MODBUSR(H, 1, Uint16)</ReadState>
+            <ReadState>var mnt := MODBUSR(H, 10, float);
+var val := MODBUSR(H, 0, float);
+if mnt = 0
+	addwarning("Montážna výška nie je nastavená");
+	return(0);
+else
+	return(val);
+end</ReadState>
             <WriteState></WriteState>
             <IconId>0</IconId>
           </DeviceProperties>
@@ -84,20 +176,26 @@
         <Device>
           <Name>Vzdialenosť od hladiny</Name>
           <Model>ModbusVariable</Model>
-          <Id>-4</Id>
+          <Id>-6</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions>{"86":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1000,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:86}\u0022}"}</SerializedValueLogTypeConversions>
+            <SerializedValueLogTypeConversions>{"86":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:86}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
             <PrefetchModeId>0</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
-            <CustomDeviceVariables />
+            <CustomDeviceVariables></CustomDeviceVariables>
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>True</IsReadOnly>
-            <ReadState>MODBUSR(H, 1, Uint16)</ReadState>
+            <ReadState>var mnt := MODBUSR(H, 10, float);
+var val := MODBUSR(H, 0, float);
+if mnt = 0
+	return(val);
+else
+	return(mnt - val);
+end</ReadState>
             <WriteState></WriteState>
             <IconId>0</IconId>
           </DeviceProperties>
