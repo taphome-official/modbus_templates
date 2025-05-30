@@ -42,7 +42,7 @@
 if(MODBUSR(H, base +6, Uint16) = 1, ADDWARNING("Filter-cleaning reminder"));
 
 var err := MODBUSR(H, base +13, Uint16);
-IF(err!=0, ADDERROR("Integrated indoor unit error",err));</ReadScript>
+IF(err!=0, ADDERROR(err, "Integrated indoor unit error"));</ReadScript>
         <PrefetchModeId>0</PrefetchModeId>
         <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Stav komunik\u00E1cie"},"ReadFormula":"var base := 50 \u002B IU*50;\r\n\r\nvar com := MODBUSR(H, base \u002B 0, Uint16);\r\nvar b0 := IF(getbit(com, 0) = 1, \u0022Existuje \u0022, \u0022\u0022);\r\nvar b1 := IF(getbit(com, 1) = 1, \u0022- Typ OK \u0022, \u0022\u0022);\r\nvar b2 := IF(getbit(com, 2) = 1, \u0022- Pripraven\u00E9 \u0022, \u0022\u0022);\r\nvar b3 := IF(getbit(com, 3) = 1, \u0022Chyba komunik\u00E1cie \u0022, \u0022\u0022);\r\nRETURN(b0 \u002B b1 \u002B b2 \u002B b3);"},{"AttributeDefinition":{"Name":"Remote Control Restriction"},"ReadFormula":"var base := 50 \u002B IU*50;\r\n\r\nvar r := MODBUSR(H, base \u002B14, Uint16);\r\nIF(r = 0, \u0022No restriction\u0022, \u0022Restriction \u0022 \u002B r);"},{"AttributeDefinition":{"Name":"Wind-free function"},"ReadFormula":"var base := 50 \u002B IU*50;\r\n\r\nSWITCH(MODBUSR(H, base \u002B 30, Uint16), 0, \u0022None\u0022, 9, \u0022Windfree\u0022, \u0022Ignored\u0022);"}]</ServiceAttributesFormulas>
         <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Clear Filter Alarm","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"var base := 50 \u002B IU*50;\r\n\r\nmodbusw(h, base \u002B 6, Uint16, 1);"}]</ServiceActionsScripts>
