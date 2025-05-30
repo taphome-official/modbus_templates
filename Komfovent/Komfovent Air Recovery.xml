@@ -301,6 +301,23 @@ MODBUSW(H, 119, Uint32, Le * 100);</WriteLevel>
             <Calibration>0</Calibration>
           </DeviceProperties>
         </Device>
+        <Device>
+          <Name>${filter}</Name>
+          <Model>ModbusAnalogInput</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>11003</DeviceType>
+            <SerializedValueLogTypeConversions />
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Filter reset","NumericParameters":[],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(H, 1050, Uint16, 1)"}]</ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadInputLevel>MODBUSR(H, 916, Uint16) / 100</ReadInputLevel>
+          </DeviceProperties>
+        </Device>        
       </Devices>
     </Module>
   </Template>
