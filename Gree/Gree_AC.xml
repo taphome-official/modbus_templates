@@ -236,6 +236,52 @@ END</ReadTemperature>
             <ReadHumidity></ReadHumidity>
           </DeviceProperties>
         </Device>
+        <Device>
+          <Name>SWING HORIZONTALLY</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>5000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>138</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>SWING</OnStateName>
+            <OffStateName>OFF</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 23, int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 23, int16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Swing VERTICALLY</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>5000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>181</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>SWING</OnStateName>
+            <OffStateName>OFF</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 22, int16)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 22, int16, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>        
       </Devices>
     </Module>
   </Template>
