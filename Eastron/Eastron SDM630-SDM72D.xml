@@ -32,7 +32,7 @@
     <Model>SDM630</Model>
     <Description></Description>
     <Module>
-      <Name>Eastron SDM630</Name>
+      <Name>Eastron SDM630 / SDM72D</Name>
       <Id>-1</Id>
       <Model>ModbusModule</Model>
       <DeviceProperties>
