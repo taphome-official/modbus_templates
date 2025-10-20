@@ -1,0 +1,642 @@
+{
+  "template_id":"228185ec-55f8-4f81-a14e-b9862c02186d",
+  "revision":"2.0",
+  "protocol_version":"88",
+  "format":"2",
+  "modules":[
+    {
+      "name":"Daikin EKMBPP1",
+      "id":"-1",
+      "model":"ModbusModule",
+      "devices":[
+        {
+          "name":"Průměr vratného vzduchu",
+          "model":"ModbusTemperatureSensor",
+          "id":"-2",
+          "capabilities":[
+            "temperature"
+          ],
+          "poll_interval":15000
+        },
+        {
+          "name":"Globální Konfigurace",
+          "model":"ModbusMultiValueSwitch",
+          "id":"-3",
+          "capabilities":[
+            "switch"
+          ],
+          "poll_interval":2500,
+          "scripts":{
+            "readswitchstate":"MODBUSR(H, 10, Uint16)",
+            "writeswitchstate":"#Pro nastaveni aktualizaci je potreba pozit servisni akce nebo zmazat # pred nasledujicim kodem\n#MODBUSW(H, 10, Uint16, Mu)",
+            "service_attributes":[
+              {
+                "AttributeDefinition":{
+                  "Name":"Aktualizace cílové nastavené hodnoty"
+                },
+                "ReadFormula":"SWITCH(MODBUSR(H, 11, Uint16),\r\n0, \"LastTouch\",\r\n1, \"Central\",\r\n2, \"Local\",\r\n3, \"OnChange\",\r\n\"Chyba\");"
+              },
+              {
+                "AttributeDefinition":{
+                  "Name":"Aktualizace otáček ventilátoru "
+                },
+                "ReadFormula":"SWITCH(MODBUSR(H, 12, Uint16),\r\n0, \"LastTouch\",\r\n1, \"Central\",\r\n2, \"Local\",\r\n3, \"OnChange\",\r\n\"Chyba\");"
+              },
+              {
+                "AttributeDefinition":{
+                  "Name":"Aktualizace režimu"
+                },
+                "ReadFormula":"SWITCH(MODBUSR(H, 13, Uint16),\r\n0, \"LastTouch\",\r\n1, \"Central\",\r\n2, \"Local\",\r\n3, \"OnChange\",\r\n\"Chyba\");"
+              },
+              {
+                "AttributeDefinition":{
+                  "Name":" Aktualizace směru proudění vzduchu"
+                },
+                "ReadFormula":"SWITCH(MODBUSR(H, 14, Uint16),\r\n0, \"LastTouch\",\r\n1, \"Central\",\r\n2, \"Local\",\r\n3, \"OnChange\",\r\n\"Chyba\");"
+              },
+              {
+                "AttributeDefinition":{
+                  "Name":"Aktualizace ZAPNUTO/VYPNUTO"
+                },
+                "ReadFormula":"SWITCH(MODBUSR(H, 15, Uint16),\r\n0, \"LastTouch\",\r\n1, \"Central\",\r\n2, \"Local\",\r\n3, \"OnChange\",\r\n\"Chyba\");"
+              }
+            ],
+            "service_actions":[
+              {
+                "ActionDefinition":{
+                  "Name":"Global Update",
+                  "NumericParameters":[],
+                  "BoolParameters":[],
+                  "EnumParameters":[
+                    {
+                      "FriendlyName":" Režim aktualizace",
+                      "Abbreviation":"Ra",
+                      "Values":[
+                        {
+                          "Item1":0,
+                          "Item2":"LastTouch"
+                        },
+                        {
+                          "Item1":1,
+                          "Item2":"Central"
+                        },
+                        {
+                          "Item1":2,
+                          "Item2":"Local"
+                        },
+                        {
+                          "Item1":3,
+                          "Item2":"OnChange"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "Script":"MODBUSW(H, 10, Uint16, Ra)"
+              },
+              {
+                "ActionDefinition":{
+                  "Name":" Aktualizace cílové nastavené hodnoty",
+                  "NumericParameters":[],
+                  "BoolParameters":[],
+                  "EnumParameters":[
+                    {
+                      "FriendlyName":"Režim aktualizace",
+                      "Abbreviation":"Ra",
+                      "Values":[
+                        {
+                          "Item1":0,
+                          "Item2":"Last Touch"
+                        },
+                        {
+                          "Item1":1,
+                          "Item2":"Central"
+                        },
+                        {
+                          "Item1":2,
+                          "Item2":"Local"
+                        },
+                        {
+                          "Item1":3,
+                          "Item2":"On Change"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "Script":"MODBUSW(H, 11, Uint16, Ra)"
+              },
+              {
+                "ActionDefinition":{
+                  "Name":" Aktualizace otáček ventilátoru",
+                  "NumericParameters":[],
+                  "BoolParameters":[],
+                  "EnumParameters":[
+                    {
+                      "FriendlyName":"Režim aktualizace",
+                      "Abbreviation":"Ra",
+                      "Values":[
+                        {
+                          "Item1":0,
+                          "Item2":"Last Touch"
+                        },
+                        {
+                          "Item1":1,
+                          "Item2":"Central"
+                        },
+                        {
+                          "Item1":2,
+                          "Item2":"Local"
+                        },
+                        {
+                          "Item1":3,
+                          "Item2":"On Change"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "Script":"MODBUSW(H, 12, Uint16, Ra)"
+              },
+              {
+                "ActionDefinition":{
+                  "Name":"Aktualizace režimu",
+                  "NumericParameters":[],
+                  "BoolParameters":[],
+                  "EnumParameters":[
+                    {
+                      "FriendlyName":"Režim aktualizace",
+                      "Abbreviation":"Ra",
+                      "Values":[
+                        {
+                          "Item1":0,
+                          "Item2":"Last Touch"
+                        },
+                        {
+                          "Item1":1,
+                          "Item2":"Central"
+                        },
+                        {
+                          "Item1":2,
+                          "Item2":"Local"
+                        },
+                        {
+                          "Item1":3,
+                          "Item2":"On Change"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "Script":"MODBUSW(H, 13, Uint16, Ra)"
+              },
+              {
+                "ActionDefinition":{
+                  "Name":"Aktualizace směru proudění vzduchu",
+                  "NumericParameters":[],
+                  "BoolParameters":[],
+                  "EnumParameters":[
+                    {
+                      "FriendlyName":"Režim aktualizace",
+                      "Abbreviation":"Ra",
+                      "Values":[
+                        {
+                          "Item1":0,
+                          "Item2":"Last Touch"
+                        },
+                        {
+                          "Item1":1,
+                          "Item2":"Central"
+                        },
+                        {
+                          "Item1":2,
+                          "Item2":"Local"
+                        },
+                        {
+                          "Item1":3,
+                          "Item2":"On Change"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "Script":"MODBUSW(H, 14, Uint16, Ra)"
+              },
+              {
+                "ActionDefinition":{
+                  "Name":"Aktualizace ZAPNUTO/VYPNUTO",
+                  "NumericParameters":[],
+                  "BoolParameters":[],
+                  "EnumParameters":[
+                    {
+                      "FriendlyName":"Režim aktualizace",
+                      "Abbreviation":"Ra",
+                      "Values":[
+                        {
+                          "Item1":0,
+                          "Item2":"Last Touch"
+                        },
+                        {
+                          "Item1":1,
+                          "Item2":"Central"
+                        },
+                        {
+                          "Item1":2,
+                          "Item2":"Local"
+                        },
+                        {
+                          "Item1":3,
+                          "Item2":"On Change"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "Script":"MODBUSW(H, 15, Uint16, Ra)"
+              }
+            ]
+          },
+          "multi_value_config":{
+            "values":{
+              "0":{
+                "name":"Last Touch",
+                "icon_id":"5"
+              },
+              "1":{
+                "name":"Central",
+                "icon_id":"6"
+              },
+              "2":{
+                "name":"Local",
+                "icon_id":"7"
+              },
+              "3":{
+                "name":"On Change",
+                "icon_id":"8"
+              },
+              "4":{
+                "name":"4",
+                "icon_id":"9"
+              },
+              "5":{
+                "name":"5",
+                "icon_id":"10"
+              },
+              "6":{
+                "name":"6",
+                "icon_id":"11"
+              },
+              "7":{
+                "name":"7",
+                "icon_id":"12"
+              },
+              "8":{
+                "name":"8",
+                "icon_id":"13"
+              },
+              "9":{
+                "name":"9",
+                "icon_id":"14"
+              }
+            }
+          }
+        },
+        {
+          "name":"Otáčky ventilátoru",
+          "model":"ModbusMultiValueSwitch",
+          "id":"-4",
+          "capabilities":[
+            "switch"
+          ],
+          "poll_interval":2500,
+          "scripts":{
+            "readswitchstate":"MODBUSR(H, 2, Uint16)",
+            "writeswitchstate":"MODBUSW(H, 2, Uint16, Mu)"
+          },
+          "multi_value_config":{
+            "values":{
+              "0":{
+                "name":"0",
+                "icon_id":"5"
+              },
+              "1":{
+                "name":"Nízká",
+                "icon_id":"24"
+              },
+              "2":{
+                "name":"Středně nízké",
+                "icon_id":"25"
+              },
+              "3":{
+                "name":"Střední",
+                "icon_id":"26"
+              },
+              "4":{
+                "name":"Středně vysoké",
+                "icon_id":"27"
+              },
+              "5":{
+                "name":"Vysoké",
+                "icon_id":"28"
+              },
+              "6":{
+                "name":"6",
+                "icon_id":"11"
+              },
+              "7":{
+                "name":"7",
+                "icon_id":"12"
+              },
+              "8":{
+                "name":"8",
+                "icon_id":"13"
+              },
+              "9":{
+                "name":"9",
+                "icon_id":"14"
+              }
+            }
+          }
+        },
+        {
+          "name":"Provoz",
+          "model":"ModbusSwitch",
+          "id":"-5",
+          "capabilities":[
+            "switch"
+          ],
+          "poll_interval":2500,
+          "scripts":{
+            "readswitchstate":"MODBUSR(H, 5, Bool)",
+            "writeswitchstate":"MODBUSW(H, 5, Bool, St)"
+          },
+          "switch_config":{
+            "on_state_name":"ON",
+            "off_state_name":"OFF"
+          }
+        },
+        {
+          "name":"Provozní režim",
+          "model":"ModbusMultiValueSwitch",
+          "id":"-6",
+          "capabilities":[
+            "switch"
+          ],
+          "poll_interval":2500,
+          "scripts":{
+            "readswitchstate":"MODBUSR(H, 3, Uint16)",
+            "writeswitchstate":"MODBUSW(H, 3, Uint16, Mu)"
+          },
+          "multi_value_config":{
+            "values":{
+              "0":{
+                "name":" Automaticky",
+                "icon_id":"113"
+              },
+              "1":{
+                "name":"Vytápění",
+                "icon_id":"1"
+              },
+              "2":{
+                "name":"Ventilátor/větrání",
+                "icon_id":"115"
+              },
+              "3":{
+                "name":"Chlazení",
+                "icon_id":"2"
+              },
+              "4":{
+                "name":"Odvlhčení",
+                "icon_id":"16"
+              },
+              "5":{
+                "name":"5",
+                "icon_id":"10"
+              },
+              "6":{
+                "name":"6",
+                "icon_id":"11"
+              },
+              "7":{
+                "name":"7",
+                "icon_id":"12"
+              },
+              "8":{
+                "name":"8",
+                "icon_id":"13"
+              },
+              "9":{
+                "name":"9",
+                "icon_id":"14"
+              }
+            }
+          }
+        },
+        {
+          "name":"Smart Grid",
+          "model":"ModbusMultiValueSwitch",
+          "id":"-7",
+          "capabilities":[
+            "switch"
+          ],
+          "poll_interval":2500,
+          "scripts":{
+            "readswitchstate":"MODBUSR(H, 55, Uint16)",
+            "writeswitchstate":"MODBUSW(H, 55, Uint16, Mu)"
+          },
+          "multi_value_config":{
+            "values":{
+              "0":{
+                "name":"Volný provoz",
+                "icon_id":"113"
+              },
+              "1":{
+                "name":"Nucené vypnutí",
+                "icon_id":"61"
+              },
+              "2":{
+                "name":"Doporučeno zapnutí",
+                "icon_id":"85"
+              },
+              "3":{
+                "name":"Nucené zapnutí",
+                "icon_id":"84"
+              },
+              "4":{
+                "name":"4",
+                "icon_id":"9"
+              },
+              "5":{
+                "name":"5",
+                "icon_id":"10"
+              },
+              "6":{
+                "name":"6",
+                "icon_id":"11"
+              },
+              "7":{
+                "name":"7",
+                "icon_id":"12"
+              },
+              "8":{
+                "name":"8",
+                "icon_id":"13"
+              },
+              "9":{
+                "name":"9",
+                "icon_id":"14"
+              }
+            }
+          }
+        },
+        {
+          "name":"Směr proudění vzduchu",
+          "model":"ModbusMultiValueSwitch",
+          "id":"-8",
+          "capabilities":[
+            "switch"
+          ],
+          "poll_interval":2500,
+          "scripts":{
+            "readswitchstate":"MODBUSR(H, 4, Uint16)",
+            "writeswitchstate":"MODBUSW(H, 4, Uint16, Mu)"
+          },
+          "multi_value_config":{
+            "values":{
+              "0":{
+                "name":"0",
+                "icon_id":"5"
+              },
+              "1":{
+                "name":"Natočení",
+                "icon_id":"140"
+              },
+              "2":{
+                "name":"0°",
+                "icon_id":"131"
+              },
+              "3":{
+                "name":"20°",
+                "icon_id":"132"
+              },
+              "4":{
+                "name":"45°",
+                "icon_id":"134"
+              },
+              "5":{
+                "name":"70°",
+                "icon_id":"136"
+              },
+              "6":{
+                "name":"90°",
+                "icon_id":"137"
+              },
+              "7":{
+                "name":"7",
+                "icon_id":"12"
+              },
+              "8":{
+                "name":"8",
+                "icon_id":"13"
+              },
+              "9":{
+                "name":"9",
+                "icon_id":"14"
+              }
+            }
+          }
+        },
+        {
+          "name":"Teplota vratného vzduchu",
+          "model":"ModbusTemperatureSensor",
+          "id":"-9",
+          "capabilities":[
+            "temperature"
+          ],
+          "poll_interval":15000,
+          "scripts":{
+            "service_attributes":[
+              {
+                "AttributeDefinition":{
+                  "Name":"Vratný vzduch MIN"
+                },
+                "ReadFormula":"MODBUSR(A, 25, Uint16)/100 + \"°C\""
+              },
+              {
+                "AttributeDefinition":{
+                  "Name":"Vratný vzduch MAX"
+                },
+                "ReadFormula":"MODBUSR(A, 26, Uint16)/100 + \"°C\""
+              }
+            ]
+          }
+        },
+        {
+          "name":"Teplota vstupu coil",
+          "model":"ModbusTemperatureSensor",
+          "id":"-10",
+          "capabilities":[
+            "temperature"
+          ],
+          "poll_interval":15000
+        },
+        {
+          "name":"Teplota výstupu coil",
+          "model":"ModbusTemperatureSensor",
+          "id":"-11",
+          "capabilities":[
+            "temperature"
+          ],
+          "poll_interval":15000
+        }
+      ],
+      "poll_interval":30000,
+      "connection_details":{
+        "slave_id":"$[SlaveId]",
+        "ip_address":"$[IpAddress]"
+      },
+      "scripts":{
+        "readscript":"#Prve dvojcislie registra musi byt cislo jednotky, e.g. pre druhu jednotku bude register pre chybu 221\nif (MODBUSR(A, 121, Uint16) = 1, ADDERROR(\"Chyba jednotky\", MODBUSR(A, 122, Uint16) ));\nif (MODBUSR(A, 124, Uint16) = 1, ADDWARNING(\"Alarm filtru\"));",
+        "service_attributes":[
+          {
+            "AttributeDefinition":{
+              "Name":"Jednotka"
+            },
+            "ReadFormula":"IF(MODBUSR(A, 120, Uint16) = 1, \"Nalezena\", \"Nenalezena\");"
+          },
+          {
+            "AttributeDefinition":{
+              "Name":"Termo"
+            },
+            "ReadFormula":"Switch(MODBUSR(A, 130, Uint16),\r\n0, \"Nečinnost/ventilátor\" ,\r\n1, \"Vytápění\",\r\n2, \"Chlazení\",\r\n\"Chyba\");"
+          },
+          {
+            "AttributeDefinition":{
+              "Name":"Odmrazování"
+            },
+            "ReadFormula":"Switch(MODBUSR(A, 35, Uint16),\r\n0, \"Žádné odmrazování\" ,\r\n1, \"Alespoň 1 jednotka v odmrazování\",\r\n\"Chyba\");"
+          }
+        ]
+      }
+    }
+  ],
+  "name":"Daikin EKMBPP1",
+  "producer":"Daikin",
+  "model":"EKMBPP1",
+  "description":"Adapter Modbus",
+  "ccu_model":"ModbusRtuCCU",
+  "communication_type":"Modbus RTU",
+  "category":"Industrial",
+  "import_parameters":[
+    {
+      "name":"${device_SlaveId}",
+      "value":"1",
+      "id":"SlaveId"
+    },
+    {
+      "name":"${ipAddress}",
+      "value":"192.168.1.0",
+      "id":"IpAddress"
+    }
+  ]
+}
