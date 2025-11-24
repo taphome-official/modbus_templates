@@ -181,7 +181,7 @@ END</ReadTemperature>
             <ServiceActionsScripts></ServiceActionsScripts>
             <CustomDeviceVariables></CustomDeviceVariables>
             <TemperatureCalibration>0</TemperatureCalibration>
-            <ReadTemperature>var v := MODBUSR(H, 49, UInt16);
+            <ReadTemperature>var v := MODBUSR(H, 49, Int16);
 
 if (GETBIT(v,15))
     RETURN (-(V &amp; 0x7FFF));
