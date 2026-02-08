@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Templates format="2" protocolVersion="89">
+  <Template revision="1.0" id="3279C911-12D6-438D-9132-2F1B768ADCD9">
+    <SuggestedCCUParameters>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <Baudrate>9600</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
+    </SuggestedCCUParameters>
+    <ImportParameters>
+      <Parameter>
+        <Id>SlaveId</Id>
+        <Name>Slave Id</Name>
+        <Value>1</Value>
+      </Parameter>
+      <Parameter>
+        <Id>IpAddress</Id>
+        <Name>IP address</Name>
+        <Value>192.168.1.0</Value>
+      </Parameter>
+    </ImportParameters>
+    <RevisionHistory>
+      <Revision id="1.0">Initial version</Revision>
+    </RevisionHistory>
+    <Name>QDL80A Temperature sensor</Name>
+    <CcuModel>ModbusRtuCCU</CcuModel>
+    <Producer></Producer>
+    <Model></Model>
+    <Description></Description>
+    <Module>
+      <Name>QDL80A Temperature sensor</Name>
+      <Id>-1</Id>
+      <Model>ModbusModule</Model>
+      <DeviceProperties>
+        <DeviceType>7001</DeviceType>
+        <InternalPollInterval>30000</InternalPollInterval>
+        <PrefetchModeId>0</PrefetchModeId>
+        <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Slave Address"},"ReadFormula":"modbusr(H, 0, int16)"},{"AttributeDefinition":{"Name":"Baud Rate"},"ReadFormula":"SWITCH(modbusr(H, 1, int16),\n\t0, 1200,\n\t1, 2400,\n\t2, 4800,\n\t3, 9600,\n\t4, 19200,\n\t5, 38400,\n      NaN\n);"},{"AttributeDefinition":{"Name":"Pressure Unit"},"ReadFormula":"SWITCH(modbusr(H, 2, int16),\n\t0, \u0022Pa\u0022,\n\t1, \u0022Kpa\u0022,\n\t2, \u0022Mpa\u0022,\n\t3, \u0022Mmh2o\u0022,\n\t4, \u0022Mh2\u0022,\n\t5, \u0022Bar\u0022,\n\t6, \u0022Psi\u0022,\n\t7, \u0022Atm\u0022,\n\t8, \u0022Kgf/Cm2\u0022,\n\t9, \u0022Mm\u0022,\n\t10, \u0022M\u0022,\n\t13, \u0022KN\u0022,\n\tNaN\n);"},{"AttributeDefinition":{"Name":"Pressure Decimal Points"},"ReadFormula":"SWITCH(modbusr(H, 3, int16),\n\t0, \u0022####\u0022,\n\t1, \u0022###.#\u0022,\n\t2, \u0022##.##\u0022,\n\t3, \u0022#.###\u0022,\t\n\t4, \u0022#.###\u0022,\n\tNaN\n);"},{"AttributeDefinition":{"Name":"Temperature Unit"},"ReadFormula":"SWITCH(modbusr(H, 6, int16),\n\t1000, \u0022\u00B0C\u0022,\n\tNaN\n);"}]</ServiceAttributesFormulas>
+        <ServiceActionsScripts>[{"ActionDefinition":{"Name":"Rewrite the Slave Address","NumericParameters":[{"FriendlyName":"Slave Address","Abbreviation":"SlaveAddr","IsFloat":false,"MinValue":1,"MaxValue":247}],"BoolParameters":[],"EnumParameters":[]},"Script":"modbusw(SH, 0, int16, SlaveAddr);"}]</ServiceActionsScripts>
+        <SlaveId>$[SlaveId]</SlaveId>
+        <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
+      </DeviceProperties>
+      <Devices>
+        <Device>
+          <Name>${temperatureSensor}</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-2</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTemperature>MODBUSR(H, 4, Int16) / 10</ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+      </Devices>
+    </Module>
+  </Template>
+</Templates>
