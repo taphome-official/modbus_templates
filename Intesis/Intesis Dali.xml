@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Templates format="2" protocolVersion="84">
   <Template revision="1.0" id="8c794050-046d-4187-9e4b-c9d910f516de">
     <SuggestedCCUParameters>
@@ -4161,7 +4161,7 @@ modbusw(H, base + 4, uint16, 1);</WriteLevel>
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4183,7 +4183,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4205,7 +4205,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4227,7 +4227,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4249,7 +4249,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4271,7 +4271,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4293,7 +4293,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4315,7 +4315,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4337,7 +4337,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4359,7 +4359,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4381,7 +4381,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4403,7 +4403,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4425,7 +4425,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4447,7 +4447,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4469,7 +4469,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>
@@ -4491,7 +4491,7 @@ end
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel></ReadLevel>
             <WriteLevel>if !isnull(Le)
-	modbusw(H, (20 * GA) + 6400, uint16, Le * 100);
+	modbusw(H, (20 * GA) + 6400 + base_modifier, uint16, Le * 100);
 end
 </WriteLevel>
             <IconId>0</IconId>

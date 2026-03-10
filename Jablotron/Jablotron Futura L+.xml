@@ -21,7 +21,7 @@
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
     </RevisionHistory>
-    <Name>Jablotron Futura 3.0</Name>
+    <Name>Jablotron Futura L+</Name>
     <CcuModel>ModbusTcpCCU</CcuModel>
     <Producer></Producer>
     <Model></Model>
