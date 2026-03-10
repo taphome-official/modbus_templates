@@ -21,14 +21,14 @@
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
     </RevisionHistory>
-    <Name>Jablotron Futura 3.0</Name>
+    <Name>Jablotron Futura L,M,S</Name>
     <CcuModel>ModbusTcpCCU</CcuModel>
     <Producer></Producer>
     <Model></Model>
     <Description></Description>
     <Category>1</Category>                         
     <Module>
-      <Name>Jablotron Futura 3.0</Name>
+      <Name>Jablotron Futura L,M,S</Name>
       <Id>-1</Id>
       <Model>ModbusModule</Model>
       <DeviceProperties>
@@ -155,6 +155,29 @@ IF (GETBIT(Code,13), ADDWARNING(13,"Obecná chyba SuperBreeze"));</ReadScript>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
+        <Device>                
+          <Name>Automatická cirkulace</Name>
+          <Model>ModbusSwitch</Model>
+          <Id>-5</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <NegateState>False</NegateState>
+            <OnStateIconId>113</OnStateIconId>
+            <OffStateIconId>114</OffStateIconId>
+            <OnStateName>${general_on}</OnStateName>
+            <OffStateName>${general_off}</OffStateName>
+            <ReadSwitchState>MODBUSR(H, 18, Bool)</ReadSwitchState>
+            <WriteSwitchState>MODBUSW(H, 18, Bool, St)</WriteSwitchState>
+          </DeviceProperties>
+        </Device>        
         <Device>
           <Name>Časový program</Name>
           <Model>ModbusSwitch</Model>
