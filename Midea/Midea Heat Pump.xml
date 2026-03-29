@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="76">
-  <Template revision="1.0" id="1e8dd5b7-e6f9-4b4c-b63e-04aff449c612">
+<Templates format="2" protocolVersion="89" locationId="f8904c5b-737c-491c-89db-a0b44237a93b">
+  <Template revision="1.0">
     <SuggestedCCUParameters>
       <UseAsciiCommunication>False</UseAsciiCommunication>
       <StopBits>One</StopBits>
@@ -81,12 +81,30 @@
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 140, Int16) / 100</ReadState>
             <WriteState></WriteState>
+            <IconId>0</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Celkova spotreba tepelneho cerpadla</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-4</Id>
+          <DeviceProperties>
+            <DeviceType>9003</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTotalConsumption>MODBUSR(H, 144, Int16) </ReadTotalConsumption>
+            <ReadDemand></ReadDemand>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>Cielova teplota Ekvitermiky</Name>
           <Model>ModbusTemperatureSensor</Model>
-          <Id>-4</Id>
+          <Id>-5</Id>
           <DeviceProperties>
             <DeviceType>3004</DeviceType>
             <InternalPollInterval>15000</InternalPollInterval>
@@ -103,7 +121,7 @@
         <Device>
           <Name>Compressor operating time</Name>
           <Model>ModbusVariable</Model>
-          <Id>-5</Id>
+          <Id>-6</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <SerializedValueLogTypeConversions />
@@ -118,12 +136,13 @@
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 122, Int16)</ReadState>
             <WriteState></WriteState>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>DC bus current</Name>
           <Model>ModbusVariable</Model>
-          <Id>-6</Id>
+          <Id>-7</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <SerializedValueLogTypeConversions>{"88":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:88}\u0022}"}</SerializedValueLogTypeConversions>
@@ -138,12 +157,13 @@
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 133, Int16)</ReadState>
             <WriteState></WriteState>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>DC bus voltage</Name>
           <Model>ModbusVariable</Model>
-          <Id>-7</Id>
+          <Id>-8</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <SerializedValueLogTypeConversions>{"87":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:87}\u0022}"}</SerializedValueLogTypeConversions>
@@ -158,12 +178,55 @@
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 134, Int16) *10</ReadState>
             <WriteState></WriteState>
+            <IconId>0</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Defrosting</Name>
+          <Model>ModbusReedContact</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <OnStateIconId>349</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>Defrosting</OnStateName>
+            <OffStateName>Off</OffStateName>
+            <ReadState>GETBIT(MODBUSR(H, 128, Int16),1) </ReadState>
+            <NegateState>False</NegateState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Dezinfekcia</Name>
+          <Model>ModbusReedContact</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <OnStateIconId>66</OnStateIconId>
+            <OffStateIconId>61</OffStateIconId>
+            <OnStateName>Dezinfekcia</OnStateName>
+            <OffStateName>Off</OffStateName>
+            <ReadState>GETBIT(MODBUSR(H, 5, Int16),4) </ReadState>
+            <NegateState>False</NegateState>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>Dezinfekcia</Name>
           <Model>ModbusSwitch</Model>
-          <Id>-8</Id>
+          <Id>-11</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>2500</InternalPollInterval>
@@ -179,16 +242,14 @@
             <OffStateIconId>61</OffStateIconId>
             <OnStateName>${general_on}</OnStateName>
             <OffStateName>${general_off}</OffStateName>
-            <ReadSwitchState>GETBIT(MODBUSR(H, 5, Int16),4) </ReadSwitchState>
-            <WriteSwitchState>var reg := MODBUSR(H, 5 , UInt16);
-MODBUSW(H, 5 , UInt16, SETBIT(reg,4,St));
-</WriteSwitchState>
+            <ReadSwitchState></ReadSwitchState>
+            <WriteSwitchState></WriteSwitchState>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>Frekvencia Kompresoru</Name>
           <Model>ModbusVariable</Model>
-          <Id>-9</Id>
+          <Id>-12</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <SerializedValueLogTypeConversions>{"58":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:58}\u0022}"}</SerializedValueLogTypeConversions>
@@ -203,12 +264,34 @@ MODBUSW(H, 5 , UInt16, SETBIT(reg,4,St));
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 100, Int16)</ReadState>
             <WriteState></WriteState>
+            <IconId>0</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>IBH1 - Immersion heater 3kw</Name>
+          <Model>ModbusReedContact</Model>
+          <Id>-13</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>1500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <OnStateIconId>351</OnStateIconId>
+            <OffStateIconId>352</OffStateIconId>
+            <OnStateName>Heating</OnStateName>
+            <OffStateName>Not heating</OffStateName>
+            <ReadState>GETBIT(MODBUSR(H, 129, Int16),0) </ReadState>
+            <NegateState>False</NegateState>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>Inlet water temperature</Name>
           <Model>ModbusTemperatureSensor</Model>
-          <Id>-10</Id>
+          <Id>-14</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>15000</InternalPollInterval>
@@ -223,9 +306,9 @@ MODBUSW(H, 5 , UInt16, SETBIT(reg,4,St));
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Kurenie</Name>
+          <Name>Kurenie - TC</Name>
           <Model>ModbusSwitch</Model>
-          <Id>-11</Id>
+          <Id>-15</Id>
           <DeviceProperties>
             <DeviceType>140</DeviceType>
             <InternalPollInterval>2500</InternalPollInterval>
@@ -249,7 +332,7 @@ MODBUSW(H, 0 , UInt16, SETBIT(reg,1,St));</WriteSwitchState>
         <Device>
           <Name>Otacky ventilatora</Name>
           <Model>ModbusVariable</Model>
-          <Id>-12</Id>
+          <Id>-16</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <SerializedValueLogTypeConversions />
@@ -264,12 +347,13 @@ MODBUSW(H, 0 , UInt16, SETBIT(reg,1,St));</WriteSwitchState>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 102, Int16) </ReadState>
             <WriteState></WriteState>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>Outdoor unit current</Name>
           <Model>ModbusVariable</Model>
-          <Id>-13</Id>
+          <Id>-17</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <SerializedValueLogTypeConversions>{"88":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:88}\u0022}"}</SerializedValueLogTypeConversions>
@@ -284,12 +368,13 @@ MODBUSW(H, 0 , UInt16, SETBIT(reg,1,St));</WriteSwitchState>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 118, Int16)</ReadState>
             <WriteState></WriteState>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>Outdoor unit high pressure value</Name>
           <Model>ModbusVariable</Model>
-          <Id>-14</Id>
+          <Id>-18</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <SerializedValueLogTypeConversions />
@@ -304,12 +389,13 @@ MODBUSW(H, 0 , UInt16, SETBIT(reg,1,St));</WriteSwitchState>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 116, Int16)</ReadState>
             <WriteState></WriteState>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>Outdoor unit low pressure</Name>
           <Model>ModbusVariable</Model>
-          <Id>-15</Id>
+          <Id>-19</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <SerializedValueLogTypeConversions />
@@ -324,12 +410,13 @@ MODBUSW(H, 0 , UInt16, SETBIT(reg,1,St));</WriteSwitchState>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 117, Int16)</ReadState>
             <WriteState></WriteState>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>Outdoor unit voltage</Name>
           <Model>ModbusVariable</Model>
-          <Id>-16</Id>
+          <Id>-20</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <SerializedValueLogTypeConversions>{"87":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:87}\u0022}"}</SerializedValueLogTypeConversions>
@@ -344,12 +431,13 @@ MODBUSW(H, 0 , UInt16, SETBIT(reg,1,St));</WriteSwitchState>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 119, Int16) </ReadState>
             <WriteState></WriteState>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>Outlet water temperature</Name>
           <Model>ModbusTemperatureSensor</Model>
-          <Id>-17</Id>
+          <Id>-21</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>15000</InternalPollInterval>
@@ -364,9 +452,27 @@ MODBUSW(H, 0 , UInt16, SETBIT(reg,1,St));</WriteSwitchState>
           </DeviceProperties>
         </Device>
         <Device>
+          <Name>Produkcia tepla</Name>
+          <Model>ModbusElectricityMeter</Model>
+          <Id>-22</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts>[]</ServiceActionsScripts>
+            <CustomDeviceVariables>[]</CustomDeviceVariables>
+            <ReadTotalConsumption>MODBUSR(H, 146, Int16)</ReadTotalConsumption>
+            <ReadDemand>
+</ReadDemand>
+          </DeviceProperties>
+        </Device>
+        <Device>
           <Name>Režim TČ</Name>
           <Model>ModbusMultiValueSwitch</Model>
-          <Id>-18</Id>
+          <Id>-23</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>2500</InternalPollInterval>
@@ -413,12 +519,50 @@ MODBUSW(H, 0 , UInt16, SETBIT(reg,1,St));</WriteSwitchState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Teplota TUV</Name>
-          <Model>ModbusThermostat</Model>
-          <Id>-19</Id>
+          <Name>SV1 - 3-way valve</Name>
+          <Model>ModbusReedContact</Model>
+          <Id>-24</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <OnStateIconId>187</OnStateIconId>
+            <OffStateIconId>191</OffStateIconId>
+            <OnStateName>Boiler Heating</OnStateName>
+            <OffStateName>Floor Heating</OffStateName>
+            <ReadState>GETBIT(MODBUSR(H, 129, Int16),4) </ReadState>
+            <NegateState>False</NegateState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Teplota senzor TUV</Name>
+          <Model>ModbusTemperatureSensor</Model>
+          <Id>-25</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ReadTemperature>MODBUSR(H, 115, Int16) </ReadTemperature>
+            <ReadHumidity></ReadHumidity>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Teplota TUV</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-26</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>10000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
             <PrefetchModeId>0</PrefetchModeId>
@@ -437,7 +581,7 @@ MODBUSW(H, 0 , UInt16, SETBIT(reg,1,St));</WriteSwitchState>
         <Device>
           <Name>TUV</Name>
           <Model>ModbusSwitch</Model>
-          <Id>-20</Id>
+          <Id>-27</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>2500</InternalPollInterval>
@@ -461,7 +605,7 @@ MODBUSW(H, 0, UInt16, SETBIT(reg,2,St));</WriteSwitchState>
         <Device>
           <Name>Vonkajsia Teplota TC</Name>
           <Model>ModbusTemperatureSensor</Model>
-          <Id>-21</Id>
+          <Id>-28</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <InternalPollInterval>1000</InternalPollInterval>
@@ -478,7 +622,7 @@ MODBUSW(H, 0, UInt16, SETBIT(reg,2,St));</WriteSwitchState>
         <Device>
           <Name>Water flow</Name>
           <Model>ModbusVariable</Model>
-          <Id>-22</Id>
+          <Id>-29</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
             <SerializedValueLogTypeConversions>{"83":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:83}\u0022}"}</SerializedValueLogTypeConversions>
@@ -486,13 +630,36 @@ MODBUSW(H, 0, UInt16, SETBIT(reg,2,St));</WriteSwitchState>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
             <PrefetchModeId>0</PrefetchModeId>
-            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceAttributesFormulas>[]</ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
-            <CustomDeviceVariables />
+            <CustomDeviceVariables>[]</CustomDeviceVariables>
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 138, Int16) / 100</ReadState>
             <WriteState></WriteState>
+            <IconId>0</IconId>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Zone 1 water temperature</Name>
+          <Model>ModbusThermostat</Model>
+          <Id>-30</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables />
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <MinTemperature>10</MinTemperature>
+            <MaxTemperature>30</MaxTemperature>
+            <ReadCurrentTemperature>MODBUSR(H, 2, Int16) &amp; 0xFF</ReadCurrentTemperature>
+            <ReadDesiredTemperature></ReadDesiredTemperature>
+            <WriteDesiredTemperature>MODBUSW(H, 2, Int16, SETBYTE(MODBUSR(H, 2, UInt16), 0, Se))</WriteDesiredTemperature>
+            <ReadHumidity></ReadHumidity>
           </DeviceProperties>
         </Device>
       </Devices>
