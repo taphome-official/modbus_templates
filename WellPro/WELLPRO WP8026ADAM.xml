@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Templates format="2" protocolVersion="54">
-  <Template id="41676937-7be7-4ec4-aee3-07fc428cdbbb" revision="1.0">
+  <Template id="32af6317-854a-4f7a-82f8-39099cea394c" revision="1.0">
     <Name>WELLPRO WP8026ADAM</Name>
     <CcuModel>ModbusTcpCCU</CcuModel>
     <Producer>WellPro</Producer>
@@ -32,163 +32,147 @@
       </DeviceProperties>
       <Devices>
         <Device>
-          <Name>DO6 -RTU</Name>
+          <Name>DI 1 -RTU</Name>
           <Id>-2</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 5, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 5,Bool,St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 0, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO1 -RTU</Name>
+          <Name>DI2 - RTU</Name>
           <Id>-3</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 0, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 0, Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 1, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO2 -RTU</Name>
+          <Name>DI3 - RTU</Name>
           <Id>-4</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 1, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 1, Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 2, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO16 -RTU</Name>
+          <Name>DI4 -RTU</Name>
           <Id>-5</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 14, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 14, Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 3, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO3 -RTU</Name>
+          <Name>DI5 - RTU</Name>
           <Id>-6</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 2, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 2, Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 4, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO4 -RTU</Name>
+          <Name>DI6 - RTU</Name>
           <Id>-7</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 3, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 3, Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 5, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO5 -RTU</Name>
+          <Name>DI7 -RTU</Name>
           <Id>-8</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 4, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 4, Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 6, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO7 -RTU</Name>
+          <Name>DI8 -RTU</Name>
           <Id>-9</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 6, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 6, Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 7, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO8 -RTU</Name>
+          <Name>DI9 -RTU</Name>
           <Id>-10</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 7, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 7, Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 8, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO10 -RTU</Name>
+          <Name>DI10 - RTU</Name>
           <Id>-11</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 9, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 9,Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 9, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO11 -RTU</Name>
+          <Name>DI11 - RTU</Name>
           <Id>-12</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 10, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 10, Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 10, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO12 -RTU</Name>
+          <Name>DI12 -RTU</Name>
           <Id>-13</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 11, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 11, Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 11, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO13 -RTU</Name>
+          <Name>DI13 - RTU</Name>
           <Id>-14</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 12, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 12, Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 12, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO14 - RTU</Name>
+          <Name>DI14 - RTU</Name>
           <Id>-15</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 13, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 13, Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 13, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO15 -RTU</Name>
+          <Name>DI15 -RTU</Name>
           <Id>-16</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 14, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 14, Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 14, Bool)</ReadState>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>DO9 -RTU</Name>
+          <Name>DI16 -RTU</Name>
           <Id>-17</Id>
-          <Model>ModbusSwitch</Model>
+          <Model>ModbusReedContact</Model>
           <DeviceProperties>
             <InternalPollInterval>2500</InternalPollInterval>
-            <ReadSwitchState>MODBUSR(C, 8, Bool)</ReadSwitchState>
-            <WriteSwitchState>MODBUSWNE(C, 8, Bool, St)</WriteSwitchState>
+            <ReadState>MODBUSR(D, 15, Bool)</ReadState>
           </DeviceProperties>
         </Device>
       </Devices>
