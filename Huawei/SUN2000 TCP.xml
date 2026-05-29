@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="87">
-  <Template revision="1.0" id="105ffe63-8edf-490a-ac48-461c64d056d1">
+<Templates format="2" protocolVersion="90" >
+  <Template revision="1.0" id="154a7317-eb9b-45ba-b3eb-99735b28f136">
     <SuggestedCCUParameters>
-      <ReconnectDelay>0</ReconnectDelay>
-      <AfterConnectDelay>0</AfterConnectDelay>
-      <TcpNoDelay>True</TcpNoDelay>
+      <ReadWriteTimeout>10000</ReadWriteTimeout>
+      <DelayBetweenRequests>1000</DelayBetweenRequests>
       <TcpPort>502</TcpPort>
-      <DelayBetweenRequests>2500</DelayBetweenRequests>
-      <ReadWriteTimeout>12000</ReadWriteTimeout>
+      <TcpNoDelay>False</TcpNoDelay>
+      <AfterConnectDelay>0</AfterConnectDelay>
+      <ReconnectDelay>0</ReconnectDelay>
     </SuggestedCCUParameters>
     <ImportParameters>
       <Parameter>
@@ -35,6 +35,7 @@
       <Model>ModbusModule</Model>
       <DeviceProperties>
         <DeviceType>7001</DeviceType>
+        <PropertiesVersion>1</PropertiesVersion>
         <InternalPollInterval>30000</InternalPollInterval>
         <ReadScript>var a1 := MODBUSR(H, 32008, Uint16);
 var a2 := MODBUSR(H, 32009, Uint16);
@@ -77,11 +78,12 @@ IF(GETBIT(a2,15) = 1, ADDERROR(${abnorm_PV_module_config}, 2080));</ReadScript>
       </DeviceProperties>
       <Devices>
         <Device>
-          <Name>Active Power 1</Name>
+          <Name>Active Power</Name>
           <Model>ModbusElectricityMeter</Model>
           <Id>-2</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
+            <PropertiesVersion>1</PropertiesVersion>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -89,58 +91,39 @@ IF(GETBIT(a2,15) = 1, ADDERROR(${abnorm_PV_module_config}, 2080));</ReadScript>
             <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":${act_pow_peak_thisday},"Section":null},"ReadFormula":"var pf := MODBUSR(H ,32084, Int16) ;\r\nMODBUSR(H, 32078, Int32, 2) + \" kW\""},{"AttributeDefinition":{"Name":${reactive_power},"Section":null},"ReadFormula":"var pf := MODBUSR(H ,32084, Int16) ;\r\nMODBUSR(H, 32082, Int32, 2)/pf + \" kVar\""},{"AttributeDefinition":{"Name":${rated_pow},"Section":null},"ReadFormula":"MODBUSR(H, 30073, Uint32, 2)/1000 + \" kW\""},{"AttributeDefinition":{"Name":${react_pow_compensation} + "(PW)","Section":null},"ReadFormula":"MODBUSR(H, 40122, Int16)/1000"},{"AttributeDefinition":{"Name":${react_pow_compensation} + "(Q/S)","Section":null},"ReadFormula":"MODBUSR(H, 40123, Int16)/1000"},{"AttributeDefinition":{"Name":"${act_pow_derating_%} (0.1%)","Section":null},"ReadFormula":"MODBUSR(H, 40122, Int16)/10 + \"%\""},{"AttributeDefinition":{"Name":"${active_pow_derating} (fixed value W)","Section":null},"ReadFormula":"MODBUSR(H, 40126, Uint32, 2) + \" W\""},{"AttributeDefinition":{"Name":${max_act_pow},"Section":null},"ReadFormula":"MODBUSR(H, 30075, Uint32, 2)/1000 + \" kW\""},{"AttributeDefinition":{"Name":${max_apparent_pow},"Section":null},"ReadFormula":"MODBUSR(H, 30077, Uint32, 2)/1000 + \" kVA\""},{"AttributeDefinition":{"Name":${max_reactive_pow_fedToGrid},"Section":null},"ReadFormula":"MODBUSR(H, 30079, Uint32, 2)/1000 + \" kVar\""},{"AttributeDefinition":{"Name":${max_reactive_pow_absFromGrid},"Section":null},"ReadFormula":"MODBUSR(H, 30081, Uint32, 2)/1000 + \" kVar\""}]</ServiceAttributesFormulas>
             <ServiceActionsScripts>[{"ActionDefinition":{"Name":"${react_pow_compensation} (PF)","NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Reactive power compensation","Abbreviation":"pf","Values":[{"Item1":-1.0,"Item2":"-1"},{"Item1":-0.9,"Item2":"-0.9"},{"Item1":-0.8,"Item2":"-0.8"},{"Item1":0.8,"Item2":"0.8"},{"Item1":0.9,"Item2":"0.9"},{"Item1":1.0,"Item2":"1"}]}]},"Script":"MODBUSWNE(H, 40122, Int16, pf*1000);"},{"ActionDefinition":{"Name":"${react_pow_compensation} (Q/S)","NumericParameters":[{"FriendlyName":"Reactive power compensation (-1, 1]","Abbreviation":"rpc","IsFloat":true,"MinValue":-1.0,"MaxValue":1.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 40123, Int16, rpc*1000);"},{"ActionDefinition":{"Name":${active_pow_derating_%},"NumericParameters":[{"FriendlyName":"Active Power Derating Percent(%)","Abbreviation":"apdp","IsFloat":false,"MinValue":0.0,"MaxValue":100.0}],"BoolParameters":[],"EnumParameters":[]},"Script":"MODBUSW(H, 40125, Uint16, apdp*10)"}]</ServiceActionsScripts>
             <CustomDeviceVariables></CustomDeviceVariables>
-            <ReadTotalConsumption>MODBUSR(H, 32080, Int32,2)</ReadTotalConsumption>
-            <ReadDemand>MODBUSR(H ,32084, Int16) ;
-						</ReadDemand>
+            <ReadTotalConsumption>MODBUSR(H, 32114, Uint32, 2)/100</ReadTotalConsumption>
+            <ReadDemand>MODBUSR(H , 37113, Int32, 2)/1000
+                        </ReadDemand>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Aktuálny odber/výroba</Name>
-          <Model>ModbusVariable</Model>
+          <Name>${deviceType_BatterySOC}</Name>
+          <Model>ModbusAnalogInput</Model>
           <Id>-3</Id>
           <DeviceProperties>
-            <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
-            <InternalPollInterval>15000</InternalPollInterval>
-            <InitializeScript></InitializeScript>
-            <ReadScript></ReadScript>
-            <PrefetchModeId>0</PrefetchModeId>
-            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Frequency"},"ReadFormula":"MODBUSR(H, 32085, Uint16)/100 \u002B \u0022 Hz\u0022"},{"AttributeDefinition":{"Name":"A Voltage"},"ReadFormula":"MODBUSR(H, 32069, Int16)/10 \u002B \u0022 V\u0022"},{"AttributeDefinition":{"Name":"B Voltage"},"ReadFormula":"MODBUSR(H, 32070, Int16)/10 \u002B \u0022 V\u0022"},{"AttributeDefinition":{"Name":"C Voltage"},"ReadFormula":"MODBUSR(H, 32071, Int16)/10 \u002B \u0022 V\u0022"},{"AttributeDefinition":{"Name":"A Current"},"ReadFormula":"MODBUSR(H, 32072, Int32, 2)/1000 \u002B \u0022 A\u0022"},{"AttributeDefinition":{"Name":"B Current"},"ReadFormula":"MODBUSR(H, 32074, Int32, 2)/1000 \u002B \u0022 A\u0022"},{"AttributeDefinition":{"Name":"C Current"},"ReadFormula":"MODBUSR(H, 32076, Int32, 2)/1000 \u002B \u0022 A\u0022"}]</ServiceAttributesFormulas>
-            <ServiceActionsScripts></ServiceActionsScripts>
-            <CustomDeviceVariables></CustomDeviceVariables>
-            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
-            <IsReadOnly>True</IsReadOnly>
-            <ReadState>MODBUSR(H, 32064, Int32, 2)/1000</ReadState>
-            <WriteState></WriteState>
-            <IconId>0</IconId>
-          </DeviceProperties>
-        </Device>
-        <Device>
-          <Name>Batéria</Name>
-          <Model>ModbusDimmer</Model>
-          <Id>-4</Id>
-          <DeviceProperties>
-            <DeviceType>0</DeviceType>
+            <DeviceType>11001</DeviceType>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedValueTypeConversions></SerializedValueTypeConversions>
             <InternalPollInterval>2500</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
             <PrefetchModeId>0</PrefetchModeId>
-            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Running Status"},"ReadFormula":"SWITCH(MODBUSR(H, 37762, Uint16),\r\n0, \u0022Offline\u0022, \r\n1, \u0022Standby\u0022,\r\n2, \u0022Running\u0022,\r\n3, \u0022Fault\u0022,\r\n4, \u0022Sleep mode\u0022,\r\n\u0022Error\u0022\r\n);"},{"AttributeDefinition":{"Name":"Current Day Charge"},"ReadFormula":"MODBUSR(H, 37784, Uint32)/100 \u002B \u0022 kWh\u0022;"},{"AttributeDefinition":{"Name":"Current Day Discharge"},"ReadFormula":"MODBUSR(H, 37786, Uint32)/100 \u002B \u0022 kWh\u0022;"}]</ServiceAttributesFormulas>
-            <ServiceActionsScripts>[]</ServiceActionsScripts>
-            <CustomDeviceVariables></CustomDeviceVariables>
-            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
-            <ReadLevel>MODBUSR(H, 37760, Uint16)/1000</ReadLevel>
-            <WriteLevel></WriteLevel>
-            <IconId>3021</IconId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables>[]</CustomDeviceVariables>
+            <ReadInputLevel>var reg := MODBUSR(H, 37760, Uint16)/1000;
+IF(reg &gt;1, ADDINFO("Batéria nepripojená"));
+return(reg);</ReadInputLevel>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>${total_energy} 1</Name>
+          <Name>${total_energy}</Name>
           <Model>ModbusVariable</Model>
-          <Id>-5</Id>
+          <Id>-4</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions>{"59":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":59}\"}"}</SerializedValueLogTypeConversions>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedValueTypeConversions>{"59":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002259\\u0022}\u0022}"}</SerializedValueTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -150,18 +133,19 @@ IF(GETBIT(a2,15) = 1, ADDERROR(${abnorm_PV_module_config}, 2080));</ReadScript>
             <CustomDeviceVariables></CustomDeviceVariables>
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>True</IsReadOnly>
-            <ReadState>MODBUSR(H, 32106, UInt32, 2)/100</ReadState>
+            <ReadState>MODBUSR(H, 32106, Uint32, 2)/100</ReadState>
             <WriteState></WriteState>
-            <IconId>0</IconId>
+            <SerializedIcon>{"icon":0}</SerializedIcon>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Energia dnes</Name>
+          <Name>${energy_today}</Name>
           <Model>ModbusVariable</Model>
-          <Id>-6</Id>
+          <Id>-5</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions>{"59":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":59}\"}"}</SerializedValueLogTypeConversions>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedValueTypeConversions>{"59":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002259\\u0022}\u0022}"}</SerializedValueTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -173,16 +157,148 @@ IF(GETBIT(a2,15) = 1, ADDERROR(${abnorm_PV_module_config}, 2080));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 32114, Int32, 2)/100</ReadState>
             <WriteState></WriteState>
-            <IconId>0</IconId>
+            <SerializedIcon>{"icon":0}</SerializedIcon>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>PV1 ${current} 1</Name>
+          <Name>Grid Frequency</Name>
           <Model>ModbusVariable</Model>
+          <Id>-6</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedValueTypeConversions>{"58":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002258\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 32085, Uint16)/100</ReadState>
+            <WriteState></WriteState>
+            <SerializedIcon>{"icon":0}</SerializedIcon>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Maximum Feed Grid</Name>
+          <Model>ModbusDimmer</Model>
           <Id>-7</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions>{"88":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":88}\"}"}</SerializedValueLogTypeConversions>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedDefaultValuesSettings>{"Settings":{"42":{"DefaultValueType":0}}}</SerializedDefaultValuesSettings>
+            <InternalPollInterval>2500</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <ReadLevel>MODBUSR(H, 47418, Int16)/10</ReadLevel>
+            <WriteLevel>MODBUSW(H, 47418, Int16, Le * 10)</WriteLevel>
+            <SerializedIcon>{"icon":0}</SerializedIcon>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Maximum Feed Grid Power</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-8</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedValueTypeConversions>{"60":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002260\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 47416, Int32)/1000</ReadState>
+            <WriteState></WriteState>
+            <SerializedIcon>{"icon":0}</SerializedIcon>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Phase A Voltage</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-9</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedValueTypeConversions>{"87":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002287\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 32069, UInt16)/10</ReadState>
+            <WriteState></WriteState>
+            <SerializedIcon>{"icon":0}</SerializedIcon>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Phase B Voltage</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-10</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedValueTypeConversions>{"87":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002287\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 32070, Uint16)/10</ReadState>
+            <WriteState></WriteState>
+            <SerializedIcon>{"icon":0}</SerializedIcon>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Phase C Voltage</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-11</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedValueTypeConversions>{"87":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002287\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas></ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 32071, Uint16)/10</ReadState>
+            <WriteState></WriteState>
+            <SerializedIcon>{"icon":0}</SerializedIcon>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>PV1 ${current}</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-12</Id>
+          <DeviceProperties>
+            <DeviceType>0</DeviceType>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedValueTypeConversions>{"88":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002288\\u0022}\u0022}"}</SerializedValueTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -194,16 +310,17 @@ IF(GETBIT(a2,15) = 1, ADDERROR(${abnorm_PV_module_config}, 2080));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 32017, Int16)/100</ReadState>
             <WriteState></WriteState>
-            <IconId>0</IconId>
+            <SerializedIcon>{"icon":0}</SerializedIcon>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>PV2 ${current} 1</Name>
+          <Name>PV2 ${current}</Name>
           <Model>ModbusVariable</Model>
-          <Id>-8</Id>
+          <Id>-13</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions>{"88":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":88}\"}"}</SerializedValueLogTypeConversions>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedValueTypeConversions>{"88":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002288\\u0022}\u0022}"}</SerializedValueTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -215,16 +332,17 @@ IF(GETBIT(a2,15) = 1, ADDERROR(${abnorm_PV_module_config}, 2080));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 32019, Int16)/100</ReadState>
             <WriteState></WriteState>
-            <IconId>0</IconId>
+            <SerializedIcon>{"icon":0}</SerializedIcon>
           </DeviceProperties>
         </Device>
         <Device>
           <Name>PV3 elektrický prúd</Name>
           <Model>ModbusVariable</Model>
-          <Id>-9</Id>
+          <Id>-14</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions>{"88":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:88}\u0022}"}</SerializedValueLogTypeConversions>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedValueTypeConversions>{"88":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002288\\u0022}\u0022}"}</SerializedValueTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -236,16 +354,17 @@ IF(GETBIT(a2,15) = 1, ADDERROR(${abnorm_PV_module_config}, 2080));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H,32021, Int16)/100</ReadState>
             <WriteState></WriteState>
-            <IconId>0</IconId>
+            <SerializedIcon>{"icon":0}</SerializedIcon>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>PV4 ${current} 1</Name>
+          <Name>PV4 ${current}</Name>
           <Model>ModbusVariable</Model>
-          <Id>-10</Id>
+          <Id>-15</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <SerializedValueLogTypeConversions>{"88":"{\"ValueLogTypeConversionTypeId\":3,\"SerializedValueLogTypeConversion\":\"{\\\"Value1OnInput\\\":0.0,\\\"Value1OnOutput\\\":0.0,\\\"Value2OnInput\\\":1.0,\\\"Value2OnOutput\\\":1.0,\\\"SourceValueLogTypes\\\":[62],\\\"TargetValueLogType\\\":88}\"}"}</SerializedValueLogTypeConversions>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedValueTypeConversions>{"88":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002288\\u0022}\u0022}"}</SerializedValueTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -257,15 +376,17 @@ IF(GETBIT(a2,15) = 1, ADDERROR(${abnorm_PV_module_config}, 2080));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 32023, Int16)/100</ReadState>
             <WriteState></WriteState>
-            <IconId>0</IconId>
+            <SerializedIcon>{"icon":0}</SerializedIcon>
           </DeviceProperties>
         </Device>
         <Device>
-          <Name>Stav meniča</Name>
+          <Name>${inverter_state}</Name>
           <Model>ModbusMultiValueSwitch</Model>
-          <Id>-11</Id>
+          <Id>-16</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedDefaultValuesSettings>{"Settings":{"49":{"DefaultValueType":0}}}</SerializedDefaultValuesSettings>
             <InternalPollInterval>2500</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -274,36 +395,7 @@ IF(GETBIT(a2,15) = 1, ADDERROR(${abnorm_PV_module_config}, 2080));</ReadScript>
             <ServiceActionsScripts></ServiceActionsScripts>
             <CustomDeviceVariables></CustomDeviceVariables>
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
-            <Value0Index>0</Value0Index>
-            <Value1Index>1</Value1Index>
-            <Value2Index>2</Value2Index>
-            <Value3Index>3</Value3Index>
-            <Value4Index>4</Value4Index>
-            <Value5Index>5</Value5Index>
-            <Value6Index>8</Value6Index>
-            <Value7Index>6</Value7Index>
-            <Value8Index>7</Value8Index>
-            <Value9Index>9</Value9Index>
-            <Value0Name>${inverter_state}</Value0Name>
-            <Value1Name>${idle}</Value1Name>
-            <Value2Name>${starting}</Value2Name>
-            <Value3Name>On Grid</Value3Name>
-            <Value4Name>Shutdown</Value4Name>
-            <Value5Name>Grid Dispatch</Value5Name>
-            <Value6Name>IV scanning</Value6Name>
-            <Value7Name>Spot-Check</Value7Name>
-            <Value8Name>${inspecting}</Value8Name>
-            <Value9Name>${dc_input_det }</Value9Name>
-            <Value0IconId>227</Value0IconId>
-            <Value1IconId>226</Value1IconId>
-            <Value2IconId>107</Value2IconId>
-            <Value3IconId>345</Value3IconId>
-            <Value4IconId>304</Value4IconId>
-            <Value5IconId>346</Value5IconId>
-            <Value6IconId>120</Value6IconId>
-            <Value7IconId>113</Value7IconId>
-            <Value8IconId>57</Value8IconId>
-            <Value9IconId>108</Value9IconId>
+            <ValueDescriptionsSerialized>[{"value":0,"icon":{"icon":227},"name":"${inverter_state}","enabled":true},{"value":1,"icon":{"icon":226},"name":"${idle}","enabled":true},{"value":2,"icon":{"icon":107},"name":"${starting}","enabled":true},{"value":3,"icon":{"icon":345},"name":"On Grid","enabled":true},{"value":4,"icon":{"icon":304},"name":"Shutdown","enabled":true},{"value":5,"icon":{"icon":346},"name":"Grid Dispatch","enabled":true},{"value":7,"icon":{"icon":113},"name":"Spot-Check","enabled":true},{"value":8,"icon":{"icon":57},"name":"${inspecting}","enabled":true},{"value":6,"icon":{"icon":120},"name":"IV scanning","enabled":true},{"value":9,"icon":{"icon":108},"name":"${dc_input_det }","enabled":true}]</ValueDescriptionsSerialized>
             <OffStateValue>0</OffStateValue>
             <ReadSwitchState>var reg := MODBUSR(H, 32089, Uint16);
 IF(reg = 0, 0,
@@ -318,6 +410,28 @@ IF(reg = 2048, 6,
 IF(reg = 2304, 9
 ))))))))))</ReadSwitchState>
             <WriteSwitchState></WriteSwitchState>
+          </DeviceProperties>
+        </Device>
+        <Device>
+          <Name>Výroba DC</Name>
+          <Model>ModbusVariable</Model>
+          <Id>-17</Id>
+          <DeviceProperties>
+            <DeviceType>9002</DeviceType>
+            <PropertiesVersion>1</PropertiesVersion>
+            <SerializedValueTypeConversions>{"60":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002260\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <InternalPollInterval>15000</InternalPollInterval>
+            <InitializeScript></InitializeScript>
+            <ReadScript></ReadScript>
+            <PrefetchModeId>0</PrefetchModeId>
+            <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":"Frequency"},"ReadFormula":"MODBUSR(H, 32085, Uint16)/100 \u002B \u0022 Hz\u0022"},{"AttributeDefinition":{"Name":"A Voltage"},"ReadFormula":"MODBUSR(H, 32069, Int16)/10 \u002B \u0022 V\u0022"},{"AttributeDefinition":{"Name":"B Voltage"},"ReadFormula":"MODBUSR(H, 32070, Int16)/10 \u002B \u0022 V\u0022"},{"AttributeDefinition":{"Name":"C Voltage"},"ReadFormula":"MODBUSR(H, 32071, Int16)/10 \u002B \u0022 V\u0022"},{"AttributeDefinition":{"Name":"A Current"},"ReadFormula":"MODBUSR(H, 32072, Int32, 2)/1000 \u002B \u0022 A\u0022"},{"AttributeDefinition":{"Name":"B Current"},"ReadFormula":"MODBUSR(H, 32074, Int32, 2)/1000 \u002B \u0022 A\u0022"},{"AttributeDefinition":{"Name":"C Current"},"ReadFormula":"MODBUSR(H, 32076, Int32, 2)/1000 \u002B \u0022 A\u0022"}]</ServiceAttributesFormulas>
+            <ServiceActionsScripts></ServiceActionsScripts>
+            <CustomDeviceVariables></CustomDeviceVariables>
+            <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
+            <IsReadOnly>True</IsReadOnly>
+            <ReadState>MODBUSR(H, 32064, Int32, 2)/1000</ReadState>
+            <WriteState></WriteState>
+            <SerializedIcon>{"icon":0}</SerializedIcon>
           </DeviceProperties>
         </Device>
       </Devices>
