@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="90" >
+<Templates format="2" protocolVersion="88">
   <Template revision="1.0" id="037c2550-03e8-4a90-ba9b-a5c6e24edbb7">
     <SuggestedCCUParameters>
-      <ReadWriteTimeout>1000</ReadWriteTimeout>
-      <DelayBetweenRequests>-1</DelayBetweenRequests>
-      <Baudrate>19200</Baudrate>
-      <Parity>None</Parity>
-      <DataBits>8</DataBits>
-      <StopBits>One</StopBits>
       <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <Baudrate>19200</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
     </SuggestedCCUParameters>
     <ImportParameters>
       <Parameter>
@@ -36,7 +36,6 @@
       <Model>ModbusModule</Model>
       <DeviceProperties>
         <DeviceType>7001</DeviceType>
-        <PropertiesVersion>1</PropertiesVersion>
         <InternalPollInterval>30000</InternalPollInterval>
         <ReadScript>var reg := MODBUSR(A, 0x09, UInt16);
 IF(reg = 3, ADDERROR("Run Mode Fault"));
@@ -99,8 +98,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-2</Id>
           <DeviceProperties>
             <DeviceType>11001</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions></SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions></SerializedValueLogTypeConversions>
             <InternalPollInterval>25000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -117,8 +115,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-3</Id>
           <DeviceProperties>
             <DeviceType>11001</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions></SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions></SerializedValueLogTypeConversions>
             <InternalPollInterval>28000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -134,9 +131,8 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Model>ModbusVariable</Model>
           <Id>-4</Id>
           <DeviceProperties>
-            <DeviceType>9002</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"59":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002259\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"59":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:59}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>150000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -148,7 +144,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A, 0x52,LittleEndianInt32) / 10</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>226</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -157,7 +153,6 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-5</Id>
           <DeviceProperties>
             <DeviceType>9002</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -175,8 +170,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-6</Id>
           <DeviceProperties>
             <DeviceType>9005</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"60":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1E-05,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002260\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -188,7 +182,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A,0x0046, Int32)/1000</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -197,8 +191,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-7</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"58":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002258\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"58":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:58}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -210,7 +203,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A, 0x006D, Int16)/100</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -219,8 +212,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-8</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"58":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002258\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"58":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:58}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -232,7 +224,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A,0x0071, Int16)/100</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -241,8 +233,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-9</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"58":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002258\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"58":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:58}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -254,7 +245,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A,0x0075, Int16)/100</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -263,8 +254,6 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-10</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedDefaultValuesSettings>{"Settings":{"49":{"DefaultValueType":0}}}</SerializedDefaultValuesSettings>
             <InternalPollInterval>2500</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -273,7 +262,36 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <ServiceActionsScripts></ServiceActionsScripts>
             <CustomDeviceVariables></CustomDeviceVariables>
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
-            <ValueDescriptionsSerialized>[{"value":0,"icon":{"icon":209},"name":"Self Use Mode","enabled":true},{"value":1,"icon":{"icon":224},"name":"Feedin Priority","enabled":true},{"value":2,"icon":{"icon":235},"name":"Backup Mode","enabled":true},{"value":3,"icon":{"icon":101},"name":"Manual Mode","enabled":true},{"value":4,"icon":{"icon":2035,"parameters":{"Background":true}},"name":"Peak Shaving","enabled":true},{"value":5,"icon":{"icon":10},"name":"5","enabled":false},{"value":6,"icon":{"icon":11},"name":"6","enabled":false},{"value":7,"icon":{"icon":12},"name":"7","enabled":false},{"value":8,"icon":{"icon":13},"name":"8","enabled":false},{"value":9,"icon":{"icon":14},"name":"9","enabled":false}]</ValueDescriptionsSerialized>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>69</Value5Index>
+            <Value6Index>70</Value6Index>
+            <Value7Index>71</Value7Index>
+            <Value8Index>72</Value8Index>
+            <Value9Index>73</Value9Index>
+            <Value0Name>Self Use</Value0Name>
+            <Value1Name>Feedin Priority</Value1Name>
+            <Value2Name>Backup</Value2Name>
+            <Value3Name>Manual</Value3Name>
+            <Value4Name>Peak Shaving</Value4Name>
+            <Value5Name>5</Value5Name>
+            <Value6Name>6</Value6Name>
+            <Value7Name>7</Value7Name>
+            <Value8Name>8</Value8Name>
+            <Value9Name>9</Value9Name>
+            <Value0IconId>16</Value0IconId>
+            <Value1IconId>230</Value1IconId>
+            <Value2IconId>231</Value2IconId>
+            <Value3IconId>101</Value3IconId>
+            <Value4IconId>121</Value4IconId>
+            <Value5IconId>10</Value5IconId>
+            <Value6IconId>11</Value6IconId>
+            <Value7IconId>12</Value7IconId>
+            <Value8IconId>13</Value8IconId>
+            <Value9IconId>14</Value9IconId>
             <OffStateValue>0</OffStateValue>
             <ReadSwitchState>MODBUSR(H, 0x008B, Uint16)</ReadSwitchState>
             <WriteSwitchState>MODBUSW(SH, 0x001F, uint16, Mu)</WriteSwitchState>
@@ -285,8 +303,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-11</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"87":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002287\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"87":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:87}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -298,7 +315,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A,0x006A, Int16)/10</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -307,8 +324,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-12</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"87":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002287\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"87":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:87}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -320,7 +336,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A, 0x006E, Int16)/10</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -329,8 +345,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-13</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"87":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002287\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"87":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:87}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -342,7 +357,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A,0x0072, Int16)/10</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -351,8 +366,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-14</Id>
           <DeviceProperties>
             <DeviceType>9005</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"60":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002260\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>18000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -364,7 +378,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A, 0x46,LittleEndianInt32)/1000</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -372,9 +386,8 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Model>ModbusVariable</Model>
           <Id>-15</Id>
           <DeviceProperties>
-            <DeviceType>9002</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"60":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002260\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <DeviceType>0</DeviceType>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>60000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -386,7 +399,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A,0x0a, UInt16)/1000</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -395,8 +408,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-16</Id>
           <DeviceProperties>
             <DeviceType>9002</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"60":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002260\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -408,7 +420,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A,0x0b, UInt16)/1000</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -417,8 +429,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-17</Id>
           <DeviceProperties>
             <DeviceType>9002</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"60":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002260\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -430,7 +441,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(A, 0x0124, Uint16)/1000</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -439,8 +450,6 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-18</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedDefaultValuesSettings>{"Settings":{"42":{"DefaultValueType":0}}}</SerializedDefaultValuesSettings>
             <InternalPollInterval>55000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -451,7 +460,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <ShouldDoPeriodicWrite>True</ShouldDoPeriodicWrite>
             <ReadLevel>MODBUSR(H, 0x0094, Uint16) / 100</ReadLevel>
             <WriteLevel>MODBUSW(SH, 0x0063,  Uint16, Le * 100)</WriteLevel>
-            <SerializedIcon>{"icon":3019}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -460,7 +469,6 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-19</Id>
           <DeviceProperties>
             <DeviceType>3001</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
             <InternalPollInterval>80000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -478,9 +486,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
           <Id>-20</Id>
           <DeviceProperties>
             <DeviceType>9005</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"60":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002260\\u0022}\u0022}"}</SerializedValueTypeConversions>
-            <SerializedDefaultValuesSettings>{"Settings":{"62":{"DefaultValueType":0}}}</SerializedDefaultValuesSettings>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -492,7 +498,7 @@ IF(GETBIT(err, 11) = 1, ADDERROR("Fan 2 Fault"));</ReadScript>
             <IsReadOnly>False</IsReadOnly>
             <ReadState>MODBUSR(H, 0x00B6, Uint16)/100</ReadState>
             <WriteState>MODBUSW(SH, 0x0042, Uint16, Va*100)</WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
       </Devices>
