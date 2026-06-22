@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Templates format="2" protocolVersion="90" >
+<Templates format="2" protocolVersion="88">
   <Template revision="1.0" id="154a7317-eb9b-45ba-b3eb-99735b28f136">
     <SuggestedCCUParameters>
-      <ReadWriteTimeout>10000</ReadWriteTimeout>
-      <DelayBetweenRequests>1000</DelayBetweenRequests>
-      <TcpPort>502</TcpPort>
-      <TcpNoDelay>False</TcpNoDelay>
-      <AfterConnectDelay>0</AfterConnectDelay>
-      <ReconnectDelay>0</ReconnectDelay>
+      <UseAsciiCommunication>False</UseAsciiCommunication>
+      <StopBits>One</StopBits>
+      <DataBits>8</DataBits>
+      <Parity>None</Parity>
+      <Baudrate>9600</Baudrate>
+      <DelayBetweenRequests>-1</DelayBetweenRequests>
+      <ReadWriteTimeout>1000</ReadWriteTimeout>
     </SuggestedCCUParameters>
     <ImportParameters>
       <Parameter>
@@ -25,7 +26,7 @@
       <Revision id="1.0">Initial version</Revision>
     </RevisionHistory>
     <Name>SUN2000 TCP</Name>
-    <CcuModel>ModbusTcpCCU</CcuModel>
+    <CcuModel>ModbusRtuCCU</CcuModel>
     <Producer></Producer>
     <Model></Model>
     <Description></Description>
@@ -35,46 +36,45 @@
       <Model>ModbusModule</Model>
       <DeviceProperties>
         <DeviceType>7001</DeviceType>
-        <PropertiesVersion>1</PropertiesVersion>
         <InternalPollInterval>30000</InternalPollInterval>
         <ReadScript>var a1 := MODBUSR(H, 32008, Uint16);
 var a2 := MODBUSR(H, 32009, Uint16);
 IF(GETBIT(a1,0) = 1, ADDERROR("High String Voltage", 2001));
-IF(GETBIT(a1,1) = 1, ADDERROR(${dc_arc_fault}, 2002));
+IF(GETBIT(a1,1) = 1, ADDERROR("DC Arc Fault", 2002));
 IF(GETBIT(a1,2) = 1, ADDERROR("String Reversed", 2011));
 IF(GETBIT(a1,3) = 1, ADDWARNING("PV String Backfeed ", 2012));
 IF(GETBIT(a1,4) = 1, ADDWARNING("Abnormal String", 2013));
-IF(GETBIT(a1,5) = 1, ADDERROR(${afci_fault}, 2021));
-IF(GETBIT(a1,6)= 1, ADDERROR(${short_circ_L-PE}, 2021));
-IF(GETBIT(a1,7) = 1, ADDERROR(${power_grid_fail}, 2032));
-IF(GETBIT(a1,8) = 1, ADDERROR(${grid_undervoltage}, 2033));
-IF(GETBIT(a1,9) = 1, ADDERROR(${grid_overvoltage}, 2034));
-IF(GETBIT(a1,10) = 1, ADDERROR(${unbalanced_grid_V}, 2035));
-IF(GETBIT(a1,11) = 1, ADDERROR(${grid_overfrequency}, 2036));
-IF(GETBIT(a1,12) = 1, ADDERROR(${grid_underfrequency}, 2037));
-IF(GETBIT(a1,13) = 1, ADDERROR(${grid_freq_instability}, 2038));
-IF(GETBIT(a1,14) = 1, ADDERROR(${output_overcurr}, 2039));
-IF(GETBIT(a1,15) = 1, ADDERROR(${out_DC_large}, 2040));
-IF(GETBIT(a2,0) = 1, ADDERROR(${abnorm_leak_curr}, 2051));
-IF(GETBIT(a2,1) = 1, ADDERROR(${abnorm_gnd}, 2061));
-IF(GETBIT(a2,2) = 1, ADDERROR(${low_insul_res}, 2062));
-IF(GETBIT(a2,3) = 1, ADDERROR(${high_tempt}, 2063));
-IF(GETBIT(a2,4) = 1, ADDERROR(${abnorm_equip}, 2064));
-IF(GETBIT(a2,5) = 1, ADDERROR(${upgrade_fail}, 2065));
-IF(GETBIT(a2,6) = 1, ADDWARNING(${license_expired}, 2066));
-IF(GETBIT(a2,7) = 1, ADDERROR(${abnorm_monitor_unit}, 61440));
-IF(GETBIT(a2,8) = 1, ADDERROR(${power_collect_fault}, 2067));
-IF(GETBIT(a2,9) = 1, ADDERROR(${abnorm_energy_storage_dev}, 2068));
+IF(GETBIT(a1,5) = 1, ADDERROR("AFCI Fault", 2021));
+IF(GETBIT(a1,6)= 1, ADDERROR("Short Circuit L-PE", 2021));
+IF(GETBIT(a1,7) = 1, ADDERROR("Power Grid Failure", 2032));
+IF(GETBIT(a1,8) = 1, ADDERROR("Grid Undervoltage", 2033));
+IF(GETBIT(a1,9) = 1, ADDERROR("Grid Overvoltage", 2034));
+IF(GETBIT(a1,10) = 1, ADDERROR("Unbalanced Grid Voltage", 2035));
+IF(GETBIT(a1,11) = 1, ADDERROR("Grid Overfrequency", 2036));
+IF(GETBIT(a1,12) = 1, ADDERROR("Grid Underfrequency", 2037));
+IF(GETBIT(a1,13) = 1, ADDERROR("Grid Frequency Instability", 2038));
+IF(GETBIT(a1,14) = 1, ADDERROR("Output Overcurrent", 2039));
+IF(GETBIT(a1,15) = 1, ADDERROR("Output DC Component Too High", 2040));
+IF(GETBIT(a2,0) = 1, ADDERROR("Abnormal Leakage Current", 2051));
+IF(GETBIT(a2,1) = 1, ADDERROR("Abnormal Grounding", 2061));
+IF(GETBIT(a2,2) = 1, ADDERROR("Low Insulation Resistance", 2062));
+IF(GETBIT(a2,3) = 1, ADDERROR("High Temperature", 2063));
+IF(GETBIT(a2,4) = 1, ADDERROR("Abnormal Equipment", 2064));
+IF(GETBIT(a2,5) = 1, ADDERROR("Upgrade Failure", 2065));
+IF(GETBIT(a2,6) = 1, ADDWARNING("License Expired", 2066));
+IF(GETBIT(a2,7) = 1, ADDERROR("Abnormal Monitoring Unit", 61440));
+IF(GETBIT(a2,8) = 1, ADDERROR("Power Collector Fault", 2067));
+IF(GETBIT(a2,9) = 1, ADDERROR("Abnormal Energy Storage Device", 2068));
 IF(GETBIT(a2,10) = 1, ADDERROR("Active islanding", 2070));
 IF(GETBIT(a2,11) = 1, ADDERROR("Passive islanding", 2071));
-IF(GETBIT(a2,12) = 1, ADDERROR(${trans_AC_overvoltage}, 2072));
-IF(GETBIT(a2,15) = 1, ADDERROR(${abnorm_PV_module_config}, 2080));</ReadScript>
+IF(GETBIT(a2,12) = 1, ADDERROR("Transient AC Overvoltage", 2072));
+IF(GETBIT(a2,15) = 1, ADDERROR("Abnormal PV Module Configuration", 2080));</ReadScript>
         <PrefetchModeId>0</PrefetchModeId>
         <ServiceAttributesFormulas>[{"AttributeDefinition":{"Name":${model_name},"Section":null},"ReadFormula":"MODBUSR(H, 30000, String, 15)"},{"AttributeDefinition":{"Name":"SN","Section":null},"ReadFormula":"MODBUSR(H, 30015, String, 10)"},{"AttributeDefinition":{"Name":"PN","Section":null},"ReadFormula":"MODBUSR(H, 30025, String, 10)"},{"AttributeDefinition":{"Name":"Model ID","Section":null},"ReadFormula":"MODBUSR(H, 30070, Uint16)\r\n"},{"AttributeDefinition":{"Name":"Number of Strings","Section":null},"ReadFormula":"MODBUSR(H, 30071, Uint16)"},{"AttributeDefinition":{"Name":"MPPT ${number}","Section":null},"ReadFormula":"MODBUSR(H, 30072, Uint16)"},{"AttributeDefinition":{"Name":${system_time},"Section":null},"ReadFormula":"var reg := MODBUSR(H, 40000, Uint32, 2);\r\nvar min := FLOOR(MOD(reg, 3600)/60);\r\nvar ho := FLOOR(MOD(reg,86400)/3600);\r\nvar day := FLOOR(MOD(reg,2629743)/86400);\r\nvar mon := FLOOR(MOD(reg,31556926)/2629743);\r\nvar year := FLOOR(reg/31556926);\r\nho + \":\" + FLOOR(min);"},{"AttributeDefinition":{"Name":${time_zone},"Section":null},"ReadFormula":"IF(MODBUSR(H, 43006, Int16) = 0, \"UTC±00:00\");\r\nvar time := MODBUSR(H, 43006, Int16)/0.6;\r\nvar zone := IF(MOD(time,100) = 0, time/100 + \":00\", ROUND(time/100) + \":\" + MOD(time,100));\r\nIF(zone &gt; 0, \"UTC+\" + zone, \"UTC-\" + zone )"},{"AttributeDefinition":{"Name":${inverter_efficiency},"Section":null},"ReadFormula":" MODBUSR(H, 32086, Uint16)/100 + \"%\""},{"AttributeDefinition":{"Name":${cabinet_tempt},"Section":null},"ReadFormula":"MODBUSR(H, 32087, Int16) / 10 + \" ℃ \""},{"AttributeDefinition":{"Name":${insul_res},"Section":null},"ReadFormula":"MODBUSR(H, 32088, Uint16)/1000 + \"MΩ \""},{"AttributeDefinition":{"Name":${dsp_data_coll},"Section":null},"ReadFormula":"IF(GETBIT(MODBUSR(H, 32002, Uint16),0) = 1, ${yes}, ${no})"}]</ServiceAttributesFormulas>
         <ServiceActionsScripts>[{"ActionDefinition":{"Name":${time_zone},"NumericParameters":[],"BoolParameters":[],"EnumParameters":[{"FriendlyName":"Time Zone","Abbreviation":"timz","Values":[{"Item1":-12.0,"Item2":"UTC-12:00"},{"Item1":-11.0,"Item2":"UTC-11:00"},{"Item1":-10.0,"Item2":"UTC-10:00"},{"Item1":-9.5,"Item2":"UTC-09:30"},{"Item1":-9.0,"Item2":"UTC-09:00"},{"Item1":-8.0,"Item2":"UTC-08:00"},{"Item1":-7.0,"Item2":"UTC-07:00"},{"Item1":-6.0,"Item2":"UTC-06:00"},{"Item1":-5.0,"Item2":"UTC-05:00"},{"Item1":-4.0,"Item2":"UTC-04:00"},{"Item1":-3.5,"Item2":"UTC-03:30"},{"Item1":-3.0,"Item2":"UTC-03:00"},{"Item1":-2.0,"Item2":"UTC-02:00"},{"Item1":-1.0,"Item2":"UTC-01:00"},{"Item1":0.0,"Item2":"UTC±00:00"},{"Item1":1.0,"Item2":"UTC+01:00"},{"Item1":2.0,"Item2":"UTC+02:00"},{"Item1":3.0,"Item2":"UTC+03:00"},{"Item1":3.5,"Item2":"UTC+03:30"},{"Item1":4.0,"Item2":"UTC+04:00"},{"Item1":4.5,"Item2":"UTC+04:30"},{"Item1":5.0,"Item2":"UTC+05:00"},{"Item1":5.5,"Item2":"UTC+05:30"},{"Item1":5.75,"Item2":"UTC+05:45"},{"Item1":6.0,"Item2":"UTC+06:00"},{"Item1":6.5,"Item2":"UTC+06:30"},{"Item1":7.0,"Item2":"UTC+07:00"},{"Item1":8.0,"Item2":"UTC+08:00"},{"Item1":8.75,"Item2":"UTC+08:45"},{"Item1":9.0,"Item2":"UTC+09:00"},{"Item1":9.5,"Item2":"UTC+09:30"},{"Item1":10.0,"Item2":"UTC+10:00"},{"Item1":10.5,"Item2":"UTC+10:30"},{"Item1":11.0,"Item2":"UTC+11:00"},{"Item1":12.0,"Item2":"UTC+12:00"},{"Item1":12.75,"Item2":"UTC+12:45"},{"Item1":13.0,"Item2":"UTC+13:00"},{"Item1":14.0,"Item2":"UTC+14:00"}]}]},"Script":"MODBUSWNE(H, 43006, Int16, timz*60)"}]</ServiceActionsScripts>
         <SlaveId>$[SlaveId]</SlaveId>
-        <IpAddress>$[IpAddress]</IpAddress>
         <MaxPrefetchGroupSize>100</MaxPrefetchGroupSize>
+        <IpAddress>$[IpAddress]</IpAddress>
       </DeviceProperties>
       <Devices>
         <Device>
@@ -83,7 +83,6 @@ IF(GETBIT(a2,15) = 1, ADDERROR(${abnorm_PV_module_config}, 2080));</ReadScript>
           <Id>-2</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -102,8 +101,7 @@ IF(GETBIT(a2,15) = 1, ADDERROR(${abnorm_PV_module_config}, 2080));</ReadScript>
           <Id>-3</Id>
           <DeviceProperties>
             <DeviceType>11001</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions></SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions></SerializedValueLogTypeConversions>
             <InternalPollInterval>2500</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -122,8 +120,7 @@ return(reg);</ReadInputLevel>
           <Id>-4</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"59":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002259\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"59":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:59}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -135,7 +132,7 @@ return(reg);</ReadInputLevel>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 32106, Uint32, 2)/100</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -144,8 +141,7 @@ return(reg);</ReadInputLevel>
           <Id>-5</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"59":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002259\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"59":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:59}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -157,7 +153,7 @@ return(reg);</ReadInputLevel>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 32114, Int32, 2)/100</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -166,8 +162,7 @@ return(reg);</ReadInputLevel>
           <Id>-6</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"58":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002258\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"58":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:58}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -179,7 +174,7 @@ return(reg);</ReadInputLevel>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 32085, Uint16)/100</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -188,8 +183,6 @@ return(reg);</ReadInputLevel>
           <Id>-7</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedDefaultValuesSettings>{"Settings":{"42":{"DefaultValueType":0}}}</SerializedDefaultValuesSettings>
             <InternalPollInterval>2500</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -200,7 +193,7 @@ return(reg);</ReadInputLevel>
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <ReadLevel>MODBUSR(H, 47418, Int16)/10</ReadLevel>
             <WriteLevel>MODBUSW(H, 47418, Int16, Le * 10)</WriteLevel>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -209,8 +202,7 @@ return(reg);</ReadInputLevel>
           <Id>-8</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"60":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002260\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -222,7 +214,7 @@ return(reg);</ReadInputLevel>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 47416, Int32)/1000</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -231,8 +223,7 @@ return(reg);</ReadInputLevel>
           <Id>-9</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"87":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002287\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"87":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:87}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -244,7 +235,7 @@ return(reg);</ReadInputLevel>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 32069, UInt16)/10</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -253,8 +244,7 @@ return(reg);</ReadInputLevel>
           <Id>-10</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"87":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002287\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"87":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:87}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -266,7 +256,7 @@ return(reg);</ReadInputLevel>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 32070, Uint16)/10</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -275,8 +265,7 @@ return(reg);</ReadInputLevel>
           <Id>-11</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"87":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002287\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"87":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:87}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -288,7 +277,7 @@ return(reg);</ReadInputLevel>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 32071, Uint16)/10</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -297,8 +286,7 @@ return(reg);</ReadInputLevel>
           <Id>-12</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"88":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002288\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"88":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:88}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -310,7 +298,7 @@ return(reg);</ReadInputLevel>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 32017, Int16)/100</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -319,8 +307,7 @@ return(reg);</ReadInputLevel>
           <Id>-13</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"88":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002288\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"88":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:88}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -332,7 +319,7 @@ return(reg);</ReadInputLevel>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 32019, Int16)/100</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -341,8 +328,7 @@ return(reg);</ReadInputLevel>
           <Id>-14</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"88":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002288\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"88":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:88}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -354,7 +340,7 @@ return(reg);</ReadInputLevel>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H,32021, Int16)/100</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -363,8 +349,7 @@ return(reg);</ReadInputLevel>
           <Id>-15</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"88":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002288\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"88":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:88}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -376,7 +361,7 @@ return(reg);</ReadInputLevel>
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 32023, Int16)/100</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
         <Device>
@@ -385,8 +370,6 @@ return(reg);</ReadInputLevel>
           <Id>-16</Id>
           <DeviceProperties>
             <DeviceType>0</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedDefaultValuesSettings>{"Settings":{"49":{"DefaultValueType":0}}}</SerializedDefaultValuesSettings>
             <InternalPollInterval>2500</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -395,7 +378,36 @@ return(reg);</ReadInputLevel>
             <ServiceActionsScripts></ServiceActionsScripts>
             <CustomDeviceVariables></CustomDeviceVariables>
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
-            <ValueDescriptionsSerialized>[{"value":0,"icon":{"icon":227},"name":"${inverter_state}","enabled":true},{"value":1,"icon":{"icon":226},"name":"${idle}","enabled":true},{"value":2,"icon":{"icon":107},"name":"${starting}","enabled":true},{"value":3,"icon":{"icon":345},"name":"On Grid","enabled":true},{"value":4,"icon":{"icon":304},"name":"Shutdown","enabled":true},{"value":5,"icon":{"icon":346},"name":"Grid Dispatch","enabled":true},{"value":7,"icon":{"icon":113},"name":"Spot-Check","enabled":true},{"value":8,"icon":{"icon":57},"name":"${inspecting}","enabled":true},{"value":6,"icon":{"icon":120},"name":"IV scanning","enabled":true},{"value":9,"icon":{"icon":108},"name":"${dc_input_det }","enabled":true}]</ValueDescriptionsSerialized>
+            <Value0Index>0</Value0Index>
+            <Value1Index>1</Value1Index>
+            <Value2Index>2</Value2Index>
+            <Value3Index>3</Value3Index>
+            <Value4Index>4</Value4Index>
+            <Value5Index>5</Value5Index>
+            <Value6Index>8</Value6Index>
+            <Value7Index>6</Value7Index>
+            <Value8Index>7</Value8Index>
+            <Value9Index>9</Value9Index>
+            <Value0Name>Off</Value0Name>
+            <Value1Name>Nečinný</Value1Name>
+            <Value2Name>Začína</Value2Name>
+            <Value3Name>On Grid</Value3Name>
+            <Value4Name>Shutdown</Value4Name>
+            <Value5Name>Grid Dispatch</Value5Name>
+            <Value6Name>IV Scanning</Value6Name>
+            <Value7Name>Spot Check</Value7Name>
+            <Value8Name>Inšpekcia</Value8Name>
+            <Value9Name>dc_input_det</Value9Name>
+            <Value0IconId>227</Value0IconId>
+            <Value1IconId>226</Value1IconId>
+            <Value2IconId>107</Value2IconId>
+            <Value3IconId>39</Value3IconId>
+            <Value4IconId>304</Value4IconId>
+            <Value5IconId>220</Value5IconId>
+            <Value6IconId>120</Value6IconId>
+            <Value7IconId>113</Value7IconId>
+            <Value8IconId>57</Value8IconId>
+            <Value9IconId>108</Value9IconId>
             <OffStateValue>0</OffStateValue>
             <ReadSwitchState>var reg := MODBUSR(H, 32089, Uint16);
 IF(reg = 0, 0,
@@ -418,8 +430,7 @@ IF(reg = 2304, 9
           <Id>-17</Id>
           <DeviceProperties>
             <DeviceType>9002</DeviceType>
-            <PropertiesVersion>1</PropertiesVersion>
-            <SerializedValueTypeConversions>{"60":"{\u0022ConversionTypeId\u0022:3,\u0022SerializedConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022TargetSetConversionResultOrigin\\u0022:false,\\u0022SourceValueTypes\\u0022:[\\u002262\\u0022],\\u0022TargetValueType\\u0022:\\u002260\\u0022}\u0022}"}</SerializedValueTypeConversions>
+            <SerializedValueLogTypeConversions>{"60":"{\u0022ValueLogTypeConversionTypeId\u0022:3,\u0022SerializedValueLogTypeConversion\u0022:\u0022{\\u0022Value1OnInput\\u0022:0,\\u0022Value1OnOutput\\u0022:0,\\u0022Value2OnInput\\u0022:1,\\u0022Value2OnOutput\\u0022:1,\\u0022SourceValueLogTypes\\u0022:[62],\\u0022TargetValueLogType\\u0022:60}\u0022}"}</SerializedValueLogTypeConversions>
             <InternalPollInterval>15000</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
@@ -431,7 +442,7 @@ IF(reg = 2304, 9
             <IsReadOnly>True</IsReadOnly>
             <ReadState>MODBUSR(H, 32064, Int32, 2)/1000</ReadState>
             <WriteState></WriteState>
-            <SerializedIcon>{"icon":0}</SerializedIcon>
+            <IconId>0</IconId>
           </DeviceProperties>
         </Device>
       </Devices>
