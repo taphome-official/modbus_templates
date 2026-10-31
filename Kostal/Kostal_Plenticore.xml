@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Templates format="2" protocolVersion="73">
-  <Template revision="1.1" id="2d2e3111-2f80-41b0-a429-a7eba6332036">
+  <Template revision="1.2" id="2d2e3111-2f80-41b0-a429-a7eba6332036">
     <SuggestedCCUParameters>
       <TcpPort>1502</TcpPort>
       <DelayBetweenRequests>-1</DelayBetweenRequests>
@@ -77,7 +77,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 212, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 212, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -95,7 +95,7 @@
             <ServiceActionsScripts></ServiceActionsScripts>
             <CustomDeviceVariables />
             <TemperatureCalibration>0</TemperatureCalibration>
-            <ReadTemperature>MODBUSR(H, 214, BigEndianFloat)</ReadTemperature>
+            <ReadTemperature>MODBUSR(H, 214, LittleEndianFloat)</ReadTemperature>
             <ReadHumidity></ReadHumidity>
           </DeviceProperties>
         </Device>
@@ -115,7 +115,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 224, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 224, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -135,7 +135,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 234, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 234, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -155,7 +155,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 244, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 244, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -175,7 +175,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 108, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 108, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -195,7 +195,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 222, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 222, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -215,7 +215,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 232, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 232, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -235,7 +235,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 242, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 242, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -255,7 +255,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>True</IsReadOnly>
-            <ReadState>MODBUSR(H, 100, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 100, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -275,7 +275,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 210, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 210, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -289,13 +289,13 @@
             <InternalPollInterval>1500</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
-            <PrefetchModeId>0</PrefetchModeId>
+            <PrefetchModeId>1</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 116, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 116, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -315,7 +315,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 106, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 106, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -335,7 +335,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 194, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 194, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -355,7 +355,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 124, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 124, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -375,7 +375,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 114, BigEndianFloat) / 1000</ReadState>
+            <ReadState>MODBUSR(H, 114, LittleEndianFloat) / 1000</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -395,7 +395,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 104, BigEndianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 104, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -415,7 +415,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 252, bigendianFloat)</ReadState>
+            <ReadState>MODBUSR(H, 252, LittleEndianFloat)</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -435,7 +435,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 110, bigEndianFloat) / 1000</ReadState>
+            <ReadState>MODBUSR(H, 110, LittleEndianFloat) / 1000</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -455,7 +455,7 @@
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 112, bigEndianFloat) / 1000</ReadState>
+            <ReadState>MODBUSR(H, 112, LittleEndianFloat) / 1000</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
@@ -469,13 +469,13 @@
             <InternalPollInterval>1500</InternalPollInterval>
             <InitializeScript></InitializeScript>
             <ReadScript></ReadScript>
-            <PrefetchModeId>0</PrefetchModeId>
+            <PrefetchModeId>1</PrefetchModeId>
             <ServiceAttributesFormulas></ServiceAttributesFormulas>
             <ServiceActionsScripts></ServiceActionsScripts>
             <CustomDeviceVariables />
             <ShouldDoPeriodicWrite>False</ShouldDoPeriodicWrite>
             <IsReadOnly>False</IsReadOnly>
-            <ReadState>MODBUSR(H, 118, bigEndianFloat)/1000</ReadState>
+            <ReadState>MODBUSR(H, 118, LittleEndianFloat)/1000</ReadState>
             <WriteState></WriteState>
           </DeviceProperties>
         </Device>
