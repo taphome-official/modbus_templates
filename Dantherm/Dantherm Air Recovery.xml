@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Templates format="2" protocolVersion="54">
-  <Template id="adaeccb1-9079-43fe-b088-40f44feef280" revision="1.0">
+  <Template id="adaeccb1-9079-43fe-b088-40f44feef280" revision="1.1">
     <Name>Dantherm Air Recovery</Name>
     <CcuModel>ModbusTcpCCU</CcuModel>
     <Producer>Dantherm</Producer>
@@ -9,6 +9,7 @@
     <Description></Description>
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
+      <Revision id="1.1">Away switch reads and writes register 168 as a holding register pair (function 16), single register writes are rejected with Illegal Function</Revision>
     </RevisionHistory>
     <ImportParameters>
       <Parameter>
@@ -137,8 +138,8 @@
           <Model>ModbusSwitch</Model>
           <DeviceProperties>
             <InternalPollInterval>1000</InternalPollInterval>
-            <ReadSwitchState>(MODBUSR(SH, 168, UInt16) &amp; 0x10) &gt; 0</ReadSwitchState>
-            <WriteSwitchState>MODBUSW(SH, 168, UInt16, IF(St, 0x10, 0x04))</WriteSwitchState>
+            <ReadSwitchState>(MODBUSR(H, 168, LittleEndianInt32) &amp; 0x0010) &gt; 0</ReadSwitchState>
+            <WriteSwitchState>MODBUSWNE(H, 168, LittleEndianInt32, IF(St, 0x014, 0x8010))</WriteSwitchState>
           </DeviceProperties>
         </Device>
         <Device>
