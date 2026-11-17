@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Templates format="2" protocolVersion="73">
-  <Template id="20084ea1-32e0-418a-866c-e514d93e8153" revision="1.0">
+  <Template id="20084ea1-32e0-418a-866c-e514d93e8153" revision="1.1">
     <SuggestedCCUParameters>
       <TcpPort>502</TcpPort>
       <DelayBetweenRequests>-1</DelayBetweenRequests>
@@ -20,6 +20,7 @@
     </ImportParameters>
     <RevisionHistory>
       <Revision id="1.0">Initial version</Revision>
+      <Revision id="1.1">Bypass damper command writes holding register 1009 (was 1008, the circulation ratio register)</Revision>
     </RevisionHistory>
     <Name>Atrea aMotion</Name>
     <CcuModel>ModbusTcpCCU</CcuModel>
@@ -270,7 +271,7 @@ end</ReadScript>
             <Value9IconId>14</Value9IconId>
             <OffStateValue>0</OffStateValue>
             <ReadSwitchState>MODBUSR(A, 1009, Int16)</ReadSwitchState>
-            <WriteSwitchState>MODBUSW(H, 1008, Int16, Mu)</WriteSwitchState>
+            <WriteSwitchState>MODBUSW(H, 1009, Int16, Mu)</WriteSwitchState>
           </DeviceProperties>
         </Device>
         <Device>
